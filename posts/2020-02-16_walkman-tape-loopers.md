@@ -1,0 +1,23 @@
+---
+title: "Walkman tape loopers"
+date: 2020-02-16T21:30:11-08:00
+url: https://audiodestrukt.wordpress.com/2020/02/16/walkman-tape-loopers/
+id: 836
+categories: Uncategorized
+tags: 
+---
+
+# Walkman tape loopers
+
+I got a few cheap portable walkman-style tape recorders from Amazon recently with the thought that I would get into doing tape loops in my live sets. I didn’t really think through what I wanted to do but it seemed like plenty of people out there were splicing loop cassettes together and things worked out ok.
+I read some posts on creating the loop cassettes themselves and many made it out to seem like you had to get everything just right for it to work, but my experience is that it’s actually hard to screw up. Maybe I just got lucky but every loop that I created worked. I used scotch tape cut with an xacto blade to splice the loops. I just used a pair of scissors to cut the tape. I didn’t use a splicing block or anything like that.
+The interesting thought exercises start coming up when you consider how long to make the loops. I have made some as short as 3″ and as long as 9. In order to make the shortest loops I had to trim the cassette shells a little bit. I have run across 3 different styles of cassette in my digging. Some are glued all the way around and suck to deal with. Some use screws and come apart easily. Some use screws and also have a third piece that forms the area where the tape heads and capstans interface with the cassette shell. This third type of cassette are like magic. You can remove that third piece of the shell and trim it down to make very short loops.
+Once thinking about tape loop lengths in inches it becomes interesting to think in terms of time, and then in terms of BPM. When using a digital looper one of the core principles is that the loop length can be set while recording. With cassettes the loop length is always the same. The loop time can vary depending on the motor speed setting though. That’s something we have to set before starting the recording though. So in effect we need to know how long the loop is before we start.
+As an aside, there is a gap between the erase head and the record head when playing. This will be a consideration as we continue this discussion. Another concern is that these cheap tape decks have no monitor head, so we can’t record and play at the same time.
+To make a tape deck work as a looper pedal we have to be able to set the speed accurately before we start, then erase the tape and then record the loop. The actual record stop point can be a little sloppy because we are going to be controlling the erase head and the record/play circuit separately. If we weren’t, we would always end up with a gap of silence in our loops due to the distance between the erase and record heads.
+I was thinking about putting a metronome output on the tape deck. I might be able to do this with an optointerrupt circuit that reads a mark on the back of the tape, or possibly shines through where the tape splice happens. We can read that time and generate an interpolated clock.
+In my initial thinking about this I wanted to just listen to the recording and kind of “beat match” until everything lined up. I can’t figure out how to do this with no repro head. Even if we had a reproduction head there would be a time delay. How can we repro at the exact point in the program material to know if our loop matched up?
+We can switch very rapidly between record and playback, but in between recordings we need a full loop where the erase head is removing the previous content. Not an ideal situation live. Even if we synchronized the erase head well, I think it would create a pop in the audio that might be pretty annoying.
+In order to sync the erase head we would actually have to put it down before the record head started recording by the amount of time represented by the distance between the heads and the speed of the tape. This is not a musically related value so would be very hard to do live.
+Essentially the undo loop needs a full cycle of the tape before it can begin again. Starting from blank tape, enter record, switch to playback and listen. If it’s off, need to engage the erase head until after the loop repeats again and try again. It would be best to start erasing as soon as you know it’s off, then you have a little time until the start of the next bar to get ready to record again. So basically two repeats play before recording again on the third.
+Some things that would help with usability of such a device would be the metronome or bpm meter. I will post more about this project and maybe some pics later.

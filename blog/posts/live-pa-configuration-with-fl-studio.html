@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live PA configuration with FL studio — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; April 29, 2012</div>
+      <h1>Live PA configuration with FL studio</h1>
+      <div class="post-tags" style="margin-top:0.75rem"><span class="tag">Live PA</span></div>
+    </div>
+    <div class="post-body">
+<h1>Live PA configuration with FL studio</h1>
+<p>I’m playing around with a few different setups for my upcoming live PA stuff. I’ve been using FL Studio since back in the v1.0 days and I’ve discovered recently that it has a new live mode that is in the upcoming 10.5 beta. However I also wanted to give it a try using the playlist marker automation method also. Here is what I came up with. I configured my Behringer FCB1010 with 2 different banks of MIDI notes. The first bank is just a chromatic keyboard starting at F2. The second bank starts at C4 and is designed to automate the playlist markers when live mode is enabled. You can grab my sysex file for this setup here. There are several different types of markers available in FL Studio. The way I ended up doing things was to create alternating loop markers containing the main song part and then I put a non-looping marker in between the sections as transitions. This makes it easy to step through the song using the increment marker button. You basically let the section loop while playing over it and then when you are ready to move on, hit the next marker pedal and it plays the fill and drops directly into the next song section. I wanted to use the pause marker to do some breakdowns where I’d just let the tempo freewheel for a little while, but in order to get the song playing again you have to hit play again after it hits a pause marker. This means that I’m going to have to set up one of my foot pedals as a play/pause button. I’m going to leave that for a little bit later though. Stepping through a song is pretty effective this way. I think I’ll be able to live with only being able to directly access the first 5 markers on my pedal. Presumably I’d want to step through the song initially and then maybe go back to the bridge or chorus section for a reprise. As long as those sections are toward the beginning of the song it should be accessible directly using the pedal. However, I could just backstep through the sections since nothing starts playing immediately. It waits until the currently playing section has finished playing before the song position pointer actually moves. This makes it impossible to comp sections or re-trigger things on the fly, but perhaps that should be done using a sampler Vsti or something like that. One other thing that I wanted to be able to do was to do loop record. There are two things that keep me from realizing this in FL Studio currently. First is that there is no destructive quantize. That is I can’t quantize my playing on the way into the sequencer. That means I have to be really really precise in order to get something that is going to be able to be looped for a few minutes without being cringe-inducing. The second thing is that the replace mode is a little off when you are playing live. The way it works is that you have to be actively playing notes in order for the old stuff to be overwritten. You can’t “record” silence over top of existing material. Also, when you are playing if you want to drop out and have the rest of the loop play out you have silence until the loop repeats. I understand that in order to make this work the way I want it would mean that you’d have to use a punch-out pedal or some way of telling FL that you are finished playing. Lastly there is a little bit of awkwardness at the beginning of the loop when it repeats. If you are playing (holding) a note, it will be cut, and the beginning of the existing material will sound for a fraction of a second. This makes the loop sound awkward when you are actively playing material during the time that it loops around. I understand that FL isn’t really designed for this, but maybe I’ll be able to find something or write something that works the way I want it to. I’ve found that when recording it’s best to just do it all on one pattern per playlist track. See my screenshot for details:</p>
+<p>The last thing I’d need to make this work would be a way of switching between tracks with the pedal. I think I should be able to program the FCB to do a series of messages that would switch FL to a new generator and change patterns to a different pattern. Not sure how well this will work yet, I’ll keep you posted.</p>
+    </div>
+    <div class="post-nav">
+      <div><a href="fl-studio-live-mode-and-foot-controllers.html">&larr; FL Studio live mode and foot controllers</a></div>
+      <div><a href="fcb1010-programming-hints.html">FCB1010 programming hints &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

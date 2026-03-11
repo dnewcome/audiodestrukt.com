@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — Page 3 — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="../index.html#plugin">Plugin</a></li>
+      <li><a href="../index.html#features">Features</a></li>
+      <li><a href="../index.html#download">Download</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="page-title">Blog</div>
+    <ul class="post-list">
+    <li class="post-item">
+      <div class="post-meta">November 21, 2024</div>
+      <div class="post-title"><a href="posts/first-look-at-the-this-is-noise-nm2.html">First look at the This is Noise NM2</a></div>
+      <div class="post-excerpt">First look at the This is Noise NM2 I bought this little Bluetooth MIDI controller on a whim when an ad showed up on my Instagram feed. It really is tiny. It uses little soft tactile switches that are non-clicky. I ordered some of these same switches for my own projects but never got around to actually using them. I…</div>
+      <div class="post-tags"><span class="tag">fashion</span><span class="tag">music</span><span class="tag">news</span><span class="tag">reviews</span><span class="tag">technology</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">November 21, 2024</div>
+      <div class="post-title"><a href="posts/live-workflow-on-the-akai-force.html">Live workflow on the Akai Force</a></div>
+      <div class="post-excerpt">Live workflow on the Akai Force I’m doing an obligatory post on working through issues with the Akai Force. As you know my approach for grooveboxes centers around building up tracks from scratch live without stopping the transport. This makes some older grooveboxes choke because you have to stop the transport every time you add a track load a sound.…</div>
+      <div class="post-tags"><span class="tag">audio</span><span class="tag">headphones</span><span class="tag">music</span><span class="tag">tech</span><span class="tag">technology</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">November 20, 2024</div>
+      <div class="post-title"><a href="posts/daw-less-dreams.html">DAW-less dreams</a></div>
+      <div class="post-excerpt">DAW-less dreams I’m going through my hardware collection and I’m thinking about what caused me to buy a particular piece of gear. I recently bought the Ableton Move, which I think prompted all of this thinkery on my part. I was on a kick with MIDI sequencers for a while. I think it started when I found an MMT-8 for…</div>
+      <div class="post-tags"><span class="tag">audio</span><span class="tag">MIDI</span><span class="tag">music</span><span class="tag">music-production</span><span class="tag">news</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">November 20, 2024</div>
+      <div class="post-title"><a href="posts/octatrack-forgetfulness.html">Octatrack forgetfulness</a></div>
+      <div class="post-excerpt">Octatrack forgetfulness I was watching this video on Youtube and remembered that I have an Octatrack sitting here that I don’t use enough. https://www.youtube.com/watch?v=eqdczUpXy4c He’s using the Polybrute 12 along with an Octatrack to make a beat. I dug my Octatrack out and hooked it up. I had some random project loaded up that I forgot all about, that’s always…</div>
+      <div class="post-tags"><span class="tag">hiking</span><span class="tag">nature</span><span class="tag">travel</span><span class="tag">walking</span><span class="tag">walks</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">November 20, 2024</div>
+      <div class="post-title"><a href="posts/evaluating-blockhead-daw.html">Evaluating Blockhead DAW</a></div>
+      <div class="post-excerpt">Evaluating Blockhead DAW I have been following and supporting this project on Patreon for a little while now. I just downloaded v0.42.2 and I’m playing around with it. I think it’s been half a year since I looked at this last. https://www.patreon.com/c/colugomusic/posts I followed the development on Youtube here https://www.youtube.com/watch?v=p_Vj3wRS0sM&list=PLH9iPQ3SdYDKcFBd52FGC3rbSwRuPyHGn I think this is the overview https://www.youtube.com/watch?v=P5fWPBOdrY8 Something about this…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">November 20, 2024</div>
+      <div class="post-title"><a href="posts/performance-mixers.html">Performance mixers</a></div>
+      <div class="post-excerpt">Performance mixers I’ve been doing live PA electronic music sets for a while now. It seems like I pull together a pretty random collection of gear every time. One thing that you always need is a mixer though. Requirements vary. Sometimes I need a mic input, sometimes phantom power. Sometimes a bunch of mono inputs from synths. Sometimes effects. Sometimes…</div>
+      <div class="post-tags"><span class="tag">audio</span><span class="tag">failure-circle</span><span class="tag">microphone</span><span class="tag">music</span><span class="tag">technology</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">November 19, 2024</div>
+      <div class="post-title"><a href="posts/revisiting-favorite-vsts.html">Revisiting favorite VSTs</a></div>
+      <div class="post-excerpt">Revisiting favorite VSTs I’m digging back through my archive of old stuff and looking to see what I used to use in my tracks. One thing I found was Audiodamage Axon drum VST. This is a peculiar plugin. I used the original version I think. Or maybe version 2. Looks like there is a new version 3 out now. I’m…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">November 19, 2024</div>
+      <div class="post-title"><a href="posts/reaktor-6.html">Reaktor 6</a></div>
+      <div class="post-excerpt">Reaktor 6 I’m getting back into Reaktor again and I realized I forgot how great the Factory Library synths are. There are some super weird soundscape patches too that are new. Reaktor is one of the best ways to do granular synthesis that I know of. There are some pretty leftfield drum beatbox kind of patches too. I also realized…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">November 19, 2024</div>
+      <div class="post-title"><a href="posts/more-live-coding-stuff.html">More Live coding stuff</a></div>
+      <div class="post-excerpt">More Live coding stuff
+I’m checking out Mumux which I found via toplap.
+https://unlessgames.gitlab.io/mumux/mixer.html
+There is a live demo which looks super cool.
+Also via TopLap which I need to spend some more time on:
+https://forum.toplap.org/t/mumux-livecoding-vj-tool/2400</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">November 19, 2024</div>
+      <div class="post-title"><a href="posts/more-pure-data-2.html">More Pure Data</a></div>
+      <div class="post-excerpt">More Pure Data There is a plugin called Camomile that I have been meaning to try out. What better time than now? https://forum.puredata.info/topic/9884/camomile-an-audio-plugin-that-loads-pure-data-patches The zip distribution contains .vst3 plugins so I just dragged them into my VST3 folder. So it didn’t work for me in Ableton. In FL Studio only the FX plugin was scanned but doesn’t seem to work…</div>
+      
+    </li>
+    </ul>
+    <div class="pagination">
+      <a href="page-2.html">&larr; Newer</a>
+      <span class="spacer"></span>
+      <span class="page-info">Page 3 of 17</span>
+      <span class="spacer"></span>
+      <a href="page-4.html">Older &rarr;</a>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

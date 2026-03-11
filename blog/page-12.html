@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — Page 12 — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="../index.html#plugin">Plugin</a></li>
+      <li><a href="../index.html#features">Features</a></li>
+      <li><a href="../index.html#download">Download</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="page-title">Blog</div>
+    <ul class="post-list">
+    <li class="post-item">
+      <div class="post-meta">December 2, 2012</div>
+      <div class="post-title"><a href="posts/building-pure-data-externals-on-windows.html">Building Pure Data externals on Windows</a></div>
+      <div class="post-excerpt">Building Pure Data externals on Windows I recently built the beatpipe external under Windows, and it had a few tricky things to remember so I’m outlining the process here. Externals are usually pretty easy to build under Linux where the GCC tool chain is already installed, but on Windows you have several different ways that something can be built. Some…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">November 26, 2012</div>
+      <div class="post-title"><a href="posts/midi-software-roundup.html">MIDI software roundup</a></div>
+      <div class="post-excerpt">MIDI software roundup I’m doing a quick post on my current MIDI software setup on my audio laptop currently – partly for me and partly for you. I seem to forget which bits of software I’m using during a particular period of time, DAW-epoch if you will. In the dark ages I used to use Hubi’s MIDI loopback driver, but…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">November 26, 2012</div>
+      <div class="post-title"><a href="posts/hacking-on-the-apc-20.html">Hacking on the APC 20</a></div>
+      <div class="post-excerpt">Hacking on the APC 20 I recently got an AKAI APC 20 Ableton control interface at a local used music store. I have been hunting around for one of these pad-style controllers for a while, and this one was priced right. I don’t think I’d ever buy a Monome, mostly due to the price, but the controller market seems to…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">November 26, 2012</div>
+      <div class="post-title"><a href="posts/midi-with-ruby.html">MIDI with Ruby</a></div>
+      <div class="post-excerpt">MIDI with Ruby I was disappointed with not being able to use Pure Data on Windows to send the appropriate MIDI sysex message out to change the operating mode of my APC20 when I was doing this text scroller patch. For some reason when I sent the sysex start and end bytes (0xF0 and 0xF7) messages to the APC it…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">November 19, 2012</div>
+      <div class="post-title"><a href="posts/using-a-rock-band-keyboard-with-the-qinheng-usb-midi-adapter.html">Using a Rock Band keyboard with the QinHeng USB MIDI adapter</a></div>
+      <div class="post-excerpt">Using a Rock Band keyboard with the QinHeng USB MIDI adapter Long title, I know, but I’m going go into details on just what it says on the tin. As you may know, the new Rock Band 3 game has a keyboard controller that has a real MIDI port on it, allowing it to be used as a controller for…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">November 18, 2012</div>
+      <div class="post-title"><a href="posts/inexpensive-usb-midi-interfaces.html">Inexpensive USB MIDI interfaces</a></div>
+      <div class="post-excerpt">Inexpensive USB MIDI interfaces Following some of my recent posts, I’m looking into finding inexpensive audio/MIDI ephemera for use with inexpensive audio nodes like the Raspberry PI running Pure Data. Since a PI only costs 35USD or so, it doesn’t make that much sense to have to get a 40USD MIDI interface for it right? Actually, don’t answer this question…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">November 17, 2012</div>
+      <div class="post-title"><a href="posts/cheap-usb-audio-interfaces-syba-sd-cm-uaud-c-media.html">Cheap USB audio interfaces &#8211; SYBA SD-CM-UAUD (C-Media)</a></div>
+      <div class="post-excerpt">Cheap USB audio interfaces &#8211; SYBA SD-CM-UAUD (C-Media) I’ve written a little bit about using the Raspberry PI for audio, but as you may know, the PI doesn’t support audio input. However, this is easily solved by adding a USB audio interface. In addition to use with the Raspberry PI, I thought it would be kind of cool to have…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">July 29, 2012</div>
+      <div class="post-title"><a href="posts/alternative-performance-interfaces-2.html">Alternative performance interfaces</a></div>
+      <div class="post-excerpt">Alternative performance interfaces I’m a big proponent of getting out from behind the laptop screen and especially just getting out from behind the table that most electronic live acts tend to stand behind. I found this passage in Hans-Christoph Steiner’s piece in the Bang Book: Performers of live computer music generally stare at the screen intently while performing,rather than interacting…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">June 12, 2012</div>
+      <div class="post-title"><a href="posts/the-setup-is-the-instrument.html">The setup is the instrument</a></div>
+      <div class="post-excerpt">The setup is the instrument I’ve been toying with various methods of MIDI control lately as you guys know, and conceptually I’m pushing the idea that the software configuration is part of the instrument. That is, something like a key split or CC controller mapping is essentially part of your instrument as much as the whammy bar and tone control…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">June 11, 2012</div>
+      <div class="post-title"><a href="posts/methods-of-midi-control.html">Methods of (MIDI) control</a></div>
+      <div class="post-excerpt">Methods of (MIDI) control I’m setting up my controllers for live PA but I’m not completely sure how I’m going to get things set up. I have a keyboard controller, a foot pedal and a drum pad. I think I’m going to mount the drum pad onto the keyboard controller somehow. I’m still up in the air on how to…</div>
+      <div class="post-tags"><span class="tag">Live PA</span></div>
+    </li>
+    </ul>
+    <div class="pagination">
+      <a href="page-11.html">&larr; Newer</a>
+      <span class="spacer"></span>
+      <span class="page-info">Page 12 of 17</span>
+      <span class="spacer"></span>
+      <a href="page-13.html">Older &rarr;</a>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

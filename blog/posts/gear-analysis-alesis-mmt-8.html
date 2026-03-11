@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gear analysis: Alesis MMT-8 — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; February 29, 2024</div>
+      <h1>Gear analysis: Alesis MMT-8</h1>
+      
+    </div>
+    <div class="post-body">
+<h1>Gear analysis: Alesis MMT-8</h1>
+<p>I’m making an attempt at writing about some of the pieces of gear that I’ve tried over the years in preparation for designing some of my own stuff. It’s worth looking back at what makes a successful tool and why it was great. Music gear is a situation where the old new thing reigns supreme. I think there are only so many ways to do something and over time most of the bases have been covered in some way and the revolutionary new gear is mostly a novel packaging of previous ideas. That’s my opinion so far but writing things out may reveal something, who knows.</p>
+<p>I bought an MMT-8 on Craigslist a few years ago when I was buying another drum machine from someone. I had cash on me and the seller had it listed as well so I bought them both. I paid $100 for it. I was mostly motivated by the legacy of it rather than an actual need. I’d been reading about artists using the MMT live and many many forum posts about how amazing it was. It seemed like everyone used it at some point in the past but there seemed to be few people using it currently. Still I was intrigued.</p>
+<p>I’m going to try to make this post short and finish up. I have another post to write and I don’t like trying to have more than one going at a time. </p>
+<p>The brilliance of the MMT-8 lies in its one button per track mute and selection interface in my opinion. The default way of interacting with it is to mute and unmute channels. Just hit one of the 8 buttons on the front of the machine. This makes it easy to record in your whole song from the sequencer you were using back in the day and then mute and unmute while it looped. That’s another thing that seems kind of unique for the time. It has a loop mode that is accessible with a single button. Other sequencers at the time had loop modes but it was always ephemeral. You had to keep enabling it with shift-play or something similar.</p>
+<p>Speaking of ephemeral, the modal nature of the MMT interface is very interesting and I haven’t seen (any?) sequencers that do this. In order to do something like record several tracks you hold down a button and use the track buttons to enable/disable things. In order to cancel the current operation all you have to do is let go of the button without hitting the record button to commit. I think this is a pretty interesting workflow that could be expanded for other sequencers. It would be pretty cool to do a mute sequence and then revert or commit based on whether you let go of the shift button or hit the “ok” button.</p>
+    </div>
+    <div class="post-nav">
+      <div><a href="thoughts-on-the-pioneer-xdj-1000.html">&larr; Thoughts on the Pioneer XDJ-1000</a></div>
+      <div><a href="gear-lore-yamaha-qy-70.html">Gear lore: Yamaha QY-70 &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

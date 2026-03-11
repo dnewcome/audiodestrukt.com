@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guitar tech &#8211; Ibanez Artist — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; January 20, 2012</div>
+      <h1>Guitar tech &#8211; Ibanez Artist</h1>
+      
+    </div>
+    <div class="post-body">
+<h1>Guitar tech &#8211; Ibanez Artist</h1>
+<p>I just got my Artist cleaned up and put back together again with the Gibson humbuckers that I got for it a few years ago. This project has been sitting around on my bench for a long time now, so it feels good to get it all done and out of the way. The back story is that I really like the way my Les Paul DC studio sounds, but I wanted a guitar with a little more mass to it, but not as much as a Les Paul Standard. I also like the double cutaway body style, so I was on the lookout for something that solid that I could outfit with the Gibson pickups. One day when I was in Baltimore I stopped into a Music-go-Round and spotted this black Ibanez Artist with full binding. It doesn’t have the scalloped tailpiece that is found on most of these guitars and it doesn’t have the fancy headstock inlay. Judging by the serial number it was made in 1980 and it has a little bit of damage to the finish and the inlays. It looks like the neck was banged by the looks of some cracks in the paint near the heel. I’ve got a few pics of the process:</p>
+<p>The factory pickup is on the left. The Gibson pickup is on the right. I got the pickup pair on eBay as pulls from a Les Paul Studio. The LP Standard uses the same pickups.</p>
+<p>The neck pickup fit perfectly into its cavity but the bridge pickup didn’t fit so well. I got it in there but unfortunately the pickup is tilted at a severe angle since there isn’t quite enough room on the bridge side of the cavity. I’ll go back at some point and route this out a little bit so that the pickup fits perfectly. The pickup rings were drilled for Ibanez’s three screw pickup mounting pattern. The new pickups were two-hole mount. I didn’t want to drill out the factory pickup rings, but in the interest of moving this project forward, I did the deed anyway. Hopefully I the stock guitar gods will forgive me this. I did notice that there was a company selling converter kits that bolted to the pickup to convert it to a three-hole mounting pattern. Pretty clever, but again, I didn’t want to bother with that. Once I had the pickups in and adjusted I lowered the action a little bit at the bridge. I felt like the strings were a little  high when sighting down the fretboard and looking at where the pickups were sitting. Unfortunately I started getting some fret buzzing and noise. I went up the neck looking for the trouble spots and found that it was really only the first fret that was buzzing. That can be fixed by raising the nut a little bit, so that’s what I did. I inserted the blade of a pocket knife between the nut and the fretboard and wiggled it a little bit to break the glue that was holding the nut in place. I cut some cardboard shims (two of them) from an index card and placed them under the nut to stand it off of the neck a little bit. Ordinarily I’d use a little brass sheet for the shims, but I don’t have any on hand right now. I can always go back and replace the shims. I’m not a fan of gluing the nut, I just let the string tension hold it in place.</p>
+<p>Once I had the action set up, I set the intonation. I found a nice guitar tuner here That I used while setting the intonation. It really helps to have an accurate tuner that does pitch detection instead of trying to do this part by ear. You really need to be accurate down to a few cents, and while you can do it by ear, it is much faster to do it visually. I set all of the strings in less than 10 minutes this way.</p>
+<p>I put a new set of .012 GHS Boomers on next.</p>
+<p>I thought I’d have to set the intonation again, but actually the bass strings were slightly better intoned than before. I left the strings slightly short the first time around, and now the heavier gauge strings were closer than the lighter ones. I’m going to have to think about this for a minute, since I expected it to go the other way. Here’s the final result. I’ve been playing it for the last hour or so to break in the strings, and I’m really happy with how things turned out. I’ll probably route out the bridge pickup cavity so that I can get the pickup adjusted correctly and then re-set the action to match and set the intonation. For now it plays and sounds great though, so I’ll just enjoy it.</p>
+    </div>
+    <div class="post-nav">
+      <div><a href="tube-circuit-experiments.html">&larr; Tube circuit experiments</a></div>
+      <div><a href="korg-the-old-new-thing.html">Korg &#8211; the old new thing &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

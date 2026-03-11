@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Local network audio — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; October 30, 2011</div>
+      <h1>Local network audio</h1>
+      
+    </div>
+    <div class="post-body">
+<h1>Local network audio</h1>
+<p>I have been looking around at setting up a JamLAN (I think I just made that up) that could be used to implement a software-based JamHub. I figured that there would be plenty of ways to get this working on a local network (as opposed to over the Internet), but I was kind of disappointed.  The basic requirements are:</p>
+<p>Platform independence (Win/Mac/Linux) Relatively low latency (10-20ms) Handle full-mesh between 4 stations (volume of each peer adjustable separately)</p>
+<p>Things that would be nice: Ability to dynamically reconfigure who is connected. For example a singer leaving one jam and entering another. Ability for one performer to perform with two separate groups simultaneously. For example, a singer riffing on two different songs or a drummer leading two different blues jams at the same time. This could be pretty wild. Possible solutions: So there are four different approaches that I thought of:</p>
+<p>NAS (Network Audio Server) PulseAudio Jack PD (using netsend~ and netreceive~)</p>
+<p>So far I have struck out on all counts.  NAS doesn’t seem to support anything besides point-to point audio, and I’m not able to figure out how to get more than one connection working. It seems to be mostly designed for X11-style remote connection of a single audio device much like an X server takes over a display device.  PulseAudio seems like it could have worked but RTP doesn’t work in the Windows build that I had, which would have been necessary to get a connection fanout of > 1 I think. PulseAudio supports virtual connections called tunnels, but it wasn’t clear if that would allow multicasting of the streams.  Jack seemed promising until I realized that it was mostly intended to allow master/slave type of distributed audio for the purposes of offloading CPU-intensive audio effects rather than allowing multiple sets of audio hardware on the network. Also there are no fewer than 3 network audio protocols under Jack, all of them being incompatible, and all having slightly different capabilities.  I thought that PD would be the stupid-simple way to finally get this working, but unfortunately netsend~ is quite dusty these days. It didn’t build cleanly for me under linux until I patched it for an antiquated use of gethostbyname(). Even then I had compiler warnings. This didn’t inspire confidence. On the Windows end, I needed an old version of libpthread on order for netsend to load. After all that, making connections between the two machines crashed the windows netreceive~ consistently, after repeated attempts to connect resulted in gibberish data including negative channel counts and random buffer sizes/byte counts. So this leaves me back at square one. I’d like to be able to get a simple network audio setup going that could accommodate 4 full-duplex audio streams. Doesn’t sound like a lot to ask. Maybe I should be looking at VOIP stuff like Asterisk. I also thought about using ShoutCast DNAS, but I thought it might be kind of odd to have to run multiple audio apps to receive the individual streams.</p>
+    </div>
+    <div class="post-nav">
+      <div><a href="jamlan-update.html">&larr; JamLan update</a></div>
+      <div><a href="new-gear-foot-controllers.html">New gear &#8211; foot controllers &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

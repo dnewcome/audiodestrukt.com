@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slicer Plugins — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; January 31, 2024</div>
+      <h1>Slicer Plugins</h1>
+      
+    </div>
+    <div class="post-body">
+<h1>Slicer Plugins</h1>
+<p>Long ago I was a Drum and Bass producer. I used FL Studio (then Fruityloops) to produce my tracks. One mainstay of DnB was chopping up breakbeat samples to use sped up. Tools like Recycle came out to slice and chop drum break wav files into separate beats to re-sequence and add effects to.</p>
+<p>Back then I had Recycle but not Reason or any sort of DAW that supported .rex files. I ended up just exporting the individual slices as separate .wav files and pulling them into FL Studio as sample tracks. I’d then just bang around on the step sequencer until I got something rolling along.</p>
+<p>It seemed that most producers were taking the breaks and also exporting the corresponding MIDI timing and maybe quantizing that and possibly shuffling a few sections around. My approach was a bit different. I would group all of the like-sounding samples (kicks, snares, hats, etc) and put them in adjoining tracks. So out of 8-12 samples in a breakbeat I’d have 3 kicks, 4 snares, and some hats all lined up in adjacent tracks. Then it’s a matter of coming up with an interesting beat that doesn’t sound repetitive by experimenting with layering or just alternating which kick or snare is playing to keep things interesting. FL Studio made this pretty easy since each sample was on an individual track and you could do anything you wanted to an individual sample. </p>
+<p>The drawback of this approach is that now the project has a ton of single samples and there are many tens of tracks devoted to just drum breaks. It got kind of confusing to get to the point where you’re focusing on finishing a track at that point. </p>
+<p>So fast forward to today. I want to do some more breakbeat stuff and I really want to stay in Ableton and not use FL Studio for all the drums. Yes I could pull FL in as a VST plugin but I wanted to try out some slicer VSTs instead.</p>
+<p>I remember one called Geist from back in the day. I dusted off my copy recently and found that the product is basically discontinued. It’s also like a full DAW in a plugin and supports so many different things it’s kind of overkill for what I want to do. I might look back at it in the future but for now it’s too much. I also noticed that it had a quantized grid sequencer and I never figured out how to get a piano roll or un-quantized sequencing out of it.</p>
+<p>I checked out TAL-drum as well. This is another oldie but it’s got an updated version that looks pretty awesome. It’s very powerful but I had a hard time setting up layers easily. It’s simple to do things like split out the slices to pads and even change where in the parent sample the slice comes from on the fly. However it was difficult to do things like get a velocity spread set up across layers and get like sounds on different layers. The interface is modal so you can’t see the pads and the edit screens at the same time. It seems like I’m always flipping back and forth. It does have good modulation and routing but I’m not seeing how to get arbitrary MIDI CCs mapped into the mod matrix.</p>
+<p>My favorite so far has been Speedrum. It’s not quite as featured as the others but has all the basics. The most salient feature for me is that it’s trivial to assign slices to layers in any pad right in the main interface. The UI is not modal so there is only one main screen. Once a sample is loaded in the slicer you can drag a slice to any pad and it’s added as a layer. I might be missing something but I wasn’t able to figure out how to easily add a slice to a layer in TAL drum. For now this is the killer feature for me. Getting a breakbeat wav file out of my library and into the slicer and from there to the pads in grouped drum layers is a great start. Everything else is gravy. Speedrum does have a compressor per pad and one global compressor that sounds pretty good and the obligatory delay and reverb sends. I’m more likely to use external effects, but it’s certainly simpler to do in the plugin especially to avoid using multiple outputs.</p>
+<p>For completeness I will mention that I have also tried the FL Studio Slicex plugin which is included with Producer Edition of FL Studio. It’s nice but not a pad-style plugin. It’s got a 303-style sequencer thing and an interesting modulation system. The modulators are called “effectors” and consist of envelopes and settings that can be applied to several slices at once.</p>
+<p>Another random slicer is LiveSlice, which I tried out long ago in an attempt to do live recording directly into a slicer so I could retrigger myself live. It does work since LiveSlice has very flexible MIDI control. A CC message can be used to enable loop recording on the fly so live audio can be sliced in near-realtime and triggered immediately. It supports scenes and sequence groups but is otherwise a little bit limited. I don’t see myself using LiveSlice for non-realtime production.</p>
+<p>That was a long diatribe about slicers. Hopefully I look back at this and remember all the random crap I tried out and why I decided to use Speedrum in the end!</p>
+    </div>
+    <div class="post-nav">
+      <div><a href="live-music-coding.html">&larr; Live Music Coding</a></div>
+      <div><a href="dawlish-jamming.html">DAWlish Jamming &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

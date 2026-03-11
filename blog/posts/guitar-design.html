@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guitar design — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; January 23, 2023</div>
+      <h1>Guitar design</h1>
+      
+    </div>
+    <div class="post-body">
+<h1>Guitar design</h1>
+<p>I’ve been making some layouts for a few guitars I have in mind. There are a lot of different concerns that come up when designing the routing templates. I’m using OpenScad for most things, but then the shapes themselves are a more organic process involving Inkscape and hand drawing. </p>
+<p>A few of my designs have been inspired by other guitars. I will scale an image up to life-size and print it out. I’ll then physically draw on the printout and change some curves and maybe cut the templates with scissors. It’s about getting a new feel for a shape here. Then I’m basically taking a photo and creating an SVG from the shape using Inkscape. Sometimes the photo trace tool does ok, but many times I have to just go around it manually and add points.</p>
+<p>This is a kind of squishy process. I end up running into limitations of the tools with respect to scaling factors, units and file formats. There is a workflow here that is working for me now but it’s not very streamlined yet. I need to produce a series of routing templates on the laser cutter in DXF format. I’m using OpenSCAD as the final output generator and LightBurn as the laser cutting software.</p>
+<p>Two basic things have to come together to form the templates: the hardware layout and the body shape. Some interesting things that come up here are where should the origin be? I have decided that maybe the origin should be the neck joint. Somehow it seems like the bridge position might be the logical origin point but most of my thinking so far has been around where the heel of the guitar is. I don’t know if this is right yet. I want to be able to use the same code for different scale lengths and different types of bridges. I want to be able to take a template for a Jaguar type guitar and use it for strat eectronics.</p>
+<p>Some other unknowns are which templates are really needed and if there is a routing order that makes sense. I made one prototype by hand and ran into some issues mostly with screw placement and hardware angles. It’s hard to line things up even with a center line marked on the guitar. You end up needing a square to mark things out and on my first one I ended up using the guitar strings to try to center things up and keep it on track, which is a total pain. You have to string at least the first and 6th strings and keep the neck flopping around attached to the body by 2 strings while trying to drill more holes.</p>
+<p>Most necks come un-drilled, so getting the neck angle set in straight is harder than it sounds. I’m not sure what the solution to this is yet. So far I have been able to get the neck pocket very tight so I was able to kind of set the neck in with a rubber mallet and tap it around with the strings in place to get it just right. Once it’s set I drilled holes and screwed the back plate on.</p>
+<p>Another snafu was the jack plate. This happened due to the way I routed the edge of my guitar body. I need an accurate way of locating this hole still.</p>
+<p>This post turned out to be just a random string of thoughts on what I have gone through so far rather than any sort of cohesive thing, I apologize if you are still reading here. A ton of ad-hoc thoughts and processes have come about as a result of my building a prototype and I’m still trying to come up with a repeatable way of building the guitar efficiently in a way that I will be able to manufacture a run of say 10 instruments myself without taking a year to do it.</p>
+<p>This is what the template looks like when applied to a random Strat outline that I downloaded. It’s parametric so I can specify where each component goes on the center line, but I’m still looking into how to automatically figure out where the neck pocket and bridge position need to go based on the scale length and the neck. One template I found marked the position of the 21st fret so maybe that’s common in the luthier world. Ideally I’d like to take a random outline, establish a centerline and be able to play with positioning in a way that will always produce a playable instrument. I need to figure out a critical measurement for a given neck that I might buy so that the scale length works out. I was a little perplexed the first time I bought a neck and it didn’t have any holes drilled in it. So it’s a design decision how deep in to set the neck really and even where to drill it.</p>
+<p>One other thing that I found unexpectedly difficult was drilling the bridge pin holes. They have to be dead-on for the bridge to fit down over the pins and they have to be exactly the right distance away from the nut for the intonation to be correct. Well, the latter isn’t totally true, since the bridges can generally be adjusted and each string requires some fine adjustment anyway. The former was hard and I screwed it up twice trying to do it even with a drill press. I ended up filling the holes in with dowels and trying again. Even with a press, I needed brad-point drill bits to get the center correct and they had to be marked perfectly with a punch first. Also the bridges I was using didn’t have any data so I was measuring everything with a caliper.</p>
+<p>So, I really want to avoid drilling these holes entirely and I’m hoping that I can route them along with everything else since they are generally a larger diameter than my routing bits.</p>
+<p>The last thing is the neck pocket. If I want to use a single routing template I have to make some kind of removable piece for the outer route vs the pocket. And the drill holes. If I use two templates then I need indexing holes or something to line the templates up with. I really want to be able to do this stuff with a single template. Also want to transfer the drill holes to the neck somehow from the template. Probably through transfer punches in the guide holes.</p>
+<p>Creating drawings in Inkscape requires changing the units in the “drawing” menu and rescaling the image. It took me a while to get this right but it seems repeatable for getting svg files that can be used in OpenScad with correct dimensions.</p>
+<p>The critical detail here is the “resize to content” and the scale factor. For my system the scale factor was 0.26 approximately. It  seems to be automatically calculated by Inkscape and seems to work. The default unit seems to be the pixel.</p>
+<p>BTW I’m publishing this code as a project called grout <a href="https://github.com/dnewcome/grout">https://github.com/dnewcome/grout</a></p>
+    </div>
+    <div class="post-nav">
+      <div><a href="drum-hardware-digging.html">&larr; Drum hardware digging</a></div>
+      <div><a href="learning-music-theory.html">Learning music theory &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

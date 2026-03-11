@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — Page 9 — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="../index.html#plugin">Plugin</a></li>
+      <li><a href="../index.html#features">Features</a></li>
+      <li><a href="../index.html#download">Download</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="page-title">Blog</div>
+    <ul class="post-list">
+    <li class="post-item">
+      <div class="post-meta">February 17, 2020</div>
+      <div class="post-title"><a href="posts/12-cassette-tape-loop.html">12&#8243; cassette tape loop</a></div>
+      <div class="post-excerpt">12&#8243; cassette tape loop In my recent posts I described some different loop length scenarios. I have made loops as short as 6″ that still are able to work with the stock location of the erase head. I just completed a 12″ loop that worked out pretty well by threading the tape over 2 extra small rollers up in the…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">February 16, 2020</div>
+      <div class="post-title"><a href="posts/tape-loop-experiment-1.html">Tape loop experiment #1</a></div>
+      <div class="post-excerpt">Tape loop experiment #1 Technically not the first experiment, but the first one that had an interesting result. I will write some more about previous things soon. Walkman https://www.amazon.com/Byron-Statics-Converter-Automatic-Headphone/dp/B07JWC2624 Modded for line input in place of the microphone. Quick note on the mic: this unit has an electret mic that seems to be biased with a 1v signal and is…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">February 16, 2020</div>
+      <div class="post-title"><a href="posts/walkman-tape-loopers.html">Walkman tape loopers</a></div>
+      <div class="post-excerpt">Walkman tape loopers I got a few cheap portable walkman-style tape recorders from Amazon recently with the thought that I would get into doing tape loops in my live sets. I didn’t really think through what I wanted to do but it seemed like plenty of people out there were splicing loop cassettes together and things worked out ok. I…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">June 22, 2019</div>
+      <div class="post-title"><a href="posts/why-are-patchbays-confusing.html">Why are patchbays confusing?</a></div>
+      <div class="post-excerpt">Why are patchbays confusing? I have a studio space that is shared with a few people. I have a patch bay set up. For some reason people unplug things from the back of the patch bay to set things up. Patch bays are confusing unless you think about it the right way. Ideally the studio is set up the way…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">September 30, 2014</div>
+      <div class="post-title"><a href="posts/accurate-timing-in-the-browser.html">Accurate timing in the browser</a></div>
+      <div class="post-excerpt">Accurate timing in the browser I have been playing around with some simple audio stuff in the browser and Nodejs again lately. In the past I’ve done some experiments with generating audio and doing simple sequencer UIs, but I never tried to get something really useful happening. One thing that’s crucial for playing audio events is timing. When generating actual…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">June 10, 2014</div>
+      <div class="post-title"><a href="posts/subtleties-of-standard-midi-file-delta-time.html">Subtleties of standard MIDI file delta time</a></div>
+      <div class="post-excerpt">Subtleties of standard MIDI file delta time I have been playing around with generating MIDI files using Node.js recently. I’m using a minimal MIDI file writer called node-midimal. Everything was working fine until I tried to output a drum beat that had a hihat and a snare/kick playing on the same beat. I was writing out the notes both with…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">March 23, 2014</div>
+      <div class="post-title"><a href="posts/rapid-prototyping-pc-boards.html">Rapid prototyping PC boards</a></div>
+      <div class="post-excerpt">Rapid prototyping PC boards Hey guys, some thoughts on doing quick-turn PCBs. I have access to a CNC mill at the moment, and I’ve been messing with PCB-GCODE to make PCB layouts in Eagle and then make them on the CNC mill. I have done some test runs on plywood with an end mill, but I’m working up to getting…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">March 23, 2014</div>
+      <div class="post-title"><a href="posts/guitar-pedal-resources.html">Guitar pedal resources</a></div>
+      <div class="post-excerpt">Guitar pedal resources I have a new guitar pedal project in the works right now, which will be unveiled soon. In the meantime there are a few resources for common parts that I keep coming back to for various things. These guys have kind of a crude name, but they are one of the only places that have the really…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">December 28, 2013</div>
+      <div class="post-title"><a href="posts/building-pd-iemmatrix-under-osx-mountain-lion.html">Building PD iemmatrix under OSX Mountain Lion</a></div>
+      <div class="post-excerpt">Building PD iemmatrix under OSX Mountain Lion It’s often a trial by fire to build Pure Data externals despite cross-platform build systems like flext designed to make the job easier. I’ve blogged a little bit about getting some arcane externals to build before, so I’ll continue my quest to document my builds here. Iemmatrix is a matrix math external for…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">July 17, 2013</div>
+      <div class="post-title"><a href="posts/using-kinkect-as-a-midi-controller.html">Using the Kinect as a MIDI controller</a></div>
+      <div class="post-excerpt">Using the Kinect as a MIDI controller I just grabbed a Microsoft Kinect camera from eBay. I’m new to the 3d camera thing so I wanted to get something cheap and simple to start out with. There are some things to keep in mind when getting a Kinect to work with a PC or Mac. The particular version of Kinect…</div>
+      
+    </li>
+    </ul>
+    <div class="pagination">
+      <a href="page-8.html">&larr; Newer</a>
+      <span class="spacer"></span>
+      <span class="page-info">Page 9 of 17</span>
+      <span class="spacer"></span>
+      <a href="page-10.html">Older &rarr;</a>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

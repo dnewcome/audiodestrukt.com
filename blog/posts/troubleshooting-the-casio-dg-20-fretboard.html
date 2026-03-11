@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Troubleshooting the Casio DG-20 fretboard — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; June 8, 2012</div>
+      <h1>Troubleshooting the Casio DG-20 fretboard</h1>
+      
+    </div>
+    <div class="post-body">
+<h1>Troubleshooting the Casio DG-20 fretboard</h1>
+<p>I’ve owned a Casio DG-20 for a few years now, and while I play it every once in a while, it hasn’t been one of my main instruments. However, I’m interested in using it as a controller for my livepa rig so I wanted to get it set up better. This includes fixing some dead frets and straightening the neck. I’m going to leave the neck straightening process for another post, partly because I haven’t actually finished doing it yet but also because I want to focus more on getting all of the frets to work correctly first. When I first took my guitar apart I found that the ribbon cables that connected the fretboard to the rest of the guitar were pinned between the neck and the body of the guitar at the heel of the neck. I assumed that this was the cause of my malfunctioning frets. However, the cables tested out fine with the meter, so it must be something else. </p>
+<p>I figured that since I was having issues with some adjacent frets playing the same notes, that the common wires between the frets must be shorted out. This turned out not to be the case, as I tested different combinations of connections involving the frets in question and there were no shorts. In any case, thinking about the observed behavior a little more, it would seem that a short would cause a skipped note rather than a repeated note. It would make sense that there would be an open circuit though, and that the previous fret was physically still pressed down when the next-higher fret is pressed, causing the previous fret to continue to sound. The DG-20 uses a scanned key matrix mechanism to register key presses. This basically means that the controller circuitry pulls one of the “string” signals high and then reads the fret that is pressed. I don’t want to spend too much time digging into exactly how this works, but suffice it to say that we can emulate how the CPU reads the fretboard by using a multimeter. First, check out the fretboard by playing each note on the guitar and noting whether there are any spots that don’t play correctly. I suspect that if there are two adjacent frets that are dead, you will get a completely dead spot on the neck. If there is a dead fret immediately following a working fret, the note will be repeated as you play up the fretboard. One important thing to notice is whether all strings on a fret are affected. If every string is affected we most likely have a break in the “common” signal for the fret. The procedure for testing once the fretboard has been removed from the guitar is to connect one meter lead to the common wire for the fret and then probe the six fret contacts to see if they are good. Note that since there are diodes involved, we have to have the meter connected in the correct orientation. The red DMM lead should be connected to the common wire for the fret.</p>
+<p>Note that there is clear lacquer covering the pins of the diode chips making it difficult to probe with the meter. If you have sharp points on your probes, you can probably scratch down under the lacquer for at least the common connections. However, I’d recommend using a bit of wire in the connector for testing the common fret wires and probing the fretboard contact surfaces with the meter to test.</p>
+<p>As a side note, if there are some fingering positions that don’t work correctly but other positions on different strings but on the same fret are ok, the issue is probably the individual connection rather than the “common” wire to the diode chip. Hopefully this helps you troubleshoot any malfunctioning notes on your DG. I want to point out that my theory on why the solder connections seem to be so vulnerable to breaking is that if the neck flexes a lot like mine does (broken truss rod inside) it takes quite a toll on these solder joints. This could be an issue if the guitar was ever banged or dropped such that then neck was jarred sharply or flexed.</p>
+    </div>
+    <div class="post-nav">
+      <div><a href="edirol-pcr-30-keyboard-repair.html">&larr; Edirol PCR-30 keyboard repair</a></div>
+      <div><a href="meeblip-open-source-synth.html">Meeblip open source synth &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JamLan update — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; November 1, 2011</div>
+      <h1>JamLan update</h1>
+      
+    </div>
+    <div class="post-body">
+<h1>JamLan update</h1>
+<p>I have been playing around with various network audio protocols recently, trying to come up with a solution for hosting music jams at the Hacker Dojo. I’ve been focusing mostly on Linux software since I have found that trying to find something fully cross platform isn’t very likely.  The most promising software package has been PulseAudio. However, PA is not designed for professional audio, thus it focuses more on power saving and low bandwidth rather than performance. I was finally able to get several laptops working together using RTP multicast protocol, which was actually pretty sweet, but unfortunately the latency is too high to be useful for realtime jamming. There are still some tweaks left that I could do, but I think I might start looking at Jack instead. As mentioned in my previous article, the problem with Jack seems to be fragmentation among the various network audio systems that target it. I think the most promising seems to be the one from CCRMA (Jack.trip) since it isn’t an inherently master/slave setup. In other words, it isn’t expecting one machine to control the transport (start/stop) and expecting sample-accurate sync at all times. This is not necessary for jamming. If Jack doesn’t end up working out, I still wonder about using Pure Data for this. I know that there is a bit of manual setup to make it work, but it might be just the thing as long as the latency is good enough. I’m sure I’ve played with netsend~ in the past, but I can’t remember what the latency was like. And, now that I’m limiting myself to Linux, I think I might not have as many problems with netsend~ crashing PD. Now that I’ve covered all of the software options, I have to confess that I have been thinking about doing a simple hardware version of a JamHub. The idea that I’m toying with would use UTP (Cat5) cabling to carry the audio between nodes. Since there are four pairs in Cat5 cabling, this would give us four balanced lines, and thus four buses, allowing up to four players to jam over the same cable. To avoid excessive cabling, I’m thinking that the nodes can be daisy-chained using standard ethernet RJ45-terminated patch cables. The nodes would be built into electrical boxes like my guitar pedal designs. I want to make this as simple as possible. Each node will be identical in design and will feature a selector switch to set which bus it will send audio on. I think I’ll use a balanced transmission scheme to avoid noise, but even then I’m wondering if I can get away without running the twisted pairs as balanced lines. Maybe for relatively short runs it won’t be that noisy. That will let me use fewer op-amps. However using a balanced line would let me run phantom power over the lines so that the boxes could all be powered from a single box. This feature sounds like overkill though. We’d have to have something in place to keep from powering two boxes up at the same time and blowing one of them up. In the interest of keeping things really simple, I could see just putting four volume knobs on each box, one for each bus with no master volume. Just turn all the knobs up or down to get overall higher sound level. Turning your own bus up turns your instrument up in your mix (obviously this doesn’t affect anyone else’s mix). Each node would have an line in and a headphone amplifier. Somehow I think an instrument level input is not necessary. I don’t envision plugging a guitar or microphone directly into the jam system. For a guitar you’d probably have at least an effects board capable of line-level output. For a microphone, you might want phantom power or equalization so you might as well use a small mixer or microphone preamp in front.  Of course, you could argue that if you use a mixer you might as well use that for your headphone mix. I still think that something like what I’m describing would be nicer and more convenient since you don’t have to deal with a lot of audio cables. Three balanced connections coming into everyone’s nodes will add up to a mess very quickly. Not to mention that most small mixers won’t split your signal very conveniently to go out to three other destinations. You might have the master out left and right, and then you’d end up using one of the effects sends if the mixer didn’t have any buses. If we are lucky it will have a tape out or possibly a non-breaking insert or direct out.  Anyway, that’s enough digression. I’ll come up with a schematic for this soon and hopefully a source for the parts like the four pole switch that we need to select which bus each node will be on.</p>
+    </div>
+    <div class="post-nav">
+      <div><a href="audiohackers-jamcat-design.html">&larr; Audiohackers JamCat design session</a></div>
+      <div><a href="local-network-audio.html">Local network audio &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

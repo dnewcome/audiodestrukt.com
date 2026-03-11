@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tape loop experiment #1 — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; February 16, 2020</div>
+      <h1>Tape loop experiment #1</h1>
+      
+    </div>
+    <div class="post-body">
+<h1>Tape loop experiment #1</h1>
+<p>Technically not the first experiment, but the first one that had an interesting result. I will write some more about previous things soon. Walkman <a href="https://www.amazon.com/Byron-Statics-Converter-Automatic-Headphone/dp/B07JWC2624">https://www.amazon.com/Byron-Statics-Converter-Automatic-Headphone/dp/B07JWC2624</a> Modded for line input in place of the microphone. Quick note on the mic: this unit has an electret mic that seems to be biased with a 1v signal and is very sensitive. I have to turn my gear down to barely audible in order to keep from clipping this input. A nice feature to figure out levels is the auto-start feature of this deck. If you turn on this feature the unit doesn’t start recording until a signal threshold is reached. You can use this to adjust the levels. TODO would be to do a little pad circuit with a coupling cap to keep that 1v bias out, but I didn’t bother for this experiment. Other things I did was remove the PCB so that the record button no longer is linked to the electronics. This means that the record button moves the erase head into the tape path but does not trigger the record electronics. To make a recording I pushed the slide switch manually with my finger. The loop tape that I constructed was 6″ of tape, which is a little tricky to do but works if you remove all of the cassette guts. There are some other issues that crop up with shorter loops. One is that the splice point is rather stiff and with tight loops the tape has to turn a severe corner at the ends of the loop. This causes some back tension in the tape that occasionally triggers the tape deck’s auto stop feature. It also has the side effect of slowing part of the loop down a little bit making it play back unevenly. The loop tape that I made for this experiment was a 6″ long and spliced with a tiny bit of packing tape. I didn’t use any rollers. The tape goes through the normal tape path grooves but loops back before the normal rollers are reached. This seemed to work ok but in the future I might grind out some plastic to make room for the rollers closer to the cassette center line to see if I can get the splice to ride more smoothly through the tape path. I used a Korg Volca Beats to play a drum loop starting at 120bpm. This seemed too fast so I turned the pitch of the tape deck all the way up and figured I’d baseline things on that speed. 124bpm was too fast so I started working my way down to 121bpm. At 121bpm I had a reasonable loop. To record the loop it seems that you have to get a little bit of overlap to avoid gaps. The timing feels a little weird when you are used to digital loopers. I started a bit before the beat and ended a bit after the beat. You can tell if the tempo is off when the first beat comes back around since you will hear a double hit sort of like beat matching while DJing. Right now this is pretty much unusable for a Techno set but might work with IDM style music that is looser. If I can get better splices on the cassettes this might help, or possibly just using higher torque cassette decks like a tabletop unit instead of a walkman. I had a bad experience with a tabletop unit from Amazon so I might try to get some heavy duty units from eBay. Some quick tape math: Cassettes run at 1 7/8 inches per second. So 6 inches of tape should play in 3.2 seconds. Assuming this is 1 bar of music at 4/4, that is 1 beat per 0.8s. That works out to 75 BPM. That’s pretty slow for what I want to do. At max pitch I got up to 121 BPM, a boggling 62% pitch increase. That’s quite a range so I’m pretty happy it works out. I’d like the flexibility to get up to 130 or so, but then I could start putting 2 bar loops on the tape to effectively double the BPM. At regular pitch on the 6″ loop that’s 150 BPM. It’s likely that I’d want to pitch that down to 140 max. Part of this exercise is to get my mind used to thinking in terms of loop lengths and time. I could see a scenario where I had a collection of loop tapes in my crate to choose from and the question would be how many bars and what tempo am I currently at in my set? Let’s say 120 BPM tempo and 2 bars. Half of 120 is 60 BPM which is just 20% down from our 75 BPM 6″ loop. So that’s one option. We also saw that setting the pitch to nearly the maximum would allow for 1 bar at 120 BPM so that might be a nice option to have on the fly. If the pitch down has the same range I think 30 BPM might be reachable so 4 bars of 120 BPM material could be recorded. So the same 6″ tape loop could have 1, 2 or 4 bars potentially. Another thought is that the 1 bar loops are just too tight to do on a cassette. 6″ seems to be the smallest I can get and still have the record head reach the tape. The smallest loop I have created is 3.75″, which barely covers the playback head and the capstan. I would have to customize the tape deck with an erase head somewhere else, maybe inside the cassette itself. 9-10″ loops are possible by looping the tape over the reels. I’m not sure what the longest loop would be. Presumably doubling the tape back and forth could get some pretty long loops and of course just dumping the tape into the cassette guts like the Roland space echo might work if the cassette was modified with pressure pads to keep all the tape from falling out when it wasn’t in the deck. Looks like some of the endless answering machine tapes are 3-12 minutes long! I have run across some 30 second endless tapes which works out to 56.25″. Of course that’s all rolled up in there with the tape feeding back to the center of the spool. I’m not sure I’d want to try that with a custom loop tape. Some other customizations that would really be helpful would be a metronome feature. A count could be derived from a mark on the tape or maybe from the sound the splice point always seems to make as it passes the tape head (I’d like to minimize that in the future so maybe I won’t try to design something around that). Let’s say there was a mark on the back of the tape that could be read by an photo sensor. That could be used to create a clock signal at whatever time signature the user desired. It would be nice to be able to reset this and keep an offset so that you didn’t have to time everything to necessarily line up with the start of the actual tape loop (the splice point). Changing the tape speed would not register until the mark was hit again and the interval changed. So it would take a little time for the metronome to settle unless there were more marks on the tape which sounds a bit daunting. I somehow think that you can get within range just with one mark and some timing code. The tape machines that I have are all mono. If we had stereo this would make things a little bit more interesting. A timecode could be recorded on the other track, or maybe for synchronization we could alternate tracks where we record on one channel the switch to the other and listen to the first while we are still recording on the second.</p>
+    </div>
+    <div class="post-nav">
+      <div><a href="12-cassette-tape-loop.html">&larr; 12&#8243; cassette tape loop</a></div>
+      <div><a href="walkman-tape-loopers.html">Walkman tape loopers &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

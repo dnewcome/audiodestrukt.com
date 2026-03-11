@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hybrid DJ/Live PA setup — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; February 21, 2024</div>
+      <h1>Hybrid DJ/Live PA setup</h1>
+      
+    </div>
+    <div class="post-body">
+<h1>Hybrid DJ/Live PA setup</h1>
+<p>I just ordered a Pioneer XDJ-1000. I resisted getting any sort of Pioneer deck for the longest time. For doing DJ stuff I really liked my Traktor S2 and the Traktor software ecosystem in general. I used to DJ renegade events with just an old Thinkpad running Traktor and it just slayed. Even if I didn’t have a controller or headphones I could rip the old X200 out of the bag and go for it. I love that feeling of dirty DJing. Well it works if you know the genre and have some idea about what tracks you have and it’s more about the vibe than anything else. As a person who had vinyl decks in the past that were non-Technics I sort of thought I could just get any digital media player and go with it. I started to realize that this is a different world. The Technics 1200 was blatantly copied by so many companies, there were many options to choose from that were (in my opinion) perfectly good alternatives. Many swore by the torque and the feel of the original 1200 but the truth is that you can DJ on any turntable if you can DJ on one of the clones. I’m not so sure about the CDJ and the Denon alternatives.</p>
+<p>So, having accepted (finally) that the world does not give a crap about Traktor and if I want to mesh with the DJ world outside of my renegade dirty DJ fests I will have to figure out how to use a CDJ or something like it. I’m pretty sure it’s straightforward but I’m also pretty sure that Pioneer decided to do some epically dumb stuff that everyone in the DJ world is aware of and somehow doesn’t care about but will drive me nuts. So I went ahead and bought.. a single XDJ deck. This is after trying out the “virtual” decks in VR where you can virtually DJ on “real” decks. They are pretty accurate as far as I can tell, which isn’t very far.</p>
+<p>Anyway, the idea of a single deck is to use it with my Octatrack and loop stuff over to bounce back and forth between tracks. It’s actually kind of nuts that you can’t already just do a set with a single deck being that they are all digital now. What prevents us from playing two tracks at once with a single digital deck? Nothing technical, I can tell you that.</p>
+<p>This got me thinking though. Apart from my being dragged unwillingly to embrace this world of DJ standardization and dogma, I’m curious how having a hybrid live PA and DJ setup is going to go. I’m planning on not just doing a DJ bounce setup effectively using the Octatrack as a looper. I’m going to play tracks I’ve made on the Syntakt also. So at minimum I will have the XDJ, Octatrack and the Syntakt. Probably one other small synth also like the Shruthi or maybe the DSI Tetra.</p>
+<p>I started messing around with more Octatrack setups in anticipation of including the XDJ (which I have on order and have yet to receive). I have my Shruthi audio going into the Syntakt so I can use the FX and param locks on the FX track to modulate it. I have the OT set up as the midi clock source and also using its midi tracks to sequence the Shruthi. It turns out that the arpeggiator on the OT is pretty cool. I haven’t dug into the midi side of the OT until this experiment. When I had the Syntakt as the clock source I was not getting clean loops – the first beat was cut off when I recorded things using record trigs on the OT. The loops loop just fine, but if you compare it to the metronome it’s off a little bit and when you go to retrigger the loop it sounds weird because the downbeat is missing. So the OT is feeding everything else clock. I noticed that there is a delay compensation setting on the OT but I have no idea if it would fix this problem.</p>
+<p>So this leaves the C/D inputs free on the Octatrack to receive the output of the XDJ. At minimum I will be able to juggle back and forth between the XDJ and the Syntakt. More likely I will have things set up so that I can go from ST to XDJ, XDJ back to XDJ or ST to ST. This should be pretty straightforward.</p>
+<p>The thing is, I haven’t seen many (any?) setups like this with a single deck along with a live rig. I wonder if this will be a thing or if I will end up just getting a second XDJ at some point or ditching it altogether.</p>
+    </div>
+    <div class="post-nav">
+      <div><a href="reverse-engineering-the-yamaha-dtx-multi-12.html">&larr; Reverse engineering the Yamaha DTX-Multi 12</a></div>
+      <div><a href="setting-up-the-octatrack-as-a-looper-mixer.html">Setting up the Octatrack as a looper/mixer &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

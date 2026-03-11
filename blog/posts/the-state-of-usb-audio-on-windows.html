@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The state of USB audio on Windows — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; December 13, 2012</div>
+      <h1>The state of USB audio on Windows</h1>
+      
+    </div>
+    <div class="post-body">
+<h1>The state of USB audio on Windows</h1>
+<p>I recently got a new audio interface. I had a cheap Behringer UCA202 USB interface that I had been using for a while and I thought it was time to get something a little nicer. I settled on the PreSonus AudioBox after considering the Focusrite 2i2 I read a few reviews of the Focusrite having issues with clipping when plugging a guitar into the instrument inputs, which is one of the things I want to do with this interface. I also wanted to have MIDI ports on the box just to cover my bases I guess. I’m not sure how important this will be in the end though. It turns out that I still have some clipping on the Presonus AudioBox when going direct with my guitars. I don’t know if it’s as bad as the Presonus though. I get some very short peaks that turn on the overload lights on the front panel. Using a DI box into the balanced inputs seems to do the trick though, so it might be a non-issue either way. Using a DI box sounds much different but it’s actually an improvement to my ears at least. The real reason for this post is to detail the issues I had trying to get a reasonable latency out of this box. I have several USB audio interfaces and Windows machines so I can hopefully give some perspective on how the Presonus fits into the spectrum of audio interfaces. The Presonus comes with its own ASIO driver supplied by the company, but will also work with Asio4all. In my experience there wasn’t a big difference between the two drivers. The custom driver used slightly less CPU it seems, so maybe using the Presonus driver is better. I personally like being able to control all my ASIO interfaces from one place and use more than one interface at a time, so I typically use Asio4all if I can. Under Windows 7 I had issues with all of my USB interfaces in terms of getting a reasonable latency. My holy grail latency number is 64 samples, which ends up being 6ms or so round-trip as reported by the Reaper DAW software. This is the latency at which my guitar effects appear to be instantaneous. I notice some lag when going up to 128 samples. Your mileage may vary. I can sometimes get used to 128 samples after a while, but if I have been playing through a real physical amp for a while, I really notice the difference unless I’m getting 64 sample latency. So, per the title of the post, the state of USB audio on Windows is pretty bad, at least under Windows 7. I tried out 3 different versions of Windows with my various interfaces and found that Windows XP got me the best latencies, followed by Windows 8. Windows 7 was by far the worst, since I experienced huge periodic CPU spikes when using USB audio devices. The Presonus box being the worst out of the 3 interfaces I tested with.  I know my results are pretty unscientific, but it’s hard to find any helpful information about USB audio performance at all, so hopefully my experiences help someone out there.  I tried the AudioBox on a Mac running OSX 10.7.5 also and had no issues at all getting 64 sample latency on Reaper for Mac. Performance was just immaculate. I didn’t have to install any drivers at all either. So Mac wins hands down, followed by Windows 8, which didn’t show any performance spikes, but did have higher DPC latency overall. I used the DPC latency checker as well as LatencyMon to find offending drivers that are doing a lot of interrupts. The top offenders on my system were network interfaces, especially Bluetooth. The second thing that I changed was to make sure that the CPU was always set to run at 100% in the Windows power management console under control panel. Apart from these two things, most of the other tweaks that I found on the Web had little or no discernible effect. Again, my procedures here are decidedly unscientific so it’s possible that some of these other things have synergistic or other statistically significant effects that I didn’t notice. However they weren’t drastic enough for me to observe a big difference.</p>
+<p>Footnotes: <a href="http://www.gearslutz.com/board/low-end-theory/749142-focusrite-scarlett-2i2-vs-presonus-audiobox.html">http://www.gearslutz.com/board/low-end-theory/749142-focusrite-scarlett-2i2-vs-presonus-audiobox.html</a></p>
+    </div>
+    <div class="post-nav">
+      <div><a href="getting-64-sample-audio-latency-on-windows-8.html">&larr; Getting 64-sample audio latency on Windows 8</a></div>
+      <div><a href="running-pure-data-patches-full-screen.html">Running Pure Data patches full screen &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

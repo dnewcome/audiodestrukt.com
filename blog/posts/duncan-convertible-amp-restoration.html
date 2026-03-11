@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Duncan convertible amp restoration — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; January 18, 2012</div>
+      <h1>Duncan convertible amp restoration</h1>
+      
+    </div>
+    <div class="post-body">
+<h1>Duncan convertible amp restoration</h1>
+<p>I’ve had a 100-watt Seymoure Duncan Convertible amp head in my collection for a few years now. A friend of mine convinced me to pick this amp up on eBay since he had one and loved it. My particular amp was working but in need of some love. Well, I never got around to doing much with it, but now I’m thinking about picking up the project again.  I have plenty of electronics experience, but not with tube electronics. I’m hoping to learn the ins and outs of working with high-voltage tube circuits as part of this endeavor. Here are a few photos to document the starting point. The chassis has some homegrown fixes and mods applied to it, and my goal is to get it pretty much back to stock. Here is a photo of the front panel with the chassis removed from the cabinet.</p>
+<p>Here is the rear of the chassis shown upside-down. Note the size of the power transformer. This thing is a beast. The output tubes and the rectifier have been removed. Note that the power supply caps look pretty beefy as well, and seem to be in good shape.</p>
+<p>Note that I have connections for a reverb unit, but my cabinet doesn’t show any evidence of there ever being a reverb tank installed. There is no reverb there and I don’t see any old mounting holes that look like they might have been a reverb. Maybe this was an optional thing that could be installed later. Here is an overview of the circuit board. You can see some hot glue here and some obvious lazy mods and fixes.</p>
+<p>The first thing I noticed was the addition of several additional filter caps tacked on in parallel with the existing caps. I’m not sure which part of the circuit this is. I was under the impression that the main power supply caps were mounted underneath the chassis along with the power transformer. Adding more capacitance here was probably done to reduce some noise or ripple, but I’m not sure where.</p>
+<p>In the next picture you can see the card edge connectors that were used to accept the pluggable modules.</p>
+<p>You can also see a hack fix involving two resistors piggy-backed and soldered to the old leads of the previous part. I guess they didn’t have the right value on hand or something, and decided to make use of the fact that R=(R1*R2)/(R1+R2). In this case the equivalent resistance would be 50k ohms. One of the most interesting parts about this amplifier is the “variable power” feature. This is a circuit that allegedly allows you to drive the output tubes hard without all of the volume. I use a THD Hot plate to soak up power from my big Marshall, so I’m not sure why this isn’t done more often if it is that easy. I’m still studying the schematic to see just how this works.</p>
+<p>In the above photo you can see the back of the aforementioned variable power control. It looks like the previous owner removed this entirely from the circuit and left the wires hanging there. I’m not sure if I can just hook this back up or if there was a reason that this was done. Note that there is also a triode/pentode switch on the back, allowing for the output tubes to be used in either mode. This should theoretically allow lower power operation. All-in-all this is a really flexible amplifier. Another questionable bit that I don’t know if it is stock is this ferrite bead soldered between the overdrive knob and the ground rail.</p>
+<p>I have 3 of the 5 modules for this amp, which is enough to get one of the channels working. The modules each have one tube socket for a 12AX7 or 12AU7.</p>
+<p>The modules are very simple inside. They consist only of a PC board with card edge connections, a tube and a small assortment of passive components. The following picture is of a “Classic warm tube” module that originally came with the amp as delivered from Seymoure Duncan.</p>
+<p>That’s the state of my amp. There are a few other lazy fixes it looks like, but I’ll document those as I repair them. Most of the time it looks like someone replaces resistors and caps by clipping the old ones out and soldering the new ones to the existing component leads. I can only guess that this was done in order to avoid having to remove the board from the chassis, which I’m just going to say is flat-out lazy. I’m hoping to get this amp back into top form soon.</p>
+    </div>
+    <div class="post-nav">
+      <div><a href="duncan-amp-schematics.html">&larr; Duncan amp schematics</a></div>
+      <div><a href="midi-over-websockets-with-socket-io.html">MIDI over Websockets with Socket.IO &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comments on the OP-Z — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; February 18, 2024</div>
+      <h1>Comments on the OP-Z</h1>
+      
+    </div>
+    <div class="post-body">
+<h1>Comments on the OP-Z</h1>
+<p>I did some traveling to Southeast Asia recently and I took along a few diversions for the long flights. One was my Kindle and the other was the Teenage Engineering OP-Z. I bought the OP-Z a while  ago used from Reverb as I was kind of curious about the OP-1 but didn’t want to drop the cash for it. The OP-Z seemed to have a vibe to it according to the internet, so I figured I’d start there.</p>
+<p>When I first unboxed it I was kind of underwhelmed. It was cute and sounded surprisingly good on first listen, but I quickly got bored. Later I hooked it up to my phone and grabbed the app and things started to make more sense, but I still didn’t use it much.</p>
+<p>Fast forward to this long flight. I pulled it out and connected my phone and started jamming around. I started to get the muscle memory for the buttons while having the phone screen tell me what the heck I was doing since it’s not super obvious from the unit itself right away. I learned that there are some pretty well thought-out UI details that help navigate the experience, but it’s nice to have the phone app at first to speed up the process.</p>
+<p>The internet tells me that the sequencer is amazing and ahead of the curve. At first I thought this was a little hard to believe and I still think it’s not the best but it certainly is unique and very fast to work in once you get the muscle memory for it.</p>
+<p>One thing I liked was that the size is just so small that I kept it in my small chest bag the entire trip. It’s small enough to pull out while waiting for coffee just like you would your phone. I also found that I could use it without putting it down on a table (sort of) with my thumbs which is also very cool and unique. Of course, you have to use the little built in speaker unless you want to dig around for headphones too. I’ve found that while the speaker doesn’t sound bad, it’s not loud enough to hear in a coffee shop or with ambient noise. I wonder if they could have done something like the old Nintendo Gameboys where the speakers were super directional. It would have to basically be pointing at your face to hear anything but you would have a little privacy and the sound would actually be audible in a louder environment.</p>
+<p>Anyway, apart from the immediacy of it’s size it also has a layout that lends itself to very fast sketching of ideas. The way the top function buttons are laid out makes it a little bit of a stretch with the fingers but make the muscle memory of the unit quite sticky. It’s also modal in a way that the old MMT-8 was where you hold buttons down in a momentary way to access the modes. They also borrow some ideas from the Elektron boxes (I think) where to clear or delete a thing you can hold a button combination down for some time while the LEDs progress across the unit. I’m not aware of any other companies that do it this way.</p>
+<p>Moving back to the form factor, I think that one could argue that a mobile phone app would be just as good if not better in terms of features and sound. Probably accurate but it’s hard to overstate how cool it is to have a little device with buttons and a little keyboard to play on even if it’s just little tactile buttons. You can train yourself to play melodies on it since it’s two octaves, which makes it arguably better than some full sized drum machines like the Syntakt (which I also own).</p>
+<p>Being able to pull out the OP-Z and quickly make a pattern on the go was a really fun experience while traveling. One flight attendant asked me what it was. It’s visibly unique. Using a mobile phone would not have the same optics or experience.</p>
+<p>I’m digging into the OP-Z in a deeper way now and exploring the sampling mode and maybe pulling int some of my own sounds. If I have any complaints it’s mostly around the limitation of sounds. There are some interesting synth algorithms and the arpeggiator is cood (the Syntakt doesn’t have this). Sound-wise it’s good but not amazing. I’m comparing it to much more expensive gear though. Given the success of the OP-1 I think it might be that I just don’t prefer the Teenage Engineering sound. It’s more of an IDM vibe and less of a Techno vibe. </p>
+<p>I’m thinking about using the OP-Z as my sampler in a live setup instead of something like the MPC500, since I’m mostly just playing simple vocal samples and chord hits. Looping things back around into the Syntakt lets me add effects and use the LFOs and sequencer on things like the filter applied to the sampler. Pretty interesting concept and doesn’t impact the amount of gear to lug around much.</p>
+    </div>
+    <div class="post-nav">
+      <div><a href="digging-into-the-elektron-syntakt.html">&larr; Digging into the Elektron Syntakt</a></div>
+      <div><a href="running-reaper-in-headless-mode.html">Running Reaper in Headless Mode &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

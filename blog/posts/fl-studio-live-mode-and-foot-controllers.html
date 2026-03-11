@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FL Studio live mode and foot controllers — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; May 2, 2012</div>
+      <h1>FL Studio live mode and foot controllers</h1>
+      <div class="post-tags" style="margin-top:0.75rem"><span class="tag">Live PA</span></div>
+    </div>
+    <div class="post-body">
+<h1>FL Studio live mode and foot controllers</h1>
+<p>I have just installed the new FL Studio 10.5 beta that includes the new live performance mode. This differs from the old live playlist mode completely. The old live mode just mapped the patterns in the old-style playlist to keys on your midi controller. In a previous post I experimented with using the song marker jump features to switch scenes using a foot controller. I’m going to try for a similar effect using the new stuff from FL. The biggest difference is that the playlist markers don’t work like they did before when in live performance mode. The idea of a looping region is gone, now the marker is an implicit trigger group that triggers the first clip on each track in the region. So the key takeaways from playing with the new stuff is that the idea of the first clip on a track vs the following clips is really important. The workflow is very much not timeline based. Clips that are triggered together will play together regardless of how they are positioned on the timeline. Even if they are offset by one beat, as long as they are triggered together they will play in sync. Clicking on a marker will trigger all of the first clips in the region, regardless of where those clips are positioned on the timeline. So don’t think that if the clip isn’t lined up with the marker it won’t play! In the following screenshot, clicking on the Pad#2 marker will trigger both clips simultaneously:</p>
+<p>The clips following the first clip on a track are called sub-clips in FL parlance. These clips can be added to groups but they cannot participate in “marching” which is what FL calls clip-follow mode. Marching is set for the track rather than individual clips, but grouping and markers affect how it operates. This was a confusing bit for me. The manual states that clips in a group will participate in marching but in fact, only the first clips in a region can participate in marching behavior, and after that it is subject to grouping. This is unfortunate since I want to set up fewer markers/regions and then work within those regions during a song. I’m using a foot controller and not a grid controller, so I’m not going to have that many buttons to work with. I can see if you have a controller with 64 or 128 buttons on it you can be liberal with markers. I also haven’t found a way to increment/decrement the region that is active. Maybe it isn’t even accurate to refer to an “active” region anyway, since really they are just trigger groups. After the initial selection of a region, clips can be activated/deactivated manually and then it is mostly meaningless to refer to the region after that. The upshot of the way regions work is a little thing I noticed when triggering a region multiple times. The first time you trigger a region it triggers the first clips. Triggering a region subsequent times triggers the next sub-clip on the track. If there are no sub-clips the first clip is just triggered again. This means that we can build combinatorial permutations of clips by cleverly arranging clips in a region.  In the following screenshot the first time we trigger the Pad#2 region, the first clips will be triggered, but the second time the first clip of the first track will be triggered with the second clips of the second and third tracks. The third time will trigger the first clips of the first two tracks with the third clip of the third track, and so on.</p>
+<p>Update: I realized from re-reading the manual that this cycling behavior is also subject to grouping. What we see here is the result of cycling through the default group. If we group these up different ways we can control the permutations we get, pretty sweet. Alternatively I was considering just creating a lot of regions and just informally grouping them, assigning just the first regions in the group to my pedal switches. See the following screenshot:</p>
+<p>I would assign regions 1-1, 2-1, etc. to my footswitch and the rest of the markers will be for the purposes of marching clips. Of course, these two techniques could be mixed and matched in the same set. There are some other things I’m exploring like trigger modes and live playing but I’ll leave those for another post.</p>
+    </div>
+    <div class="post-nav">
+      <div><a href="sending-osc-from-pd-to-touchosc.html">&larr; Sending OSC from PD to TouchOSC</a></div>
+      <div><a href="live-pa-configuration-with-fl-studio.html">Live PA configuration with FL studio &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

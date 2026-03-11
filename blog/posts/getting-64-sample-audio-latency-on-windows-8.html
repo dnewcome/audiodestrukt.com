@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Getting 64-sample audio latency on Windows 8 — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; December 21, 2012</div>
+      <h1>Getting 64-sample audio latency on Windows 8</h1>
+      
+    </div>
+    <div class="post-body">
+<h1>Getting 64-sample audio latency on Windows 8</h1>
+<p>I recently spent some time setting up a new audio rig with my Presonus Audiobox USB audio interface. I won’t promise that you’ll get the same results I did, but I’ll share what I learned along the way to getting lower latencies with my setup. I’ve written a little bit before about the state of USB audio in Windows. It kind of sucks actually, and it seems to suck a little bit more on Windows 7 than it does in Windows 8, which is kind of convenient, as I’d rather go with the later version of Windows if possible. Note that the dpclat tool gives false readings on Windows 8. This caused me pause for a while since the average reported DPC latency will be very high with respect to Windows 7. However I wasn’t seeing as many problems as I would have expected for this high latency. I found a reference to dpclat being updated for Windows 8 support and that the readings are artificially high due to a change in the way Windows reports the DPC statistics. Check out this Anandtech thread for details. However, the driver situation on Windows is pretty awful when it comes to getting good performance. The way the Windows kernel works is that it serves up time slices to various processes and if everything in the path of your audio data doesn’t get its CPU time before the data in the audio interface can be processed you lose some incoming data, resulting in a loud pop.  Actually, that’s essentially the way all modern operating systems work. However, many legacy hardware devices such as ps2 keyboards are written very inefficiently and there are some power-saving features of ACPI (advanced configuration and power interface) that will really kill performance if they aren’t disabled. The Mac works with USB audio without a hitch out of the box in my limited testing. On Windows the onus is on us to figure out which drivers or devices are killing our performance. This is a tedious process of using LatencyMon to figure out which drivers are taking most of the CPU’s interrupt handling time and deferred procedure calls. These are important because once a driver is in a DPC or is handling an interrupt it cannot be preempted. So if a driver is spending a lot of time handling interrupts, there is a good chance that at some point the audio driver will need CPU time to flush its buffers and not be able to get it because the CPU is servicing non-preemptible requests. So on my system there are a few things that made the biggest difference. These things will probably be different on yours. I have done this process on two different machines with different hardware and had two very different sets of drivers that were misbehaving. In one case “ACPI Compliant Control Method Battery” was a huge culprit. The driver ACPI.sys was scheduling a lot of DPCs according to LatencyMon and I couldn’t figure out what to do about it until I found this post on the NI forums. Once I disabled the ACPI battery device things got a lot better. Speedstep also gave me issues, although this was difficult to track down as LatencyMon doesn’t help here. I noticed in the system performance monitor that the reported CPU speed was changing a lot during some audio dropouts so I tried setting the power saving CUP mode to always force the processor to 100%. In the control panel power plan settings, go to “advanced power settings” then to “Processor power managment” and set “minimum processor state” to 100%. I also disabled USB selective suspend. I also disable all network interfaces. LatencyMon shows that NDIS.sys chews up a lot of resources and when all interfaces are disabled, NDIS is effectively idle. There is also TCPIP.sys and some other related network drivers that seem to do a lot of interrupt handling. I had some issues with the Windows scheduled tasks like the Windows Assessment Tool running suddenly and causing CPU spikes. Check out this link for details on how do disable Winsat in the scheduled tasks console. Surely Windows search service could cause problems, and a probably a host of others. Sometimes heavy graphics loads can cause dropouts. However this seems to vary by system. Directx drivers are usually somewhere near the top of the list in LatencyMon, but I only have problems on one of my systems. Minimizing or maximizing, dragging/dropping actions usually trigger these if they are a problem. Both of my systems have similar Intel graphics hardware, so I’m not sure what the determining factor is here. So to put it in a nutshell, disable ACPI battery and your network adapters and see how far you get. After that set the power plan to 100% CPU all the time and never let anything go to sleep. I’m able to get 64 samples of latency with NI Guitar Rig, which is my magic number for realtime amp simulation. I can deal with 128 samples if I have to, but anything higher I’d rather just use a pedal or external amp for record monitoring and do latency compensation on playback.</p>
+    </div>
+    <div class="post-nav">
+      <div><a href="configuring-raspberry-pi-for-audio.html">&larr; Configuring Raspberry PI for audio</a></div>
+      <div><a href="the-state-of-usb-audio-on-windows.html">The state of USB audio on Windows &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Octatrack re-learnings — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; November 21, 2024</div>
+      <h1>Octatrack re-learnings</h1>
+      <div class="post-tags" style="margin-top:0.75rem"><span class="tag">elektron</span><span class="tag">music</span><span class="tag">octatrack</span><span class="tag">technology</span></div>
+    </div>
+    <div class="post-body">
+<h1>Octatrack re-learnings</h1>
+<p>I’m digging back into using my Octatrack and I’m finding that I have to re-learn a bunch of things about how it works. Saying that it’s a quirky machine is an understatement. There are some guides like Merlin’s OT manual that go into the philosophy of the machine, but I’m writing things here with my own live use in mind.</p>
+<p>I used to think of the OT as a looper. Then I thought of it as a sampler. Then I thought of it as a sequencer. Now I think of it as a performance recorder – sort of.</p>
+<p>Using the OT as a recorder means setting up the recording machines according to the inputs you have connected. This is pretty straightforward but there are some nuances that make it a little weird. The first is that you can’t hear anything you are recording by default until you are playing it back. That is, monitoring is disabled by default. </p>
+<p>There are two ways to fix this. The first is to go to the mixer page and enable direct monitoring. There is a confusingly named knob called “DIR” that sets the direct input level that will be passed through the machine. The second way is using a THRU track. I won’t get into that here but I think that most people that are proficient at the OT have a THRU track somewhere in their setup, sometimes the last track (if they aren’t using it as a master track, which is a whole other thing).</p>
+<p>Once we have monitoring out of the way there are trigger modes for enabling recording. The recorder can be enabled using a special track of triggers on the pattern (separate from the normal trigs that control playback or the trigs that control swing and slide for that matter). These can be edited separately using FUNC+BANK.</p>
+<p>I’m not going to cover trigs here. I’m going to focus on manually recording things. There are three little buttons at the top left of the machine next to the (confusing) headphone volume knob. These three buttons trigger recording manually. There are a few modes. One mode just sets the thing off recording into the wild blue yonder. The default recording length is really long (MAX) unless you set it to some number of trig steps. I like to either set the max length to one bar or use the momentary mode where you have to keep the button held down for as long as the recording lasts.</p>
+<p>There are some tricks for recording to different tracks that I learned here <a href="https://www.youtube.com/watch?v=lniCqGfqBy4">https://www.youtube.com/watch?v=lniCqGfqBy4</a></p>
+<p>One of which is that you can hold the track button T1, T2 etc and hit the record button to trigger that track’s recorder. There are some others too, you should watch his video.</p>
+<p>Other things to note are that you can record while in the sample editor which lets you see the waveform as it’s being recorded which is totally awesome and I didn’t know you could do. Hit AED and then start the recorder and you should see it recording. Then you are already in the editor and you can trigger playback using FUNC+YES (another counter-intuitive trick that works in a lot of places like previewing slots).</p>
+<p>Speaking of slots, I also forget about how this works. Slots are not slices. Slices are not slots. They are separate. Slices are populated from the slicer and slots are loaded manually in the machines (FLEX or STATIC). Note that there are two separate banks of slots that are shared by FLEX and STATIC respectively. So loading a slot in a FLEX machine will load that same sample in all FLEX machines. Same with STATIC. So there are a total of 256 possible slots that can be loaded and they are split between STATIC and FLEX machines separately.</p>
+<p>Confusingly, slices are not shared between machines. A FLEX machine that contains a sliced waveform will have separate slices than another FLEX machine. I think this is because the main sample that is loaded in a FLEX machine is separate from slots (you can play slots and the main sample separately on any FLEX machine but just not at the same time since each track is monophonic).</p>
+<p>Another confusing thing is that loop is enabled by default on FLEX machines, so any short sample that is played like a kick drum in a slot will loop indefinitely until another trig happens on the same track. This can be turned off in a settings page for the machine <a href="https://www.elektronauts.com/t/slices-looping-on-trigger-disable/151650/2">https://www.elektronauts.com/t/slices-looping-on-trigger-disable/151650/2</a></p>
+<p>Ok that covers some main things that I had to re-learn just now. Hope this helps you if you read this far.</p>
+    </div>
+    <div class="post-nav">
+      <div><a href="audio-file-format-conversion.html">&larr; Audio file format conversion</a></div>
+      <div><a href="live-pa-with-just-two-boxes.html">Live PA with just two boxes &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

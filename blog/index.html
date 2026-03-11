@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — Page 1 — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="../index.html#plugin">Plugin</a></li>
+      <li><a href="../index.html#features">Features</a></li>
+      <li><a href="../index.html#download">Download</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="page-title">Blog</div>
+    <ul class="post-list">
+    <li class="post-item">
+      <div class="post-meta">October 5, 2025</div>
+      <div class="post-title"><a href="posts/strings-and-things.html">Strings and things</a></div>
+      <div class="post-excerpt">Strings and things It’s been a while since I put strings on any of my guitars and I keep forgetting my strategy. I have a few stop tailpiece instruments and some floating bridge instruments. Different scale lengths and all of that. I was on a kind of exploratory mission a while back to start putting heavier and heavier strings on…</div>
+      <div class="post-tags"><span class="tag">fiction</span><span class="tag">guitar</span><span class="tag">music</span><span class="tag">reviews</span><span class="tag">writing</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">June 15, 2025</div>
+      <div class="post-title"><a href="posts/impulse-responses.html">Impulse responses</a></div>
+      <div class="post-excerpt">Impulse responses I’m now resigning myself to using IR for a lot of things. I will probably never buy another guitar amp at this point. I might buy some cabinets, but that’s more to explore things and maybe create impulses of the sounds I like. The little pocket guitar pedal that I got can load IRs and so I went…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">June 15, 2025</div>
+      <div class="post-title"><a href="posts/portable-phantom-power.html">Portable phantom power</a></div>
+      <div class="post-excerpt">Portable phantom power I was on a quest for a small phantom-powered mic pre that could be powered by batteries for one of my live rigs. I had a flute and various small instruments to play along with my synths and I wanted to have a single condenser mic set up and running through my effects. I figured this would…</div>
+      <div class="post-tags"><span class="tag">gaming</span><span class="tag">gear</span><span class="tag">music</span><span class="tag">technology</span><span class="tag">travel</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">June 1, 2025</div>
+      <div class="post-title"><a href="posts/live-pa-fx.html">Live PA FX</a></div>
+      <div class="post-excerpt">Live PA FX I’ve recently been buying some of the Joyo guitar pedals. These things came onto the scene a few years ago after many years of DOD/Digitech and Boss/Roland pedal dominance. The guitar pedal market never ceases to fascinate me with so many botique pedal manufacturers popping up all the time and now also many overseas manufacturers jumping into…</div>
+      <div class="post-tags"><span class="tag">bike</span><span class="tag">bikes</span><span class="tag">biking</span><span class="tag">cycling</span><span class="tag">travel</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">May 31, 2025</div>
+      <div class="post-title"><a href="posts/small-midi-controllers.html">Small MIDI controllers</a></div>
+      <div class="post-excerpt">Small MIDI controllers I have been jamming with grooveboxes and synths for years now. I have been doing the DAW-less jams. I’m one of those people sometimes. Sometimes I use Ableton, which is a sane thing to do. I’m not a purist. Most of my synths are desktop modules without a keyboard. I somehow gravitated toward that kind of setup…</div>
+      <div class="post-tags"><span class="tag">gaming</span><span class="tag">music</span><span class="tag">reviews</span><span class="tag">tech</span><span class="tag">technology</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">February 20, 2025</div>
+      <div class="post-title"><a href="posts/sound-libraries.html">Sound libraries</a></div>
+      <div class="post-excerpt">Sound libraries I’m trying to build Seq66 on OSX right now. I figured it would be straightforward since everything is mostly POSIX. Turns out that libasound isn’t really ported to mac. This led me to look into what other libraries are out there right now. http://libsound.io/ I have never heard of libsound. These all have such generic names that it’s…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">January 24, 2025</div>
+      <div class="post-title"><a href="posts/recording-rig.html">Recording rig</a></div>
+      <div class="post-excerpt">Recording rig I have been setting up a new recording rack in my studio. It has been a long time since I did any serious recording so I’m kind of re-learning things like patchbay configuration. I have an old M-Audio ProFire 2626 set up on a SFF PC in this old Grundorf rack case. I’m setting up two mic pres…</div>
+      <div class="post-tags"><span class="tag">audio</span><span class="tag">microphone</span><span class="tag">music</span><span class="tag">open-mic</span><span class="tag">poetry</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">December 19, 2024</div>
+      <div class="post-title"><a href="posts/alternative-education.html">Alternative education</a></div>
+      <div class="post-excerpt">Alternative education
+I’m always looking around for new art and many times I come across fringe art schools or interdisciplinary programs at colleges. When I was in Engineering school there really wasn’t this cross-pollination that there is today. 
+Here is one I just found https://sfpc.study/
+The School for Poetic Computation – a place for learning and unlearning. So great.</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">December 7, 2024</div>
+      <div class="post-title"><a href="posts/algorithmic-composition.html">Algorithmic composition</a></div>
+      <div class="post-excerpt">Algorithmic composition I was thinking back to my days of using PD for random glitchy synth things. I was using Markov chains for doing some random scales. I looked around for some other people doing this and lo did I find this guy http://www.algorithmiccomposer.com/2010/05/algorithmic-composition-tutorial-markov.html Algorithmic Composer has not posted in a while but I will be looking at his back…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">December 7, 2024</div>
+      <div class="post-title"><a href="posts/trackers.html">Trackers</a></div>
+      <div class="post-excerpt">Trackers I’m a fan of trackers. Mostly out of nostalgia now. I never did get much music written back in the day using trackers but I still liked dabbling. FastTracker 2 was a revelation seeing those oscilloscope displays dancing away. There was something I found called GoatStudio that was a simple curses-based tracker. I have been digging into a few…</div>
+      
+    </li>
+    </ul>
+    <div class="pagination">
+      
+      <span class="spacer"></span>
+      <span class="page-info">Page 1 of 17</span>
+      <span class="spacer"></span>
+      <a href="page-2.html">Older &rarr;</a>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

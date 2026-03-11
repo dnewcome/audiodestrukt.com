@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — Page 14 — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="../index.html#plugin">Plugin</a></li>
+      <li><a href="../index.html#features">Features</a></li>
+      <li><a href="../index.html#download">Download</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="page-title">Blog</div>
+    <ul class="post-list">
+    <li class="post-item">
+      <div class="post-meta">May 19, 2012</div>
+      <div class="post-title"><a href="posts/yamaha-cs1x-teardown-and-repair.html">Yamaha CS1x teardown and repair</a></div>
+      <div class="post-excerpt">Yamaha CS1x teardown and repair I had a bad button on my Yamaha CS1x recently and I had to tear it most of the way down in order to fix it, so I took a lot of pictures. I haven’t seen a lot of pics on the Web of this synth, so hopefully these pictures help you out if you…</div>
+      <div class="post-tags"><span class="tag">Repair</span><span class="tag">Teardowns</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">May 5, 2012</div>
+      <div class="post-title"><a href="posts/pedalfighter-button-selection.html">Pedalfighter button selection</a></div>
+      <div class="post-excerpt">Pedalfighter button selection I’m picking up some new parts for the Arduino PedalFighter project that I started a while back. My initial prototype was kind of disappointing due in part to the quality and size of the buttons that I used. I picked up some small 3/8″ buttons from Halted here in Silicon Valley. They were cheap and proved the…</div>
+      <div class="post-tags"><span class="tag">Arcade Buttons</span><span class="tag">Pedal Fighter</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">May 3, 2012</div>
+      <div class="post-title"><a href="posts/arduino-usb-midi-workflow.html">Arduino USB MIDI workflow</a></div>
+      <div class="post-excerpt">Arduino USB MIDI workflow Since I re-flashed my Aruduino with the USB MIDI firmware I had to come up with another way of getting my code uploaded to the board. In case you were wondering, the MIDI firmware replaces the USB serial firmware that the Arduino boot loader normally uses to download code to the board. In the past I…</div>
+      <div class="post-tags"><span class="tag">Arduino</span><span class="tag">MIDI</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">May 2, 2012</div>
+      <div class="post-title"><a href="posts/sending-osc-from-pd-to-touchosc.html">Sending OSC from PD to TouchOSC</a></div>
+      <div class="post-excerpt">Sending OSC from PD to TouchOSC I’m playing around with some TouchOSC control methods currently. I’m running the fantastic Monome TouchOSC emulation and hoping to control my old PD sequencer with it. I had a few issues getting the Hexler basic.pd demo patch to work, and it was a very simple thing in the end. You can grab their pd…</div>
+      <div class="post-tags"><span class="tag">Live PA</span><span class="tag">TouchOSC</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">May 2, 2012</div>
+      <div class="post-title"><a href="posts/fl-studio-live-mode-and-foot-controllers.html">FL Studio live mode and foot controllers</a></div>
+      <div class="post-excerpt">FL Studio live mode and foot controllers I have just installed the new FL Studio 10.5 beta that includes the new live performance mode. This differs from the old live playlist mode completely. The old live mode just mapped the patterns in the old-style playlist to keys on your midi controller. In a previous post I experimented with using the…</div>
+      <div class="post-tags"><span class="tag">Live PA</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">April 29, 2012</div>
+      <div class="post-title"><a href="posts/live-pa-configuration-with-fl-studio.html">Live PA configuration with FL studio</a></div>
+      <div class="post-excerpt">Live PA configuration with FL studio I’m playing around with a few different setups for my upcoming live PA stuff. I’ve been using FL Studio since back in the v1.0 days and I’ve discovered recently that it has a new live mode that is in the upcoming 10.5 beta. However I also wanted to give it a try using the…</div>
+      <div class="post-tags"><span class="tag">Live PA</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">April 29, 2012</div>
+      <div class="post-title"><a href="posts/fcb1010-programming-hints.html">FCB1010 programming hints</a></div>
+      <div class="post-excerpt">FCB1010 programming hints I just wanted to share a few thoughts now that I’ve gone through and programmed the first bank of presets on my new FCB. One of the things that I wanted to do with my foot controller was to play bass lines using my feet. I figured since the switch layout of the FCB was staggered, more…</div>
+      <div class="post-tags"><span class="tag">Live PA</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">April 28, 2012</div>
+      <div class="post-title"><a href="posts/behringer-fcb1010-configuration-notes.html">Behringer FCB1010 configuration notes</a></div>
+      <div class="post-excerpt">Behringer FCB1010 configuration notes I just got an FCB1010 to add to my live rig and I figured I’d be stomping away by now, but apparently I didn’t look into exactly how this pedal was designed before I got it. It turns out that it works entirely differently than I was expecting. At first I was really upset and I…</div>
+      <div class="post-tags"><span class="tag">Live PA</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">April 27, 2012</div>
+      <div class="post-title"><a href="posts/midi-foot-pedal-build-notes.html">Kick Plate MIDI foot pedal build notes</a></div>
+      <div class="post-excerpt">Kick Plate MIDI foot pedal build notes I’m in the middle of getting my prototype Midi foot controller put together so that I can play around with it and practice without worrying about it falling apart in the middle of a session. I’m mounting the Arduino inside a plastic junction box. Check out the following photo: Some issues I ran…</div>
+      <div class="post-tags"><span class="tag">Arduino</span><span class="tag">Kick Plate</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">April 26, 2012</div>
+      <div class="post-title"><a href="posts/load-cell-midi-controller.html">Kick Plate load cell MIDI controller</a></div>
+      <div class="post-excerpt">Kick Plate load cell MIDI controller I’ve been working on a new Midi foot controller concept that uses a pressure-sensitive load cell as the control source. I got the idea for a pressure-sensitive Midi continuous controller from looking at the McMillen stuff and from my Korg NanoPad, which uses resistive pad elements. Sometimes I put the NanoPad on the floor…</div>
+      <div class="post-tags"><span class="tag">Kick Plate</span></div>
+    </li>
+    </ul>
+    <div class="pagination">
+      <a href="page-13.html">&larr; Newer</a>
+      <span class="spacer"></span>
+      <span class="page-info">Page 14 of 17</span>
+      <span class="spacer"></span>
+      <a href="page-15.html">Older &rarr;</a>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

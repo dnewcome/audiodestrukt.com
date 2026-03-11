@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — Page 8 — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="../index.html#plugin">Plugin</a></li>
+      <li><a href="../index.html#features">Features</a></li>
+      <li><a href="../index.html#download">Download</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="page-title">Blog</div>
+    <ul class="post-list">
+    <li class="post-item">
+      <div class="post-meta">December 3, 2023</div>
+      <div class="post-title"><a href="posts/electronic-drums.html">Electronic Drums</a></div>
+      <div class="post-excerpt">Electronic Drums This is really going to be a pseudo-review of the Alesis Strike MultiPad. I need to fold this into a larger context arc of electronic drums for this blog though. I’m a drummer. I’m a decent drummer who cares about kits and sounds and the way things feel. I have built a few acoustic kits at this point…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">May 31, 2023</div>
+      <div class="post-title"><a href="posts/coming-full-circle-with-native-audio-processing.html">Coming full-circle with native audio processing</a></div>
+      <div class="post-excerpt">Coming full-circle with native audio processing I wrote the following in 2012 and just found the draft. Did this come to pass? I think some hardware we are seeing now could be seen as general purpose computers repackaged as single-purpose audio devices. === I’ve been thinking about the divide between using general purpose computing platforms vs using dedicated hardware for…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">January 23, 2023</div>
+      <div class="post-title"><a href="posts/drum-hardware-digging.html">Drum hardware digging</a></div>
+      <div class="post-excerpt">Drum hardware digging I have been interested in drums for a long time. I’ve been playing for years and have had dozens of different setups over that time. In addition there are many setups that I play that don’t belong to me and I have adapted to many different idiosyncratic configurations over the years. That said, I’ve been playing around…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">January 23, 2023</div>
+      <div class="post-title"><a href="posts/guitar-design.html">Guitar design</a></div>
+      <div class="post-excerpt">Guitar design I’ve been making some layouts for a few guitars I have in mind. There are a lot of different concerns that come up when designing the routing templates. I’m using OpenScad for most things, but then the shapes themselves are a more organic process involving Inkscape and hand drawing. A few of my designs have been inspired by…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">December 4, 2022</div>
+      <div class="post-title"><a href="posts/learning-music-theory.html">Learning music theory</a></div>
+      <div class="post-excerpt">Learning music theory This is not really a tech post, but it’s related because music theory is kind of a technical language. Not quite programming language technical but maybe math technical. I’m doing a series of exercises I call 5-minute song drills. I pick a key and chords and write a song. Picking a key consists of me naming the…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">March 15, 2020</div>
+      <div class="post-title"><a href="posts/synth-golf.html">Synth golf</a></div>
+      <div class="post-excerpt">Synth golf I’m revisiting some ideas I had around minimal audio synthesizer circuits. One of the simplest methods of creating an oscillator is using a schmidt trigger oscillator using a 74LS14 inverter. The trick here is to get the oscillation range correct with the RC values. I used a 100uF cap and a 10K potentiometer here. I like to test…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">March 15, 2020</div>
+      <div class="post-title"><a href="posts/cassette-deck-pitch-control.html">Cassette deck pitch control</a></div>
+      <div class="post-excerpt">Cassette deck pitch control I got around to playing with the pitch control circuit on the cheap Amazon cassette recorders. The circuit uses a 500 ohm trimmer and an AN6650 IC speed controller. Most pots I have are in the 10k-500k range so I didn’t have anything close to 500 ohms. I decided it was probably a voltage divider anyway…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">March 4, 2020</div>
+      <div class="post-title"><a href="posts/universal-power-for-synth-gear.html">Universal power for synth gear</a></div>
+      <div class="post-excerpt">Universal power for synth gear I have been playing around with powering all my synths as you would a guitar pedal board by daisy chaining one power supply to all devices. One concern is that standardizing on one voltage would over power some devices and under power others. Also some devices take reverse polarity For daisy chaining I use a…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">February 21, 2020</div>
+      <div class="post-title"><a href="posts/midi-harmonica.html">MIDI harmonica</a></div>
+      <div class="post-excerpt">MIDI harmonica I’ve been thinking about a harmonica-style electronic instrument for a while. This thought grew out of my obsession with foot controllers in the past. I liked the idea of playing bass lines with my feet, which grew to loopers and controlling Ableton, the McMillen SoftStep, Pedal Fighter and other things. I started thinking about the harmonica idea after…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">February 18, 2020</div>
+      <div class="post-title"><a href="posts/finished-cassette-looper.html">Finished cassette looper</a></div>
+      <div class="post-excerpt">Finished cassette looper I got a basic cassette looper put together using the techniques I wrote about earlier. The basic premise revolves around separating the erase head from the engagement of the rest of the record electronics and making each of them momentary so that it’s easy to retry a few times until the loop is just right. The record…</div>
+      
+    </li>
+    </ul>
+    <div class="pagination">
+      <a href="page-7.html">&larr; Newer</a>
+      <span class="spacer"></span>
+      <span class="page-info">Page 8 of 17</span>
+      <span class="spacer"></span>
+      <a href="page-9.html">Older &rarr;</a>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

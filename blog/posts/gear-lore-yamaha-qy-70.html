@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gear lore: Yamaha QY-70 — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; February 26, 2024</div>
+      <h1>Gear lore: Yamaha QY-70</h1>
+      
+    </div>
+    <div class="post-body">
+<h1>Gear lore: Yamaha QY-70</h1>
+<p>I’m playing around a lot more with my live set now. I’m experimenting with streaming on Twitch as well. This all came about after I re-kindled my electronic music muscles with, of all things, the Teenage Engineering OP-Z. In a weird twisted way this all led me back to the OG of my setup, the Octatrack. I call this the OG because the first bit of electronic music gear I bought in my modern music incarnation was the Elektron Machinedrum.</p>
+<p>How did I get here? It all started with an Ensoniq Mirage. It’s an 8-bit sampler and it’s what I had access to when I was younger. I bought it from a friend whose uncle was running a recording studio in Las Vegas. The Mirage kind of changed my life. The bass player in the band I was in was primarily a pianist. He had some keyboards and electric pianos that he got from his uncle over the years. I think he had a suitcase piano and a Korg DW-8000. He had this one semi-weighted keyboard, I can’t remember exactly what it was but it was a digital synth. It wasn’t the DW. I remember holding down the inc/dec buttons to change the filter cutoff of a sound and hearing it sweep through all step-like and glitchy. I was listening to electronic music somewhat. I had bought this bootleg CD of Goa trance. I had this Zoo Rave compilation CD too. I remember some girl at the store I was working at as a teenager mentioning going to a rave. I was so uncool, but I thought raving sounded pretty amazing based on how she described it.</p>
+<p>Somehow I knew I had to have the filter sweep however I could get it. Later on my friend’s uncle gave him an Ensoniq Mirage sampling keyboard. We used it in the band we were in to play Nine Inch Nails songs. I played the keyboard on those songs. I didn’t know how big of an impact this was going to have later in my life. Later on I ended up buying the Mirage from my friend for $250. The Mirage had a two-digit alphanumeric led display. You had to program everything in hexadecimal. It had some buttons and used floppy disks to store data. Since it had no knobs like much of the hardware in the 80s, in order to “sweep” parameters I would hold down the inc/dec button. Later I learned about mapping the  mod wheel, but that’s another story.</p>
+<p>What does this have to do with the QY-70? I’m glad you asked. After my struggles with alphanumeric displays and clicky tactile buttons and no knobs, I mostly moved to using computers to make music. Fruity Loops ruled. I just used that for pretty much everything. Once I got sick of clicking buttons in the step sequencer, I sort of graduated to Ableton. This seemed like some virtuous shift but let’s not fool ourselves – it’s still clicking mouse buttons on stuff to make music for the most part. The only difference is that it felt more serious to draw drum patterns in the piano roll. </p>
+<p>After that I went DAW-less. But I didn’t know about the meme yet. The problem was I didn’t actually have a plan for how that was going to work out. I figured there was plenty out there that could do what I wanted so I bought the Machinedrum. I thought the Machinedrum was cool because someone that came to my Laptop Music Production Workshop meetup had one and his tracks sounded pretty cool. That’s pretty much it. Yes I capitalized it because that was the literal title of the meetup. I ran that for a few years, doing laptop productions and finally I moved to San Francisco and let the South Bay kids run the show.</p>
+<p>The Machinedrum was a talisman of electronic coolness. I wasn’t cool enough for the IDM kids on EM411 back when I was producing Drum and Bass. I honestly didn’t get it. The hipster thing eluded me when I was secluded in suburban Pennsylvania after college. Why would anyone make this stuff that you couldn’t dance to? Oh well. I figured it out eventually. </p>
+<p>The MD was my re-introduction to electronic music production after a long time away making rock music. I formed a new meetup called the Digital Drum Circle. I went into a period of buying random grooveboxes and drum machines. Yes I owned an SP-505. I still own an MC-505… and an MC-303… and… Well at some point DAW-less kind of takes over your life, because a computer can do so much it’s nearly impossible to cover the bases with hardware that just a laptop with Ableton covers. Part of this insistence is actually ignorance and laziness. Of course you can get controllers to control any aspect of Ableton that you could desire. It takes work though. Or patience. Or both. Learning the Ableton Push seemed to be out of my grasp. Mostly due to hubris. Why does it work this way? It’s just software, but it’s hardware. The worst of both worlds.</p>
+<p>The idea of a hardware sequencer brain to run the whole show is sort of at the center of the stage. When I was producing Drum and Bass, DAW-less hadn’t been coined as a phrase yet. We called it Live PA. There was a little site called livepa.org. It was a message board that was relatively low volume but I read it and checked it voraciously back then. I dreamed of the day that I could just rip out any idea I had in real-time with some magic hardware setup that I deftly assembled. Stories of EMU command stations and Yamaha RS7000s abound. Not to mention the venerable MMT-8, which seemed to be the holy grail of LivePA sequencers. I dreamed of a dual laptop setup running two copies of FruityLoops where I used the number pad to jam seamlessly between patterns to adoring fans.</p>
+<p>This led later to my acquisition of numerous Akai MPCs, Roland MCs, an MMT-8, and even an Elektron Octatrack (the holy grail if the internets are to be believed). One of these unholy experiments was the Yamaha QY-70. </p>
+<p>I had this idea that the early days of hardware sequencers had it all figured out. General MIDI compatibility. Why were modern sequencers so limited? Back in the day it was assumed that a successful product would have to have very complete MIDI compliance like sending patch changes and MIDI real-time messages. Recording multiple tracks and everything. So I bought a QY-70.</p>
+<p>The QY was made in a market where MIDI afficianados were more of a composer archetype. The could sight=read sheet music and knew actual theory. They know about time signatures. They might need to change the signature, accelerando! No one in the EDM space is doing that kind of thing. This is before grooveboxes were cool. It’s in the space between the early days of modular synthesis where a series of clocked square waves counted as a sequencer and the modern day of Techno. Real musicians embracing technology!</p>
+<p>Ok so this means that looping a pattern is a fringe use case in something like the QY and that it’s not a given that a pattern that repeats isn’t the cornerstone of the entire user experience. Patterns are relegated to backing tracks, al-la Band in a Box. The defaults don’t even send MIDI from the patterns – they are merely a songwriting tool.</p>
+<p>This brings me to why I’m trying to use it now. The Octatrack, for all its awesome features, is still kind of a groovebox when it comes to sequencing. It’s got a pretty cool MIDI implementation but it’s still hard to play a chord on it. Forget about recording multiple tracks. I had this thought that I could do a freestyle MIDI jam over the patterns playing on the OT and I’d be able to record it with a free-playing MIDI track. Nope. Of course no piece of hardware is free of crippling limitations, no matter how expensive it is. The limitations just change with the trends of the day. QY is bad at looping and patterns, OT is bad at just free-jamming MIDI sequences.</p>
+<p>I’m using the QY to just record freestyle jam stuff that I’m doing over my OT sequences and playing it back verbatim. That’s it. Why did it take so much effort to do this? If only the OT could record a free jam and just play it back on a un-quantized free-playing track that would be totally amazing. But true to form, it takes a mix of modern and ancient technologies to re-create what non-luddites take for granted in their computer software.</p>
+    </div>
+    <div class="post-nav">
+      <div><a href="gear-analysis-alesis-mmt-8.html">&larr; Gear analysis: Alesis MMT-8</a></div>
+      <div><a href="reverse-engineering-the-yamaha-dtx-multi-12.html">Reverse engineering the Yamaha DTX-Multi 12 &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

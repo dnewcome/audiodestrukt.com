@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arduino USB MIDI workflow — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; May 3, 2012</div>
+      <h1>Arduino USB MIDI workflow</h1>
+      <div class="post-tags" style="margin-top:0.75rem"><span class="tag">Arduino</span><span class="tag">MIDI</span></div>
+    </div>
+    <div class="post-body">
+<h1>Arduino USB MIDI workflow</h1>
+<p>Since I re-flashed my Aruduino with the USB MIDI firmware I had to come up with another way of getting my code uploaded to the board. In case you were wondering, the MIDI firmware replaces the USB serial firmware that the Arduino boot loader normally uses to download code to the board. In the past I had been removing the socketed AVR chip from the Arduino and putting into my breadboard, where I had a parallel port programmer rigged up. However swapping the chip out between the programmer and the Arduino was getting to be a real bottleneck, so I had to come up with a better workflow.  The Arduino has an ISP (in system programming) port right on the board, which is mostly compatible with what I was doing with my homebrew programmer, so I decided to stuff everything into a D-Sub head shell so I could program my AVR right on the Arduino board. I went through a few iterations of my programmer in order to finally arrive at a solution that worked with my parallel port. So read down a bit to see what I ended up doing in the end. There are actually two different parallel programmers that I know of. I found this pretty amazing overview of different programmers here. The only one missing there is the ponyprog serial programmer. The programmer that I made is a “bsd” style programmer. It uses 1k resistors on the data and reset lines. That’s all there is to it.  I soldered the 1k resistors directly to the D-sub connector, staggering every other one so that they would be less likely to short out against one another in the shell. I used a bit of cat5 ethernet cabling since I have a lot of it lying around. On the other end I used a DIP IDC (insulation displacement connector) since I’m lazy and I didn’t want to do any more soldering. The cat5 cable is probably at the upper range of wire gauge that will work with an IDC terminator like this, but it worked out. The little pins are probably bent in there though. Once the cable was finished I tried out avrdude, which I had been using in my homebrew breadboard AVR programmer. It wasn’t able to find the AVR device on the Arduino board, so I was kind of concerned that I messed up somewhere. I got out my meter and double-checked everything and it all looked fine, so I tried out another programmer. Uisp seemed to work initially:</p>
+<p>$ sudo uisp -dprog=bsd -dpart=ATmega48 Atmel AVR ATmega48 is found.</p>
+<p>However, as I learned later, this command reports that the device is found regardless of whether it is even connected. I soldered the current-limiting resistors into the headshell. Note that this picture shows 1k resistors, but in the end I dropped these down to 470 ohm resistors to try to get enough current from my parallel port in order to get things working (this didn’t work either, my port is apparently too weak).</p>
+<p>I decided to use an insulation displacement connector for the Arduino side of things. Here you can see different views of that assembly:</p>
+<p>In the end I ended up using a series of inverters as buffers to drive the IO lines between the Arduino and the parallel port. I had a similar set of issues when building my homebrew Arduino circuit. I had 5k resistors there and I was having intermittent issues with the programmer. With the 470 ohm resistors things were working every once in a while, and when they did work I got a different device ID every time. This made me think that I was just not able to sink enough juice to get things working with the AVR device in-circuit on the Arduino board. When the chip was sitting on the breadboard without much else it worked fine. So, I used 2 74ls04 hex inverter ICs for the purpose of sourcing some more power since my parallel port didn’t seem to be up to the task. I used 2 inverters back-to-back in order to form non-inverting buffers. I had a few 74ls07 chips around too, but these are open-collector devices meaning I would have to use a bunch of pull up resistors and I was too lazy to wire that up, so I decided on the hex inverter solution. Since the logic levels were the same (should be 5v, but I didn’t measure my parallel port, and my power supply is actually running at closer to 6v) I didn’t worry too much about not using open-collector devices with pull ups.</p>
+<p>I inserted the buffer circuit inline by cutting my cable in two rather than try to make this a nice finished cable. However, this allows me to make code updates without too much hassle now. I do need to remove the header from the Arduino in order to run the uploaded code (would be nice to have a way to electrically disconnect things. I feel like I should be able to bring reset high to get this to work without disconnecting the cable).</p>
+<p>In the midst of this, I thought briefly about abandoning the MIDI firmware so I could just program the Arduino using the USB connection. I might use a serial interface here like the Monome did so that I can implement better bidirectional data support. I want to eventually put LEDs on the pedals of the Kickplate project and in order to do that I need to send data back to the pedals. I thought about using sysex or maybe just sending a MIDI status message with the proper ID for the pedal in question. That design discussion is for another post though.</p>
+    </div>
+    <div class="post-nav">
+      <div><a href="pedalfighter-button-selection.html">&larr; Pedalfighter button selection</a></div>
+      <div><a href="sending-osc-from-pd-to-touchosc.html">Sending OSC from PD to TouchOSC &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

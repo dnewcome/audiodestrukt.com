@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Music Coding — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; February 1, 2024</div>
+      <h1>Live Music Coding</h1>
+      
+    </div>
+    <div class="post-body">
+<h1>Live Music Coding</h1>
+<p>I’m interested in getting back into live audio coding. I have done a lot of stuff in Pure Data, which might be apparent given the header image on my blog here. I’m not fully sold on dataflow programming languages but they are a fun unique challenge and they look pretty cool up on the screen.</p>
+<p>I’ve been to a few Algorave-style events at Gray Area here in San Francisco over the years. The last one I went to was using Tidal Cycles which apparently is a Haskell-based live coding environment. This got me thinking about SuperCollider and a few other things I’ve been exposed to over the years. This post is sort of a look back and reminder of some of what I’m aware of and what I’ve tried so far.</p>
+<p>Pure Data is the original for me. Back when I started getting into audio production I was pretty interested in the programming side of sound. I wasn’t really doing heavy DSP coding although I was pretty familiar with the concepts as a result of my Electrical Engineering education. Most of what we did in school revolved around RF and antenna stuff and not audio, but all of the concepts are the same, only the frequencies of interest are different. I was interested in modular environments at the time. Reaktor I think had just come out and was called Generator at the time. I think I started using PD before that but I’m a little fuzzy on the timeline. I remember Plogue Bidule and Synthmaker. I can’t recall what order I saw these in but I still got the sense that Pure Data was more mature at the time. Synthmaker was designed to compile to .dll files for use in a DAW I believe. There was another product called Sync Modular which was eventually bought by Native Instruments and became their “core” architecture in Reaktor. Reaktor is organized into high-level and low-level components and the low-level stuff is implemented by the original developer of Sync Modular if my understanding is correct. Sync Modular was a really cool app back then as you could build up DSP concepts out of very granular blocks like Z-1 elements (unit delays) which were right out of the signal processing textbooks I had around. Reaktor had a definite advantage in ease of use and sound quality. I made a few synths that sounded pretty good for very little effort. It’s more like patching together a modular synth. Speaking of which, I messed around with AAS Modular and I really wanted to get my hands on a Nord Modular synth. I never did get one of those. However I did have a Korg Oasys PCI card and eventually was able to get a copy of SynthKit to program the DSPs. That was a really crazy ride. I didn’t really make anything useful in that system as it was really an odd duck. It compiled everything to code for the AD Sharc DSP chips that were on the card. I’ll try to post some screenshots of that stuff at some point.</p>
+<p>So I guess I should mention MAX/MSP also. I did use this a bit as part of Ableton but not until much later I believe. Honorable mention goes to AudioMulch, which did have a patching environment although my recollection is that one didn’t need to necessarily dig into patching much to use it. Another program I remember is Jeskola Buzz, which was a DAW that had a patcher as the basic structure of the entire song being created. It’s not as low-level but I remember a lot of people hacking on DSP blocks for it since the interface and environment was pretty straightforward. VST development was pretty arcane at the time. Side note: one of my favorite modern takes on this is Sunvox. It’s still being updated and is a very nice and fast modular DAW that runs on lots of different platforms. I also recall Logic Audio being really flexible and had its own patching environment. You could pretty much build your own mixing console with whatever sends and returns you wanted and patch VSTs and midi modulators into the chains. I almost forgot about KeyKit, which is developed by a guy at Bell Labs and is a language that also has a GUI component to it. I ended up meeting this guy during my time at Hacker Dojo in Mountain view running the Audiohackers meetup.</p>
+<p>Getting back to the present day, I’m looking into some more modern things not only for audio but for video as well. I’ve discovered a promising environment for windows called Tooll3. It feels a lot like a demoscene tool sort of akin to Werkzeug from Farbrousch. I’m trying to find some alternative to Touchdesigner. These pro tools are a little heavy for what I’m trying to do. Some friends use Davinci Resolve and even Unity for this stuff. I’m looking for an alternative to PD/GEM. I did a project recently with a well-known local San Francisco artist where one of the designers used Grasshopper in Rhino for some of the algorithmic design. That’s another interesting graph programming language. I guess in the industry it would be called “node-based”. Speaking of which, Blender now has its own version of this natively. I used to use something called Sverchok that was a node-based workflow in Blender that was developed as a third-party plugin which does something similar to the Rhino/Grasshopper combo.</p>
+<p>This post was supposed to be about live coding. Ok I got off track a little bit. I’m looking at a few things now and not necessarily node or graph based. The first of which is FoxDot. This is a Python client that connects to SuperCollider to do the audio synthesis. I think a few of these systems work in a similar way where SC is used as the audio backend for a custom notation language built in a different environment and connected using TCP or UDP sockets. I installed this and started playing around with it a little bit. Tidal Cycles is kind of involved to set up and I haven’t gotten around to that yet. Over the years I’ve run across languages like Chuck and Faust. Faust is kind of interesting to me right now because there is a way to target the ESP32 with it. I’ve been using ESP32 boards for some LED lighting projects so maybe I can use them for audio too.</p>
+<p>Whew. I wanted to get all of these different systems written down. That was a lot of random things but hopefully next time I think about this I will refer back to this and it will be useful. Hopefully you find it useful too.</p>
+    </div>
+    <div class="post-nav">
+      <div><a href="strange-loops.html">&larr; Strange Loops</a></div>
+      <div><a href="slicer-plugins.html">Slicer Plugins &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

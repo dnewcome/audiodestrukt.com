@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — Page 10 — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="../index.html#plugin">Plugin</a></li>
+      <li><a href="../index.html#features">Features</a></li>
+      <li><a href="../index.html#download">Download</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="page-title">Blog</div>
+    <ul class="post-list">
+    <li class="post-item">
+      <div class="post-meta">June 23, 2013</div>
+      <div class="post-title"><a href="posts/midi-programming-in-python.html">Midi programming in Python</a></div>
+      <div class="post-excerpt">Midi programming in Python I’ve been playing with different ways to script MIDI I/O over the last year or so. There are a ton of different ways to skin this cat including special-purpose languages like PD and KeyKit. However, it’s nice to be able to do some coding in a more general purpose language if for no other reason that…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">May 21, 2013</div>
+      <div class="post-title"><a href="posts/string-gauge-experimentation.html">String gauge experimentation</a></div>
+      <div class="post-excerpt">String gauge experimentation I’ve been toying with different string gauges again recently. For the last 8 years or so I’ve been using GHS Boomers GBH heavy strings with a 0.012″ first string and plain third string. If you play guitar you probably get what I just said, but if not suffice it to say that string sets are typically sold…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">May 20, 2013</div>
+      <div class="post-title"><a href="posts/metaprogramming-in-pd.html">Metaprogramming in PD</a></div>
+      <div class="post-excerpt">Metaprogramming in PD Metaprogramming is essentially writing code with code. It is a powerful tool used mostly in languages that have macros. But any time we have the ability to alter code at runtime meaprogramming is possible. In PD we have ways of sending object creation messages to a subpatch. These messages are mostly undocumented features of PD, so we…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">April 4, 2013</div>
+      <div class="post-title"><a href="posts/using-the-wii-remote-with-pure-data.html">Using the Wii Remote with Pure Data</a></div>
+      <div class="post-excerpt">Using the Wii Remote with Pure Data After some experimentation with my Texas Instruments Chronos watch I’ve been thinking about picking up an accelerometer-based controller (SixAxis or Wiimote). I just picked up a Wii Remote at a local thrift shop, so now I’m looking at how to use it to control some audio hackery. I know using the Wii controllers…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">March 2, 2013</div>
+      <div class="post-title"><a href="posts/first-look-at-the-microchip-23s17-spi-port-expander.html">First look at the Microchip 23S17 SPI port expander</a></div>
+      <div class="post-excerpt">First look at the Microchip 23S17 SPI port expander I’m looking at some ways to expand my input options on my Arduino projects. I was looking around at some ICs and I noticed that Microchip had some 16 bit port expander chips that worked with SPI and I2C so I ordered some samples. The part that I settled on was…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">March 1, 2013</div>
+      <div class="post-title"><a href="posts/using-the-adafruit-atmega32u4-breakout-board.html">Using the Adafruit Atmega32u4 breakout board</a></div>
+      <div class="post-excerpt">Using the Adafruit Atmega32u4 breakout board I picked up an Atmega breakout board from Adafruit the last time I ordered from them. I haven’t had much of a chance to use it yet other than to blink a “hello world” LED, but I wanted to make a few notes here about it to keep my memory fresh. Hopefully it helps…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">February 15, 2013</div>
+      <div class="post-title"><a href="posts/hacking-the-mcmillen-softstep.html">Hacking the McMillen SoftStep</a></div>
+      <div class="post-excerpt">Hacking the McMillen SoftStep I recently got a SoftStep foot controller from Keith McMillen Instruments and I finally got a chance to play around with the raw data from it in Max/MSP. I won’t go into too much detail here except to note some details about what data you get from this thing and how the sensors on the pads…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">February 6, 2013</div>
+      <div class="post-title"><a href="posts/network-audio-with-netjack-part-ii.html">Network audio with NetJack part II</a></div>
+      <div class="post-excerpt">Network audio with NetJack part II In the last installment I was setting up Jack on different platforms, namely Mac and Windows in preparation for doing some network streaming. Jack was kicking butt locally on both platforms using ASIO and CoreAudio as the case may be. However I hate to be the bearer of bad news – when I went…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">February 4, 2013</div>
+      <div class="post-title"><a href="posts/pure-data-skratchpad.html">Pure Data Skratchpad</a></div>
+      <div class="post-excerpt">Pure Data Skratchpad I just released a first version of a Pure Data patch that I’ve been playing with called Skratchpad. The basic purpose of this patch is to enable manipulation of an audio loop using a turntable and a trigger pad. Lots of DJs are using things like the Novation Dicer to manipulate cue points and trigger samples. I…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">February 4, 2013</div>
+      <div class="post-title"><a href="posts/working-with-vinylcontrol-in-pure-data.html">Working with vinylcontrol~ in Pure Data</a></div>
+      <div class="post-excerpt">Working with vinylcontrol~ in Pure Data In the last post I described how to get the vinylcontrol~ external compiled and installed on a Mac. If you are on Linux there is already a 32 bit binary out there for you, and if you are on Windows, good luck. Seriously though it’s not that bad, just read my tutorial on building…</div>
+      
+    </li>
+    </ul>
+    <div class="pagination">
+      <a href="page-9.html">&larr; Newer</a>
+      <span class="spacer"></span>
+      <span class="page-info">Page 10 of 17</span>
+      <span class="spacer"></span>
+      <a href="page-11.html">Older &rarr;</a>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

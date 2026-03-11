@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MIDI over HTTP with using ALSA and Curl — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; December 4, 2011</div>
+      <h1>MIDI over HTTP with using ALSA and Curl</h1>
+      
+    </div>
+    <div class="post-body">
+<h1>MIDI over HTTP with using ALSA and Curl</h1>
+<p>A few weeks ago, I created a small Node app called Dub Siren to demonstrate playing audio under Node using SDL. My plan was to expand the idea into a more fully-featured sampler. One of the things that I wanted to check out was the audio latency between the time a request was initiated and the time that the sound was played. In order to get a feel for whether the latency was musically tolerable, I decided to rig up my Korg NanoPad so that I could send HTTP requests to the Dub Siren app. I realize that this is a completely unscientific way of measuring the latency, but it mirrors the use case that I care about most, and that is the live realtime performance of the app. I hacked the MIDI-to-HTTP script up in bash using curl. I’m using Ubuntu, which means that the standard MIDI interface is ALSA. I didn’t want to mess with ALSA-OSS compatibility, although that should have let me treat the MIDI controller like a regular file (I think). However, ALSA has a few useful tools for getting MIDI data to standard out. Amidi lets us monitor a connected MIDI device for data. I want to take this data and send it to the Dub Siren app using curl. In order to do this we need to invoke curl for each line of output that we get from amidi. Fortunately the common UNIX xargs tool will let us do just this. To start with, I connected my NanoPad using USB and used amidi to find out the hardware device number that it had been assigned:</p>
+<p>$ amidi -l Dir Device    Name IO  hw:1,0,0  nanoPAD MIDI 1</p>
+<p>Here you can see that the device number is </p>
+<p>hw:1,0,0</p>
+<p>Now we can use this device number to monitor the device, again using amidi:</p>
+<p>$ amidi -d -p hw:1,0,0</p>
+<p>90 26 7F 80 26 40</p>
+<p>The data shown is a single pad hit. All values are shown in hexadecimal. 0x90 is the MIDI command for a note-on, and 0x80 is the command for a note-off. The second number, 0x26 is the note number for the pad that I pressed. The third value is the velocity number.  Data is output to the console continuously until the process is killed. What I need to have happen is for curl to be invoked for each line of this continuous output. This would be tricky since without some help from xargs. Xargs is intended to do things like run a command for each file found by find or to take a list of arguments and put them all on the same line. In short, it processes input and calls a target command with the input as the arguments. Here is the command </p>
+<p>amidi -d -p hw:1,0,0 | xargs -I {} ./midicurl.sh {}</p>
+<p>Where midicurl.sh is a wrapper around curl that parses the arguments and makes the HTTP request:</p>
+<p>tokens=( $1 )</p>
+<h2>since this is a drum sampler for now, we only care about note-on events</h2>
+<p>if [ ${tokens[0]} == "90" ] ; then  	echo $1 	curl "http://localhost:3003/play?note=${tokens[1]}&vel=${tokens[2]}" fi</p>
+<p>I filter out note-off events by checking for MIDI command 90. The only interesting thing here is that all of the arguments get passed from xargs in one string and we have to tokenize them. There should be a way to get xargs to pass them as separate arguments, but I didn’t seem straightforward and I didn’t have the time to figure it out. Now hitting a note on my NanoPad results in an HTTP request to the Dub Siren’s /play method, passing note number and velocity in the query string. Pretty cool. However, the latency is pretty unusable. It is probably ok for the actual siren sample, but not for drum samples. It’s way too slow to play a drum beat live on the pads. What to do? Well, since we are using Node, there is another way to easily pass data that eliminates the overhead of HTTP. That is Websockets. I’ll show the code for using Websockets via Socket.IO in the next post.</p>
+    </div>
+    <div class="post-nav">
+      <div><a href="midi-over-websockets-with-socket-io.html">&larr; MIDI over Websockets with Socket.IO</a></div>
+      <div><a href="sdl-audio-in-node-js.html">SDL audio in Node.js &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

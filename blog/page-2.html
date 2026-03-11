@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — Page 2 — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="../index.html#plugin">Plugin</a></li>
+      <li><a href="../index.html#features">Features</a></li>
+      <li><a href="../index.html#download">Download</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="page-title">Blog</div>
+    <ul class="post-list">
+    <li class="post-item">
+      <div class="post-meta">December 1, 2024</div>
+      <div class="post-title"><a href="posts/some-thoughts-on-the-ableton-move.html">Some thoughts on the Ableton Move</a></div>
+      <div class="post-excerpt">Some thoughts on the Ableton Move I’ve been using the Move in various situations over the last week. I have traveled with it and used it in my studio. Battery: this thing charges a little bit slowly for my taste. I can’t imagine that the battery is really all that big. I’m using a 60w charger so I know it’s…</div>
+      <div class="post-tags"><span class="tag">diy</span><span class="tag">music</span><span class="tag">review</span><span class="tag">reviews</span><span class="tag">technology</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">November 30, 2024</div>
+      <div class="post-title"><a href="posts/little-sound-dj.html">Little Sound DJ</a></div>
+      <div class="post-excerpt">Little Sound DJ I was pretty intrigued by this a few years ago and then again when Trash80 released the Dirtywave M8. I have a Nintendo DS that I have had forever to play Mario Kart on with my wife while sitting on the couch (we each have one). In order to load ROMs on the NDS I have a…</div>
+      
+    </li>    <li class="post-item">
+      <div class="post-meta">November 27, 2024</div>
+      <div class="post-title"><a href="posts/ableton-note-is-great.html">Ableton Note is great</a></div>
+      <div class="post-excerpt">Ableton Note is great Before I bought the Ableton Move I was looking at reviews that mentioned that it might share some code with the iOS app, Ableton Note. I was intrigued so I bought the app for $8.99. After playing around with it a while I think it’s amazing. Initially I thought it was cool but limited. It’s only…</div>
+      <div class="post-tags"><span class="tag">ableton</span><span class="tag">electronic-music</span><span class="tag">music</span><span class="tag">music-production</span><span class="tag">technology</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">November 23, 2024</div>
+      <div class="post-title"><a href="posts/moog-slim-phatty.html">Moog Slim Phatty</a></div>
+      <div class="post-excerpt">Moog Slim Phatty I’m still digging though my analog synth collection and just writing some notes. I have owned the Slim Phatty for a few years now. I went through a period of buying synths on Craigslist for a while an this is one that I picked up here in San Francisco. I wanted a Moog synth for a while…</div>
+      <div class="post-tags"><span class="tag">moog</span><span class="tag">music</span><span class="tag">new-music</span><span class="tag">reviews</span><span class="tag">synth</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">November 23, 2024</div>
+      <div class="post-title"><a href="posts/dsi-tetr4-synth.html">DSI Tetr4 synth</a></div>
+      <div class="post-excerpt">DSI Tetr4 synth I’m digging through my analog synths right now and taking stock of stuff. I have a bunch of boxes that I bought four tabletop/live pa use. I’m getting kind of philosophical about the things that I own right now and trying to find the reasons that I should have them. I don’t generally sell anything. I usually…</div>
+      <div class="post-tags"><span class="tag">music</span><span class="tag">new-music</span><span class="tag">reviews</span><span class="tag">synth</span><span class="tag">synthesizer</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">November 22, 2024</div>
+      <div class="post-title"><a href="posts/octatrack-midi-multi.html">Octatrack MIDI multi</a></div>
+      <div class="post-excerpt">Octatrack MIDI multi I’m still jamming on my Octatrack today. I hooked up my Waldorf Blofeld to the mix. Same kind of setup where I have MIDI going out of the OT and into the Blofeld. I chose the Blofeld for this experiment because it’s 16 part multitimbral and I can trigger a few different sounds at once from different…</div>
+      <div class="post-tags"><span class="tag">audio</span><span class="tag">MIDI</span><span class="tag">music</span><span class="tag">music-production</span><span class="tag">reviews</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">November 21, 2024</div>
+      <div class="post-title"><a href="posts/octatrack-as-an-arpeggiator.html">Octatrack as an arpeggiator</a></div>
+      <div class="post-excerpt">Octatrack as an arpeggiator I was digging through Octatrack settings and realized that the “plays free” feature is pretty useful as an arpeggiator. I never used this feature much and thought it was more for people who did ambient music to just fire off something that plays for like a half hour. There are some things that make it pretty…</div>
+      <div class="post-tags"><span class="tag">music</span><span class="tag">new-music</span><span class="tag">review</span><span class="tag">reviews</span><span class="tag">synthesizer</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">November 21, 2024</div>
+      <div class="post-title"><a href="posts/audio-file-format-conversion.html">Audio file format conversion</a></div>
+      <div class="post-excerpt">Audio file format conversion I’m digging through some AKAI format sample CDs that I have in my collection. I converted some things in the past but I’m getting back into the process now. I don’t think I ever wrote anything down before so it feels like I’m starting over now. The CDs are image files of varying formats. Some are…</div>
+      <div class="post-tags"><span class="tag">free</span><span class="tag">mac</span><span class="tag">python</span><span class="tag">software</span><span class="tag">technology</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">November 21, 2024</div>
+      <div class="post-title"><a href="posts/octatrack-re-learnings.html">Octatrack re-learnings</a></div>
+      <div class="post-excerpt">Octatrack re-learnings I’m digging back into using my Octatrack and I’m finding that I have to re-learn a bunch of things about how it works. Saying that it’s a quirky machine is an understatement. There are some guides like Merlin’s OT manual that go into the philosophy of the machine, but I’m writing things here with my own live use…</div>
+      <div class="post-tags"><span class="tag">elektron</span><span class="tag">music</span><span class="tag">octatrack</span><span class="tag">technology</span></div>
+    </li>    <li class="post-item">
+      <div class="post-meta">November 21, 2024</div>
+      <div class="post-title"><a href="posts/live-pa-with-just-two-boxes.html">Live PA with just two boxes</a></div>
+      <div class="post-excerpt">Live PA with just two boxes I’m calling DAWless Live PA from now on. That’s what it used to be called and I was on livepa.org way back. It’s funny how things progressed. It’s great actually, it’s no longer a fringe thing and honestly everyone’s game really improved. Back then it was people with a bunch of keyboards on a…</div>
+      
+    </li>
+    </ul>
+    <div class="pagination">
+      <a href="index.html">&larr; Newer</a>
+      <span class="spacer"></span>
+      <span class="page-info">Page 2 of 17</span>
+      <span class="spacer"></span>
+      <a href="page-3.html">Older &rarr;</a>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

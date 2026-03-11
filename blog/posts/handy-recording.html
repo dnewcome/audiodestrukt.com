@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Handy Recording — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; January 26, 2024</div>
+      <h1>Handy Recording</h1>
+      
+    </div>
+    <div class="post-body">
+<h1>Handy Recording</h1>
+<p>I recently bought an all-in-one handheld recorder with built in x/y mics and several mic preamp inputs. The device I ended up with is the Zoom H6. I’d been thinking about buying something like this on and off for years as friends would set up their Zoom H4 recorders to capture jams and messing around in the studio. Someone else always seemed to have one so I never ended up buying one back in those days.</p>
+<p>I recently started going back to my rehearsal space here in San Francisco. I’ve held on to this room for years now and took over the lease from my friend when he wanted to leave after the COVID pandemic. I’m planning on doing a recording project with the mics and preamps that I have available but I wanted to do some quick tests to figure out which mics I wanted to use where and get some basic recording setups worked out so I could just get in there and set things up once I knew how things were going to sound.</p>
+<p>Some things about having the handy recorder that I did not expect. </p>
+<p>1 – I never take the SD card out of it. I just bring it back and forth between home and the studio. It’s really nice to just grab the thing and take it to listen back to something rather than copying files or even taking out the card.</p>
+<p>2 – Using the x/y mic along with one other external mic is something I do all the time now. I’ll use the x/y to pick up my acoustic guitar or even as the drum overheads (a little less convenient since you have to balance it up on a boom stand).</p>
+<p>3 – Having 4 real mic inputs is great. The H4 only has 2 and I figured that would be enough generally. I only got the H6 because I found it for almost the same price and it’s much newer than the H4. However, doing a full drum kit becomes possible this way and even doing mic shootouts with 3 or 4 mics is kind of nice to be able to do easily.</p>
+<p>4 – The immediacy of being able to just do quick high quality recordings as “proofs” to sanity check mic placements or selection is amazing. The difference between even just opening up the DAW and getting the multichannel audio interface set up on the right channels to record vs just plugging some mics directly into the H6 is surprisingly significant.</p>
+<p>5 – Running on batteries is amazing. It’s crazy how much friction finding a power outlet is and how freeing not having to find a wall wart is.</p>
+<p>6 – Even if not recording, it’s great to have a headphone monitoring system that can handle multiple mics with phantom power and can sit on a music stand right in front of you.</p>
+<p>There are some downsides as well.</p>
+<p>1 – Playback controls are limited. Changing the volume on individual tracks requires some fidgeting and menu diving. Mute/unmute is very quick though.</p>
+<p>2 – Volume control is slow to use and awkward. Many times I will want to reflexively turn the volume down because I think some source might be loud. Instead of just riding a volume knob you have to click and hold and wait for the volume to change digitally.</p>
+<p>3 – There’s kind of a medusa effect going on when using more than 2 mics and there are cables coming out of both sides of the device. It always seems like the cables are in the way of the x/y mics or are running off of the table in a sketchy way.</p>
+<p>That’s all I can think of right now. I do think this is a game changer for me though. It’s kind of like the audio recording equivalent of playing with a metronome (it has one of those too!). You know you should be playing to a click but unless you have an easy to use metronome with you, it never happens. By the same token, recording and listening back is an essential practice activity that I practically never do because it’s not quick enough to set up anything more sophisticated than my phone and the voice memo app. The Zoom is as easy as using the phone but sounds so much more inspiring.</p>
+<p>This leads me to wonder if it would be good to look into one of the Zoom multitrack recorders like the R8. I used to have a Tascam 4 track that was so fun to use since it was so simple. It was always ready to go (as long as there was a tape in it!). I kind of miss that immediacy and the old 4-tracks didn’t have balanced mic inputs like the more modern digital units do.</p>
+    </div>
+    <div class="post-nav">
+      <div><a href="overview-of-free-midi-editors.html">&larr; Overview of free MIDI editors</a></div>
+      <div><a href="vr-xr-audio.html">VR/XR Audio &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

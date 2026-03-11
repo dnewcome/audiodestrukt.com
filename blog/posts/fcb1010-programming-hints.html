@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FCB1010 programming hints — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; April 29, 2012</div>
+      <h1>FCB1010 programming hints</h1>
+      <div class="post-tags" style="margin-top:0.75rem"><span class="tag">Live PA</span></div>
+    </div>
+    <div class="post-body">
+<h1>FCB1010 programming hints</h1>
+<p>I just wanted to share a few thoughts now that I’ve gone through and programmed the first bank of presets on my new FCB. One of the things that I wanted to do with my foot controller was to play bass lines using my feet. I figured since the switch layout of the FCB was staggered, more or less like a piano keyboard, that this would be a natural thing to do with it. If you saw my last post you’d know that nothing about this pedal board has been what I was expecting. Getting this initial bank set up was no exception. From the factory, every preset sends a Midi program change message and has the 2 expression pedals activated. I wanted my patches to send just a note event and not a program change so for each of the presets I set up I disabled the PC message and added the note message. I left the expression pedals set up as they were. As a side note, having the expression pedals part of the patch configuration is kind of a pain in this case since if I ever want to send a different CC message I have to go through each of the presets and change it individually. There is also the possibility that one of the presets will get accidentally configured to send the wrong CC message for the expression pedals. Ok so what I want to go into here is the basic concept behind programming this thing. The manual give you these excruciating step-by-step instructions for the different types of messages but never explains the overall concept behind programming the thing. Of course, you would figure it out after you’d gone through the process a few times, but for those of you that are thinking about buying one of these and don’t have one in front of you my explanation could be pretty helpful in grokking just what this thing is all about. There are really only two modes that the pedal board can be in — patch select or edit mode. There are two different patch select modes, but that doesn’t matter for our discussion here. If the pedal is in patch select mode there is an active or currently selected patch. When we enter edit mode, this is the patch that we will be editing. Edit mode is entered by holding down the “down” foot switch for 2.5 seconds. In edit mode, the very first “screen” is the external switch jack configuration. This is not part of my setup, and unless you are controlling a guitar amp that has a channel selector switch that you want to use, you’ll skip this configuration step every time. Hitting the “up” foot switch will put us into the main pedal configuration step. In this step the LED above each switch will be solid on or off depending on whether that particular function is enabled. Holding the switch down will turn the function on or off. Hitting the switch again enters the configuration step for that function. Reading back up through this description is making me think that I’m not explaining this stuff much better than the manual. The main thing to understand is that once the main configuration step is reached, the LEDs give you a bird’s-eye view of what is configured for that preset. All of the labels on the switches should make a lot more sense when you think of things this way. In order to get my Midi keyboard bank working, I went through the first 10 presets and disabled the PC message and added a note message corresponding to the note that I wanted to send. I started with note F3 for the first foot switch. One thing to notice is that the Midi note function is designed to also send a CC message along with the note-on message sometimes. In my tests this message gets sent irregularly, and on note-off rather than note-on like the manual suggests. This may be a firmware bug that is fixed in the UnO firmware, but I’m not sure. In any case it is relatively harmless, but is annoying to me nonetheless.</p>
+    </div>
+    <div class="post-nav">
+      <div><a href="live-pa-configuration-with-fl-studio.html">&larr; Live PA configuration with FL studio</a></div>
+      <div><a href="behringer-fcb1010-configuration-notes.html">Behringer FCB1010 configuration notes &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

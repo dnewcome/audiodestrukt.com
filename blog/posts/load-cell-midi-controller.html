@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kick Plate load cell MIDI controller — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; April 26, 2012</div>
+      <h1>Kick Plate load cell MIDI controller</h1>
+      <div class="post-tags" style="margin-top:0.75rem"><span class="tag">Kick Plate</span></div>
+    </div>
+    <div class="post-body">
+<h1>Kick Plate load cell MIDI controller</h1>
+<p>I’ve been working on a new Midi foot controller concept that uses a pressure-sensitive load cell as the control source. I got the idea for a pressure-sensitive Midi continuous controller from looking at the McMillen stuff and from my Korg NanoPad, which uses resistive pad elements. Sometimes I put the NanoPad on the floor to use with my feet, but it’s just too fragile to use with shoes on. My requirements were extreme durability, reasonable sensitivity, and low cost. I want to experiment a lot with different foot control setups in my new live PA set, so this should give me a lot to work with. Since you know I love building things out of steel junction boxes, I thought I’d start there for the enclosure. The actual resistive element is going to be a chunk of anti-static foam that ICs come packaged in. I have lots of this stuff lying around, and even if I didn’t I could probably get plenty of it for free by asking around. So this satisfies the cost requirement and the durability requirement right there.  The theory of operation is that the conductive foam will be sandwiched between two steel plates. The plates will be squeezed together by foot pressure and the resistance provided between the two plates via the conductive foam should vary in some inverse proportionality to the displacement of the top plate, and hence the amount of foot pressure. Now let’s build one and see about how well it performs. What I’m showing here is a prototype, held together with rubber bands, but the final version should be pretty similar, albeit epoxied together instead. I cut some bits of foam weather stripping material and applied it to the edges of a steel junction box cover. I also put some big rubber feet on the bottom of this bottom plate.</p>
+<p>After the weather stripping was applied I put the conductive foam piece in the center. I didn’t glue it so that I could experiment with different foam configurations. I’m planning on tacking the corners using epoxy for the final build.</p>
+<p>I put the top plate on and connected wires to the top and bottom plates. For the final build I’ll use adhesive to bond the foam to both plates. For now I’ve used rubber bands to hold the top plate in place.</p>
+<p>Now to find out how well it works. My test setup consists of a postal scale and a digital multimeter. I have the load cell connected in a resistive voltage divider network along with a 10K resistor. Loading the cell pulls the output up toward a 5V supply. Here is what the test setup looks like:</p>
+<p>I took a few measurements to see what the response curve looked like. The values jump around a bit even with very constant pressures, so these readings are kind of rough averages of what I was seeing on the DMM. The load numbers are pretty accurate, since I was taking those readings from the postal scale. Here is the graph:</p>
+<p>So we can see that once we get up to about 5 pounds, the response is remarkably linear. This is pretty awesome actually because we can set up a trigger threshold in software for a trigger mode that I have in mind for this. A relatively light push on the pedal will trigger an event, but a harder push past that can send continuous control messages. Here are some more views of the prototype:</p>
+<p>More to come later when I interface this to an Arduino ADC and get it sending Midi data.</p>
+    </div>
+    <div class="post-nav">
+      <div><a href="midi-foot-pedal-build-notes.html">&larr; Kick Plate MIDI foot pedal build notes</a></div>
+      <div><a href="alesis-dual-zone-snare-trigger-teardown.html">Alesis dual zone snare trigger teardown &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

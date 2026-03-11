@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developing DSSI plugins — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; May 23, 2012</div>
+      <h1>Developing DSSI plugins</h1>
+      
+    </div>
+    <div class="post-body">
+<h1>Developing DSSI plugins</h1>
+<p>I was looking around for a sampler instrument on Linux to test my Pedal Fighter project with, and while I remembered Specimen from a while ago, I remembered that there weren’t many samplers out there apart from the Linux Sampler project (which I’ve had problems with in the past – way too complicated for quick setups). I dip my toes into the Linux audio development world every now and then, so I figured I’d take a look at the current state-of-the-art for Linux instrument plugins, DSSI (dizzy). DSSI is basically VSTi for Linux, or LADSPA for instruments depending on your viewpoint. It is a spec that we can conform with to enable our code to be hosted in different programs such as Ardour. I grabbed the DSSI development kit and compiled it. I had to grab the LADSPA SDK using APT (I’m using Ubuntu)</p>
+<p>$ sudo apt-get install ladspa-sdk</p>
+<p>After this I could build the sources using configure/make. However in order to get the reference Jack host to work we’ll need the libjack development package which includes the headers.</p>
+<p>$ sudo apt-get install libjack-dev</p>
+<p>There are some other dependencies that I already had installed, but are worth mentioning. Liblo is the Lightweight OSC library. I started looking through the code and the host looked to complicated to start with (the reference jack-dssi-host is 2000 lines or so) so I started with trivial_synth.c under examples/. I looked around for an entry point. I noticed the following:</p>
+<p>#ifdef <strong>GNUC</strong> <strong>attribute</strong>((constructor)) void init() #else void _init() #endif</p>
+<p>_init(), is part of dlopen, which is used to load dynamic libraries at runtime. The init function constructs the plugin descriptors according to the LADSPA and DSSI specs.  The following function is specified in the LADSPA spec, and returns the descriptor when called.</p>
+<p>const LADSPA<em>Descriptor *ladspa</em>descriptor(unsigned long index) {     switch (index) {     case 0:     return tsLDescriptor;     default:     return NULL;     } }</p>
+<p>The descriptor is where we specify the functions we want to use as callbacks for things like processing the chunk of audio or defining input and output ports. The only thing further to understand is that the GUIs are separate standalone programs that communicate with the running plugin using OSC. You can start the GUI separately from the plugin and kill the GUI without affecting the execution of the plugin. I had some problems getting the GUIs for the sample projects to show up when running the reference Jack host though. In order to get things working I had to actually install everything on my system using</p>
+<p>$ sudo make install</p>
+<p>The commandline options for running a GUI are kind of cryptic so here is what the GUI command looks like when it runs automatically from the Jack reference host:</p>
+<p>$ /usr/local/lib/dssi/trivial<em>sampler/trivial</em>sampler<em>qt osc.udp://X200:12034/dssi/trivial</em>sampler/stereo<em>sampler/chan00 trivial</em>sampler.so stereo_sampler channel 0</p>
+<p>It looks like the GUIs are installed alongside the plugins using a folder structure that follows the naming convention of the shared object file. I’ll write some more once I’ve done some actual coding on a new plugin.</p>
+    </div>
+    <div class="post-nav">
+      <div><a href="meeblip-open-source-synth.html">&larr; Meeblip open source synth</a></div>
+      <div><a href="pedal-fighter-first-play-test.html">Pedal Fighter first play test &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arduino Pedal Fighter project — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; January 20, 2012</div>
+      <h1>Arduino Pedal Fighter project</h1>
+      <div class="post-tags" style="margin-top:0.75rem"><span class="tag">Arduino</span><span class="tag">Pedal Fighter</span></div>
+    </div>
+    <div class="post-body">
+<h1>Arduino Pedal Fighter project</h1>
+<p>I’m looking into building a MIDI foot controller that works something like the MIDI Fighter but for your feet. The idea is to use momentary arcade-style buttons just like the MIDI Fighter. There are a few problems with doing that though. One is that the arcade buttons are not very low profile. They are designed to be installed into 3/4″-1″ particleboard arcade cabinets. This makes them pretty deep to use for a foot controller. There are some lower profile versions but they seem to be kind of expensive. I’m starting with a cheap prototype using 1/8″ MDF and furring strips. The pushbuttons are general purpose round pushbuttons that are similar to arcade buttons but smaller in diameter. I picked these up locally at HSC. Pull up resistors One snag that I ran into when dealing with the Firmata firmware was that by default they don’t enable the Arduino’s internal pull up resistors. The Arduino has internal 20k resistors that are use to keep the inputs from floating. If these aren’t enabled, and no external pull ups are used, the inputs will be unpredictable. I thought that the Firmata demos would enable the pull ups but the apparently don’t. To test my pedal design I used the SimpleDigitalFirmata sketch that is included with the Arduino IDE. I modified the code slightly so that pull ups would be enabled.</p>
+<p>void setPinModeCallback(byte pin, int mode) {     if (IS<em>PIN</em>DIGITAL(pin)) {         pinMode(PIN<em>TO</em>DIGITAL(pin), mode);         // added the follwing call to digitalWrite          digitalWrite(pin, HIGH);     } }</p>
+<p>For some documentation on digitalWrite and enabling the internal pull up resistors see this page. Once I did this, the buttons worked without external pull ups. Construction I built the enclosure as cheaply as possible. Total cost of the materials was under 5USD if you don’t count the screws. I bought a 100 count box of wood screws that set me back 3.50USD but I only used 6 screws. My thinking on the enclosure is that I’m going to cut it up and experiment with different button placements before I do the final design. Using cheap materials such as particle board lets me drill holes easily and throw away entire iterations on the design without worrying too much about it. The basic design is a flat panel supported on the front and back by wooden strips. The furring strip that I bought was 3/4″ x 1″ or so, so I decided to lay the wood down on the front and stand it up on the back to create a slightly angled panel. </p>
+<p>I drilled out the panel using a 5/8″ wood boring bit. These are much cheaper than metal bits and other types of tungsten carbide goodness. A 5/8″ bit at Home Depot was a 17USD investment if I remember correctly. When I fabricate this in metal, I’m going to go broke buying drill bits! More seriously, drilling MDF is very quick, but it pays to go slowly since the material will chip and tear on the backside when the bit punches through. Drilling against a bit of scrap wood helps too.</p>
+<p>Some of my holes ended up kind of messy because I got impatient after drilling a few of the holes.  I decided on a layout that should provide ample room for a normal adult-sized shoe to fit between the buttons. However the way that the top row is positioned, the foot will not fit fully between the lower row, so the user will have to use his toe. I’m still not sure about the spacing, but I’m pretty sure that I want to use an offset top row to mimic the layout of a chromatic piano keyboard. I only bought 6 buttons, but the final version should have a full octave of buttons. Or perhaps an octave plus one. The only problem with an extra button is that ganging more than one unit together is more awkward that way. Maybe that is a problem for later on. Once I drilled the holes, I fit the push buttons into the holes and soldered up a wiring harness. The following picture shows what I ended up with:</p>
+<p>Note that I could only find a dual row header. I should have used a single row header. Also of note – soldering to the header is very quick and easy. Don’t keep the soldering iron on the header for longer than a split second, otherwise the header pin will melt the plastic and it will get loose or fall out of the plastic carrier. This happened to me, and I’m going to have to redo the header work because of it. A few things about this prototyping method. I made the mistake of doing the wiring using a ground bus – connecting the individual buttons to one another rather than using a star wiring configuration. In a finished design it makes sense to wire things this way to save wire and effort. However, it occurred to me that I can’t actually pull a button out of its hole because of the way I did the wiring. I’m going to have to desolder the button in order to do this. Better to put each button on its own header I guess. The pedalboard so far looks like this:</p>
+<p>Post-build notes I haven’t really finished this. It is a prototype of a larger work in progress. However I can say that there are a few things I learned about developing enclosures using thin MDF. The MDF is really easy to cut and work with. It is a little bit fragile to drill, but with a little care it is fine, you just have to go slowly. However, it is not as rigid as plywood or metal. When I use normal foot force on this pedalboard it flexes noticeably. I think that this could be prevented by putting a bottom on the pedal or by putting sides/braces underneath the top panel. The current design is good enough for me to validate the design however, and that was the point of this exercise.</p>
+    </div>
+    <div class="post-nav">
+      <div><a href="pedalfighter-pure-data-patch.html">&larr; Pedal Fighter Pure Data patch</a></div>
+      <div><a href="tube-circuit-experiments.html">Tube circuit experiments &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>

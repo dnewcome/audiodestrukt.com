@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barebones Arduino — AudioDestrukt</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --accent: #c8ff00;
+      --accent2: #ff3c00;
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+    nav ul li a.active { color: var(--accent); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .page-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* POST LIST */
+    .post-list { list-style: none; }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .post-item:first-child { padding-top: 0; }
+
+    .post-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .post-title a { color: #fff; }
+    .post-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      font-size: 0.8rem;
+    }
+
+    .pagination a {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .pagination a:hover { border-color: var(--text); text-decoration: none; }
+    .pagination .page-info { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; }
+    .pagination .spacer { flex: 1; }
+
+    /* SINGLE POST */
+    .post-header { margin-bottom: 3rem; }
+
+    .post-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-body { font-size: 0.92rem; }
+
+    .post-body h1, .post-body h2, .post-body h3 {
+      color: #fff;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .post-body h1 { font-size: 1.4rem; }
+    .post-body h2 { font-size: 1.2rem; }
+    .post-body h3 { font-size: 1rem; }
+
+    .post-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .post-body a { color: var(--accent); }
+
+    .post-body strong { color: var(--text); }
+
+    .post-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      gap: 1rem;
+    }
+
+    .post-nav a {
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-nav a:hover { color: var(--text); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-header h1 { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+  <nav>
+    <a href="posts/../index.html" class="logo">audio<span>destrukt</span></a>
+    <ul>
+      <li><a href="posts/../index.html#plugin">Plugin</a></li>
+      <li><a href="posts/../index.html#features">Features</a></li>
+      <li><a href="posts/../index.html#download">Download</a></li>
+      <li><a href="posts/../index.html#about">About</a></li>
+      <li><a href="posts/index.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div class="post-header">
+      <div class="post-meta"><a href="../index.html">Blog</a> &mdash; November 16, 2011</div>
+      <h1>Barebones Arduino</h1>
+      
+    </div>
+    <div class="post-body">
+<h1>Barebones Arduino</h1>
+<p>While waiting for my Arduino Uno to show up, I thought I’d explore the Arduino ecosystem a little bit. I had an Atmega48 chip lying around and I wondered if I could get it working to play around with AVR development in the meantime to familiarize myself with things a bit. After some research, I found that I should be able to get some Arduino stuff working on it without a full Arduino board. It is helpful to know what Arduino actually is. Roughly, it is a C API that is modeled after Processing. The toolchain uses gcc-avr and links to a small libc for AVR microcontrollers. The IDE is set up to make this toolchain integrated and easy to use. The Arduino stack uses a bootloader to make things work more smoothly with USB serial, but as I found out it is not necessary to use a booloader to run Arduino programs (or “sketches” as they are called). The ability to run without a bootloader turned out to be key since there is no Arduino bootloader that works as-is with the Atmega48 chip. Although I’ve seen in the forums that others have hacked it to work with some simple changes to the code, I decided to go without it, and in hindsight I’m glad I did since it would have been a lot of extra effort to compile a custom version of the bootloader, and since the 48 chip only has 4k of flash, the bootloader would have taken up valuable storage space (the Arduino runtime takes quite a bit of that space – a simple LED blinking program consumes about 2.5k). The only hardware required to get things working was the Atmega chip itself, a parallel printer cable and some 1k resistors. Really, that is it. The Atmega chip has an onboard oscillator so no crystal is necessary at all and no other hardware is actually required to program the chip, and the programs are self-contained, so they can be uploaded to the chip using the parallel port. In most of the examples out there on the net, the parallel programmer is only used to get the bootloader onto the device, but the same technique can be used to upload the actual code as well. I soldered a cable up using a DB25 connector that I had lying around, but for many of you it might be easier to take a regular parallel printer cable and just cut the printer end off and strip the needed wires at the end. I used this pinout for my cable, and the avrdude programmer utility to program the chip. I was using Ubuntu Linux, so avrdude was available using apt-get:</p>
+<h1>apt-get install avrdude</h1>
+<p>Once the cable was plugged into the parallel port (I’m using an old laptop for this, I think it will work with USB parallel port converters too, but I haven’t tried it) I used the following command to check connectivity to the Atmega chip:</p>
+<h1>avrdude -p m48 -c bsd</h1>
+<p>Note that this has to be run as root or some user that has access to /dev/parport0. Running this command should give you the chip configuration (the fuse settings):</p>
+<p>avrdude: AVR device initialized and ready to accept instructions</p>
+<p>Reading | ################################################## | 100% 0.00s</p>
+<p>avrdude: Device signature = 0x1e9205</p>
+<p>avrdude: safemode: Fuses OK</p>
+<p>avrdude done.  Thank you.</p>
+<p>This was the first step. The next step is to compile .hex files that can be uploaded to the chip. The easiest way to do this is with the Arduino IDE. I’ll cover that in the next post since there was some configuration necessary to add the Atmega48 as a target device.</p>
+    </div>
+    <div class="post-nav">
+      <div><a href="sdl-audio-in-node-js.html">&larr; SDL audio in Node.js</a></div>
+      <div><a href="audiohackers-jamcat-design.html">Audiohackers JamCat design session &rarr;</a></div>
+    </div>
+  </div>
+  <footer>
+    <span>audio<span style="color:var(--accent)">destrukt</span></span>
+    <span>&copy; 2025 AudioDestrukt</span>
+  </footer>
+</body>
+</html>
