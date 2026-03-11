@@ -13,6 +13,7 @@ POSTS_DIR = "posts"
 OUT_DIR = "blog"
 POSTS_OUT_DIR = os.path.join(OUT_DIR, "posts")
 PER_PAGE = 10
+SITE_URL = "https://audiodestrukt.com"
 
 # ---------------------------------------------------------------------------
 # Minimal markdown -> HTML converter (handles what these posts use)
@@ -381,6 +382,8 @@ def page_shell(title, body, depth=''):
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title} — AudioDestrukt</title>
+  <link rel="icon" type="image/svg+xml" href="{'../' * (depth.count('/') + 1)}favicon.svg">
+  <link rel="alternate" type="application/rss+xml" title="AudioDestrukt Blog" href="{SITE_URL}/blog/feed.xml">
   <style>{CSS}</style>
 </head>
 <body>
@@ -469,6 +472,47 @@ def build_post_page(post, prev_post, next_post):
 
 
 # ---------------------------------------------------------------------------
+# RSS feed
+# ---------------------------------------------------------------------------
+
+def rss_date(dt):
+    """Format datetime as RFC 822 for RSS pubDate."""
+    return dt.strftime('%a, %d %b %Y %H:%M:%S +0000')
+
+
+def xml_escape(s):
+    return s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;')
+
+
+def build_rss(posts, limit=20):
+    items = []
+    for p in posts[:limit]:
+        url = f'{SITE_URL}/blog/posts/{p["slug"]}.html'
+        plain_excerpt = re.sub(r'<[^>]+>', '', p['excerpt'])
+        items.append(f"""    <item>
+      <title>{xml_escape(p['title'])}</title>
+      <link>{url}</link>
+      <guid isPermaLink="true">{url}</guid>
+      <pubDate>{rss_date(p['date'])}</pubDate>
+      <description>{xml_escape(plain_excerpt)}</description>
+    </item>""")
+
+    build_date = rss_date(datetime.utcnow())
+    return f"""<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AudioDestrukt</title>
+    <link>{SITE_URL}</link>
+    <description>A poke in the ear with a sharp stick.</description>
+    <language>en-us</language>
+    <lastBuildDate>{build_date}</lastBuildDate>
+    <atom:link href="{SITE_URL}/blog/feed.xml" rel="self" type="application/rss+xml"/>
+{''.join(items)}
+  </channel>
+</rss>"""
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -506,6 +550,13 @@ def main():
         out_path = os.path.join(POSTS_OUT_DIR, f'{post["slug"]}.html')
         with open(out_path, 'w', encoding='utf-8') as f:
             f.write(html)
+
+    # Build RSS feed (last 20 posts)
+    rss = build_rss(posts, limit=20)
+    rss_path = os.path.join(OUT_DIR, 'feed.xml')
+    with open(rss_path, 'w', encoding='utf-8') as f:
+        f.write(rss)
+    print(f'  wrote {rss_path}')
 
     print(f'\nDone. {len(posts)} posts across {total_pages} index pages.')
 
