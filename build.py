@@ -419,14 +419,16 @@ CSS = """
 
 
 def nav_html(active='blog', depth=''):
+    up = '../' * (depth.count('/') + 1)
+    blog = '../' * depth.count('/')
     return f"""  <nav>
-    <a href="{depth}../index.html" class="logo">audio<span>destrukt</span></a>
+    <a href="{up}index.html" class="logo">audio<span>destrukt</span></a>
     <ul>
-      <li><a href="{depth}../index.html#plugin">Plugin</a></li>
-      <li><a href="{depth}../index.html#features">Features</a></li>
-      <li><a href="{depth}../index.html#download">Download</a></li>
-      <li><a href="{depth}../index.html#about">About</a></li>
-      <li><a href="{depth}index.html" class="{'active' if active == 'blog' else ''}">Blog</a></li>
+      <li><a href="{up}index.html#plugin">Plugin</a></li>
+      <li><a href="{up}index.html#features">Features</a></li>
+      <li><a href="{up}index.html#download">Download</a></li>
+      <li><a href="{up}index.html#about">About</a></li>
+      <li><a href="{blog}index.html" class="{'active' if active == 'blog' else ''}">Blog</a></li>
     </ul>
   </nav>"""
 
