@@ -188,6 +188,25 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
     .post-body img {
       max-width: 100%;
       height: auto;
@@ -258,9 +277,14 @@
 <p>I’m starting with a cheap prototype using 1/8″ <a href="http://en.wikipedia.org/wiki/Medium-density_fibreboard">MDF</a> and furring strips. The pushbuttons are general purpose round pushbuttons that are similar to arcade buttons but smaller in diameter. I picked these up locally at <a href="http://www.halted.com/">HSC</a>.</p>
 <h2>Pull up resistors</h2>
 <p>One snag that I ran into when dealing with the Firmata firmware was that by default they don’t enable the Arduino’s internal pull up resistors. The Arduino has internal 20k resistors that are use to keep the inputs from floating. If these aren’t enabled, and no external pull ups are used, the inputs will be unpredictable. I thought that the Firmata demos would enable the pull ups but the apparently don’t. To test my pedal design I used the SimpleDigitalFirmata sketch that is included with the Arduino IDE. I modified the code slightly so that pull ups would be enabled.</p>
-<p>```</p>
-<p>void setPinModeCallback(byte pin, int mode) {  if (IS<em>PIN</em>DIGITAL(pin)) {  pinMode(PIN<em>TO</em>DIGITAL(pin), mode);  // added the follwing call to digitalWrite   digitalWrite(pin, HIGH);  } }</p>
-<p>``` For some documentation on digitalWrite and enabling the internal pull up resistors see <a href="http://arduino.cc/en/Reference/digitalWrite">this page</a>.</p>
+<pre><code>void setPinModeCallback(byte pin, int mode) {
+ if (IS_PIN_DIGITAL(pin)) {
+ pinMode(PIN_TO_DIGITAL(pin), mode);
+ // added the follwing call to digitalWrite 
+ digitalWrite(pin, HIGH);
+ }
+}</code></pre>
+<p>For some documentation on digitalWrite and enabling the internal pull up resistors see <a href="http://arduino.cc/en/Reference/digitalWrite">this page</a>.</p>
 <p>Once I did this, the buttons worked without external pull ups.</p>
 <h2>Construction</h2>
 <p>I built the enclosure as cheaply as possible. Total cost of the materials was under 5USD if you don’t count the screws. I bought a 100 count box of wood screws that set me back 3.50USD but I only used 6 screws. My thinking on the enclosure is that I’m going to cut it up and experiment with different button placements before I do the final design. Using cheap materials such as particle board lets me drill holes easily and throw away entire iterations on the design without worrying too much about it.</p>

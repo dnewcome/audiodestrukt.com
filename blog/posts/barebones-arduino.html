@@ -188,6 +188,25 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
     .post-body img {
       max-width: 100%;
       height: auto;
@@ -258,19 +277,20 @@
 <p>The ability to run without a bootloader turned out to be key since there is no Arduino bootloader that works as-is with the Atmega48 chip. Although I’ve seen in the forums that others have hacked it to work with some simple changes to the code, I decided to go without it, and in hindsight I’m glad I did since it would have been a lot of extra effort to compile a custom version of the bootloader, and since the 48 chip only has 4k of flash, the bootloader would have taken up valuable storage space (the Arduino runtime takes quite a bit of that space – a simple LED blinking program consumes about 2.5k).</p>
 <p>The only hardware required to get things working was the Atmega chip itself, a parallel printer cable and some 1k resistors. Really, that is it. The Atmega chip has an onboard oscillator so no crystal is necessary at all and no other hardware is actually required to program the chip, and the programs are self-contained, so they can be uploaded to the chip using the parallel port. In most of the examples out there on the net, the parallel programmer is only used to get the bootloader onto the device, but the same technique can be used to upload the actual code as well.</p>
 <p>I soldered a cable up using a DB25 connector that I had lying around, but for many of you it might be easier to take a regular parallel printer cable and just cut the printer end off and strip the needed wires at the end. I used <a href="http://www.bsdhome.com/avrdude/">this pinout</a> for my cable, and the <a href="http://savannah.nongnu.org/projects/avrdude/">avrdude programmer</a> utility to program the chip. I was using Ubuntu Linux, so avrdude was available using apt-get:</p>
-<p>```</p>
-<h1>apt-get install avrdude</h1>
-<p>``` Once the cable was plugged into the parallel port (I’m using an old laptop for this, I think it will work with USB parallel port converters too, but I haven’t tried it) I used the following command to check connectivity to the Atmega chip:</p>
-<p>```</p>
-<h1>avrdude -p m48 -c bsd</h1>
-<p>``` Note that this has to be run as root or some user that has access to /dev/parport0. Running this command should give you the chip configuration (the fuse settings):</p>
-<p>```</p>
-<p>avrdude: AVR device initialized and ready to accept instructions</p>
-<p>Reading | ################################################## | 100% 0.00s</p>
-<p>avrdude: Device signature = 0x1e9205</p>
-<p>avrdude: safemode: Fuses OK</p>
-<p>avrdude done. Thank you.</p>
-<p>``` This was the first step. The next step is to compile .hex files that can be uploaded to the chip. The easiest way to do this is with the Arduino IDE. I’ll cover that in the next post since there was some configuration necessary to add the Atmega48 as a target device.</p>
+<pre><code># apt-get install avrdude</code></pre>
+<p>Once the cable was plugged into the parallel port (I’m using an old laptop for this, I think it will work with USB parallel port converters too, but I haven’t tried it) I used the following command to check connectivity to the Atmega chip:</p>
+<pre><code># avrdude -p m48 -c bsd</code></pre>
+<p>Note that this has to be run as root or some user that has access to /dev/parport0. Running this command should give you the chip configuration (the fuse settings):</p>
+<pre><code>avrdude: AVR device initialized and ready to accept instructions
+
+Reading | ################################################## | 100% 0.00s
+
+avrdude: Device signature = 0x1e9205
+
+avrdude: safemode: Fuses OK
+
+avrdude done. Thank you.</code></pre>
+<p>This was the first step. The next step is to compile .hex files that can be uploaded to the chip. The easiest way to do this is with the Arduino IDE. I’ll cover that in the next post since there was some configuration necessary to add the Atmega48 as a target device.</p>
     </div>
     <div class="post-nav">
       <div><a href="sdl-audio-in-node-js.html">&larr; SDL audio in Node.js</a></div>

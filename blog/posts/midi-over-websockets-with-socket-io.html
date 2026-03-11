@@ -188,6 +188,25 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
     .post-body img {
       max-width: 100%;
       height: auto;
@@ -255,21 +274,33 @@
 <h1>MIDI over Websockets with Socket.IO</h1>
 <p>In my last post I outlined how I used curl to send MIDI data over HTTP to a web app. The problem with this design is that HTTP has a lot of connection overhead that contributes to latency problems.</p>
 <p>To address the latency issues, I set up the Node Web application to use Websockets for playing notes. The code on the server side is very simple:</p>
-<p>```</p>
-<p>var io = require('socket.io').listen(8030);</p>
-<p>io.sockets.on('connection', function (socket) {  socket.on('play', function (data) {  play_drum( data.note );  }); });</p>
-<p>``` Here we set up a message called “play” that takes an object describing the note that we want to play.</p>
+<pre><code>var io = require('socket.io').listen(8030);
+
+io.sockets.on('connection', function (socket) {
+ socket.on('play', function (data) {
+ play_drum( data.note );
+ });
+});</code></pre>
+<p>Here we set up a message called “play” that takes an object describing the note that we want to play.</p>
 <p>The code above is pretty much boilerplate code. The trickiest part is the client. Ordinarily the Socket.IO client would be a Web browser. In order for us to pipe MIDI data to a Websocket request we’ll need a Socket.IO client. The Socket.IO guys now have an official client called <a href="https://github.com/LearnBoost/socket.io-client">Socket.IO-client</a>.</p>
 <p>Since we can handle stdin ourselves in Node, we don’t need xargs, and we can pipe the output of amidi directly to our node client program.</p>
-<p>```</p>
-<p>amidi -d -p hw:1,0,0 | node socketio-client.js </p>
-<p>``` See my <a href="https://audiodestrukt.wordpress.com/2011/12/04/midi-over-http-with-using-alsa-and-curl/">previous post</a> for more details on amidi and finding the correct device number for your MIDI controller.</p>
-<p>```</p>
-<p>var io = require( 'socket.io-client' ); process.stdin.resume(); process.stdin.setEncoding('utf8');</p>
-<p>process.stdin.on('data', function (chunk) {</p>
-<p> // process arguments 	chunk = chunk.replace( '\n', '' ); 	var args = chunk.split( ' ' ); 	var jsargs = { note: args[1], vel: args[2] };</p>
-<p> // raise the play event 	socket.emit('play', jsargs ); });</p>
-<p>``` Node.js requires us to unpause stdin. Once we do that we can listen for stdin.on() for data and raise the Socket.IO event when we receive data.</p>
+<pre><code>amidi -d -p hw:1,0,0 | node socketio-client.js </code></pre>
+<p>See my <a href="https://audiodestrukt.wordpress.com/2011/12/04/midi-over-http-with-using-alsa-and-curl/">previous post</a> for more details on amidi and finding the correct device number for your MIDI controller.</p>
+<pre><code>var io = require( 'socket.io-client' );
+process.stdin.resume();
+process.stdin.setEncoding('utf8');
+
+process.stdin.on('data', function (chunk) {
+
+ // process arguments
+	chunk = chunk.replace( '\n', '' );
+	var args = chunk.split( ' ' );
+	var jsargs = { note: args[1], vel: args[2] };
+ 
+ // raise the play event
+	socket.emit('play', jsargs );
+});</code></pre>
+<p>Node.js requires us to unpause stdin. Once we do that we can listen for stdin.on() for data and raise the Socket.IO event when we receive data.</p>
 <p>The latency is much better with this method, but still not great. I’m going to try implementing this using a browser-based client as well to see if it is any better.</p>
 <p>The code for all of this is part of <a href="https://github.com/dnewcome/dub-siren">dub-siren</a>.</p>
     </div>

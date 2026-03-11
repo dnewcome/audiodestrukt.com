@@ -37,6 +37,21 @@ def md_to_html(text):
             i += 1
             continue
 
+        # Fenced code block
+        if line.startswith('```'):
+            i += 1
+            code_lines = []
+            while i < len(lines) and not lines[i].startswith('```'):
+                code_lines.append(lines[i])
+                i += 1
+            if i < len(lines):
+                i += 1  # consume closing ```
+            code = '\n'.join(code_lines).strip('\n')
+            # Escape HTML entities inside code
+            code = code.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+            html_blocks.append(f'<pre><code>{code}</code></pre>')
+            continue
+
         # Blank line
         if line.strip() == '':
             i += 1
@@ -44,7 +59,7 @@ def md_to_html(text):
 
         # Collect paragraph lines
         para_lines = []
-        while i < len(lines) and lines[i].strip() != '' and not re.match(r'^#{1,6}\s', lines[i]):
+        while i < len(lines) and lines[i].strip() != '' and not re.match(r'^#{1,6}\s', lines[i]) and not lines[i].startswith('```'):
             para_lines.append(lines[i])
             i += 1
         if para_lines:
@@ -55,7 +70,7 @@ def md_to_html(text):
 
 
 def inline_md(text):
-    # Extract images into placeholders to protect src URLs from italic/bold
+    # Extract images and inline code into placeholders to protect from italic/bold
     placeholders = {}
     def extract_img(m):
         alt, src = m.group(1), m.group(2)
@@ -65,6 +80,13 @@ def inline_md(text):
         key = f'\x00IMG{len(placeholders)}\x00'
         placeholders[key] = tag
         return key
+    def extract_code(m):
+        content = m.group(1).replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+        tag = f'<code>{content}</code>'
+        key = f'\x00CODE{len(placeholders)}\x00'
+        placeholders[key] = tag
+        return key
+    text = re.sub(r'`([^`]+)`', extract_code, text)
     text = re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', extract_img, text)
     # Bold
     text = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', text)
@@ -329,6 +351,25 @@ CSS = """
     .post-body a { color: var(--accent); }
 
     .post-body strong { color: var(--text); }
+
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
 
     .post-body img {
       max-width: 100%;

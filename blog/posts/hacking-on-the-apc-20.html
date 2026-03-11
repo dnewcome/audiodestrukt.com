@@ -188,6 +188,25 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
     .post-body img {
       max-width: 100%;
       height: auto;
@@ -261,12 +280,10 @@
 <p>If the APC just sits there without a USB connection it will start to display a sort of screensaver pattern with chasing lights.</p>
 <p>Here are the SYSEX commands that can be sent with a tool like MIDI OX.</p>
 <p>The handshake query identifies the device and polls things like the firmware revision:</p>
-<p>```</p>
-<p>0xF0, 0x7E, 0x00, 0x06, 0x01, 0xF7</p>
-<p>``` The device mode set sysex can put the device into one of four modes based on the value of the 7th byte in the following message:</p>
-<p>```</p>
-<p>0xF0, 0x47, 0x7F, 0x7B, 0x60, 0x00, 0x04, 0x41, 0x08, 0x02, 0x01, 0xF7</p>
-<p>``` 0x40 is the default startup mode, 0x41 is Ableton mode. The APC20 has a fourth mode called note mode corresponding to 0x43. I’m not sure what this mode is useful for yet, as mode 0x41 seems to be the most useful for programming since it relinquishes full control over the device.</p>
+<pre><code>0xF0, 0x7E, 0x00, 0x06, 0x01, 0xF7</code></pre>
+<p>The device mode set sysex can put the device into one of four modes based on the value of the 7th byte in the following message:</p>
+<pre><code>0xF0, 0x47, 0x7F, 0x7B, 0x60, 0x00, 0x04, 0x41, 0x08, 0x02, 0x01, 0xF7</code></pre>
+<p>0x40 is the default startup mode, 0x41 is Ableton mode. The APC20 has a fourth mode called note mode corresponding to 0x43. I’m not sure what this mode is useful for yet, as mode 0x41 seems to be the most useful for programming since it relinquishes full control over the device.</p>
 <p>I’ll be posting more about this as I find out more.</p>
     </div>
     <div class="post-nav">

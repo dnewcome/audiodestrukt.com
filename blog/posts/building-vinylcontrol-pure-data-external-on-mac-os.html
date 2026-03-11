@@ -188,6 +188,25 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
     .post-body img {
       max-width: 100%;
       height: auto;
@@ -258,35 +277,27 @@
 <p>Vinylcontrol is written using the <a href="http://puredata.info/Members/thomas/flext/">flext wrappers</a> for PD which allows externals to be written using c++ and built on multiple platforms. The flext system is sort of like autoconf for PD. </p>
 <p>Installing flext on the Mac could be an article in itself, but I was able to get it to work by simply following the documentation so I’ll go into it here only briefly. By default, the flext build system compiled universal binaries of libflext-pd.dylib (both 64bit and 32bit) and installed them in /usr/local/lib. The default flext configuration files included with vinylcontrol were set so that libflext was found by the linker without any additional configuration.</p>
 <p>Check out flext from svn:</p>
-<p>```</p>
-<p>$ svn co <a href="https://svn.grrrr.org/ext/trunk/flext">https://svn.grrrr.org/ext/trunk/flext</a> flext</p>
-<p>``` Build using:</p>
-<p>```</p>
-<p>$ ./build.sh pd gcc</p>
-<p>``` The way flext works you’ll have to run this a few times, as there are some intermediate files generated that you might have to edit for your environment.</p>
+<pre><code>$ svn co https://svn.grrrr.org/ext/trunk/flext flext</code></pre>
+<p>Build using:</p>
+<pre><code>$ ./build.sh pd gcc</code></pre>
+<p>The way flext works you’ll have to run this a few times, as there are some intermediate files generated that you might have to edit for your environment.</p>
 <p>I did need to modify the config-mac-pd-gcc.txt file to point to the proper path where my PD installation was.</p>
-<p>```</p>
-<p>PDPATH=/Applications/Pd-0.43.4-extended-20130105.app/Contents/Resources</p>
-<p>``` To install flext libraries and headers in the right places where vinylcontrol can find them, run:</p>
-<p>```</p>
-<p>$ ./build.sh pd gcc install</p>
-<p>``` Untar the vinylcontrol sources and take a look at buildsys/config-mac-pd-gcc.txt. You might have to run build.sh once to generate this file. There are some antiquated flags here for G4 macs that need to be removed or commented out:</p>
-<p>```</p>
-<h1>optimizations for G4</h1>
-<h1>OFLAGS+=-mcpu=G4</h1>
-<h1>UFLAGS=-faltivec -ffast-math</h1>
-<p>``` -ffast-math is a valid compiler optimization but I left it out when I compiled. I might try putting it back in there later. -faltivec is for G4/G5 CPUs, and will generate a compiler error if specified for an Intel architecture.</p>
+<pre><code>PDPATH=/Applications/Pd-0.43.4-extended-20130105.app/Contents/Resources</code></pre>
+<p>To install flext libraries and headers in the right places where vinylcontrol can find them, run:</p>
+<pre><code>$ ./build.sh pd gcc install</code></pre>
+<p>Untar the vinylcontrol sources and take a look at buildsys/config-mac-pd-gcc.txt. You might have to run build.sh once to generate this file. There are some antiquated flags here for G4 macs that need to be removed or commented out:</p>
+<pre><code># optimizations for G4
+# OFLAGS+=-mcpu=G4
+# UFLAGS=-faltivec -ffast-math</code></pre>
+<p>-ffast-math is a valid compiler optimization but I left it out when I compiled. I might try putting it back in there later. -faltivec is for G4/G5 CPUs, and will generate a compiler error if specified for an Intel architecture.</p>
 <p>I also had to specify a i386 (32bit) architecture in order for the linker to link the compiled external against the 32bit PD binary. The flext binaries were universal, so they linked ok but PD did not. The error messages get a little verbose so it can take a while to get to the root of things. Using the “file” command on generated binaries can help debug things by showing the architecture that the binary was compiled for.</p>
 <p>I specified the architecture for the compiler using user flags:</p>
-<p>```</p>
-<p>UFLAGS+=-arch i386</p>
-<p>``` I specified the architecture for the linker using LDFLAGS:</p>
-<p>```</p>
-<p>LDFLAGS+=-arch i386</p>
-<p>``` Compile like this:</p>
-<p>```</p>
-<p>$ ./build.sh pd gcc</p>
-<p>``` The build output shows up under pd-darwin/. I copied release-shared to ~/Library/Pd to install the external for my user account. I’m not sure what multi and single are. I believe that since I forced the architecture these will be all the same, but I’m not completely sure.</p>
+<pre><code>UFLAGS+=-arch i386</code></pre>
+<p>I specified the architecture for the linker using LDFLAGS:</p>
+<pre><code>LDFLAGS+=-arch i386</code></pre>
+<p>Compile like this:</p>
+<pre><code>$ ./build.sh pd gcc</code></pre>
+<p>The build output shows up under pd-darwin/. I copied release-shared to ~/Library/Pd to install the external for my user account. I’m not sure what multi and single are. I believe that since I forced the architecture these will be all the same, but I’m not completely sure.</p>
     </div>
     <div class="post-nav">
       <div><a href="working-with-vinylcontrol-in-pure-data.html">&larr; Working with vinylcontrol~ in Pure Data</a></div>

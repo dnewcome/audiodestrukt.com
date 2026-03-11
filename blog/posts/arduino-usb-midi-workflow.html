@@ -188,6 +188,25 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
     .post-body img {
       max-width: 100%;
       height: auto;
@@ -259,9 +278,9 @@
 <p>There are actually two different parallel programmers that I know of. I found this pretty amazing overview of different programmers <a href="http://www.dl1dow.de/inhalt/arduino/bootloader/e<em>arduino</em>bootloader.htm">here</a>. The only one missing there is the ponyprog serial programmer. The programmer that I made is a “bsd” style programmer. It uses 1k resistors on the data and reset lines. That’s all there is to it. </p>
 <p>I soldered the 1k resistors directly to the D-sub connector, staggering every other one so that they would be less likely to short out against one another in the shell. I used a bit of cat5 ethernet cabling since I have a lot of it lying around. On the other end I used a DIP IDC (insulation displacement connector) since I’m lazy and I didn’t want to do any more soldering. The cat5 cable is probably at the upper range of wire gauge that will work with an IDC terminator like this, but it worked out. The little pins are probably bent in there though.</p>
 <p>Once the cable was finished I tried out avrdude, which I had been using in my homebrew breadboard AVR programmer. It wasn’t able to find the AVR device on the Arduino board, so I was kind of concerned that I messed up somewhere. I got out my meter and double-checked everything and it all looked fine, so I tried out another programmer. Uisp seemed to work initially:</p>
-<p>```</p>
-<p>$ sudo uisp -dprog=bsd -dpart=ATmega48 Atmel AVR ATmega48 is found.</p>
-<p>``` However, as I learned later, this command reports that the device is found regardless of whether it is even connected.</p>
+<pre><code>$ sudo uisp -dprog=bsd -dpart=ATmega48
+Atmel AVR ATmega48 is found.</code></pre>
+<p>However, as I learned later, this command reports that the device is found regardless of whether it is even connected.</p>
 <p>I soldered the current-limiting resistors into the headshell. Note that this picture shows 1k resistors, but in the end I dropped these down to 470 ohm resistors to try to get enough current from my parallel port in order to get things working (this didn’t work either, my port is apparently too weak).</p>
 <p><img src="../../images/2012-05-03_arduino-usb-midi-workflow_dsub-shell.jpg" alt="" loading="lazy"></p>
 <p>I decided to use an insulation displacement connector for the Arduino side of things. Here you can see different views of that assembly:</p>

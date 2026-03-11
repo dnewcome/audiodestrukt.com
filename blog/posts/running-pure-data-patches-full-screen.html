@@ -188,6 +188,25 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
     .post-body img {
       max-width: 100%;
       height: auto;
@@ -258,9 +277,7 @@
 <p>Installing the plugin is just a matter of extracting the archive to pd-extended\extra\kiosk-plugin. It’s not that obvious from the docs where it should go on Windows. If pd-extended is your Pure Data installation path, it will go under the “extra” directory under that. On Linux there is a directory called “pd-externals” that doesn’t seem to be consistent with Windows installations. As an aside, I’m using the “portable” version of PD that is distributed <a href="http://autobuild.puredata.info/auto-build/latest/Pd-0.43.4-extended-windowsxp-i386.zip">without an installer</a>. Note that the version is 0.43.4 as of this Writing. I’ve experienced performance issues with earlier beta versions.</p>
 <p>Once the plugin is installed, it will be loaded the next time that PD is run. Configuration is done using kiosk.cfg, which is located in the plugin directory. This file is a little inconvenient at times, as many times you’ll want to override kiosk mode unless you are actually doing a performance.</p>
 <p>The crucial thing to note is that auto-fullscreen doesn’t seem to work in Windows. Thus, the following setting will enable fullscreen-on focus (clicking the patch window):</p>
-<p>```</p>
-<p>KioskNewWindow True</p>
-<p>```</p>
+<pre><code>KioskNewWindow True</code></pre>
 <p>When opening a patch for performance, simply click on the window that you want to run full screen and it should expand and hide its toolbar and OS chrome.</p>
     </div>
     <div class="post-nav">

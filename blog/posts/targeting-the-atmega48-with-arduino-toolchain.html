@@ -188,6 +188,25 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
     .post-body img {
       max-width: 100%;
       height: auto;
@@ -258,15 +277,27 @@
 <p>First off, there is no bootloader for this device. If you are using an UNO though, the bootloader is actually in the smaller ATmega8U2 chip anyway, so this isn’t an issue. </p>
 <p>The Arduino IDE doesn’t have a board configuration for the 48, so in order to get it to build hex files that will work, we have to do a little configuration.</p>
 <p>We need to modify a file called boards.txt. On Linux this is installed here:</p>
-<p>```</p>
-<p>/usr/share/arduino/hardware/arduino</p>
-<p>``` I added a new section for the Atmega48 like this:</p>
-<p>```</p>
-<p>atmega48.name=ATmega48</p>
-<p>atmega48.upload.protocol=avrisp atmega48.upload.maximum_size=4094 atmega48.upload.speed=38400 atmega48.upload.using=parallel</p>
-<p>atmega48.bootloader.low<em>fuses=0xe2 atmega48.bootloader.high</em>fuses=0xdf atmega48.bootloader.extended<em>fuses=0xff atmega48.bootloader.path=atmega atmega48.bootloader.file=ATmega48.hex atmega48.bootloader.unlock</em>bits=0x3F atmega48.bootloader.lock_bits=0x0F</p>
-<p>atmega48.build.mcu=atmega48 atmega48.build.f_cpu=16000000L atmega48.build.core=arduino</p>
-<p>``` I’m not sure all of these things are necessary. The most important thing is to get the memory size correct. I’m not sure that 4094 is completely correct. It would make more sense to try 4096 there (4k) but I haven’t tested that out.</p>
+<pre><code>/usr/share/arduino/hardware/arduino</code></pre>
+<p>I added a new section for the Atmega48 like this:</p>
+<pre><code>atmega48.name=ATmega48
+
+atmega48.upload.protocol=avrisp
+atmega48.upload.maximum_size=4094
+atmega48.upload.speed=38400
+atmega48.upload.using=parallel
+
+atmega48.bootloader.low_fuses=0xe2
+atmega48.bootloader.high_fuses=0xdf
+atmega48.bootloader.extended_fuses=0xff
+atmega48.bootloader.path=atmega
+atmega48.bootloader.file=ATmega48.hex
+atmega48.bootloader.unlock_bits=0x3F
+atmega48.bootloader.lock_bits=0x0F
+
+atmega48.build.mcu=atmega48
+atmega48.build.f_cpu=16000000L
+atmega48.build.core=arduino</code></pre>
+<p>I’m not sure all of these things are necessary. The most important thing is to get the memory size correct. I’m not sure that 4094 is completely correct. It would make more sense to try 4096 there (4k) but I haven’t tested that out.</p>
 <p>I’m posting this up here for my own reference, and as I tweak it I’ll post more details. I have run into some issues with clock speeds and the like. For my low-cost Arduino clone using the 48 chip I used its internal oscillator, which is running at half the speed of the normally clocked Arduino. Because of this, some sketches like the servo motor sketch will not work correctly. I have a hunch that setting f_cpu correctly should alleviate this but I have not tried it.</p>
 <p>Hopefully if you have some of these chips sitting around you can get them working in your Arduino too.</p>
     </div>

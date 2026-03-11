@@ -188,6 +188,25 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
     .post-body img {
       max-width: 100%;
       height: auto;
@@ -255,21 +274,35 @@
 <h1>Pedal Fighter first play test</h1>
 <p>I have the new PF prototype wired up and working now using the Firmata Arduino firmware and Pure Data on my Ubuntu laptop. I’m using a test patch that I wired up in PD the last time around.</p>
 <p>I’m using a slightly modified version of the SimpleDigitalFirmata firmware that ships with the Arduino IDE. The first change I made is to patch a bug in the patch. This is a known error and will probably be fixed in a later version of the IDE so you may not have to deal with this. If the sketch fails with the error:</p>
-<p>```</p>
-<p>/usr/share/arduino/libraries/Firmata/Boards.h: In function ‘void loop()’: /usr/share/arduino/libraries/Firmata/Boards.h:270: error: too few arguments to function ‘unsigned char readPort(byte, byte)’ SimpleDigitalFirmata:56: error: at this point in file</p>
-<p>``` you will have to make this fix.</p>
-<p>```</p>
-<p>void loop() {  byte i;</p>
-<p> for (i=0; i<TOTAL_PORTS; i++) {  // IMPORTANT! bitmask set to 255  outputPort(i, readPort(i, 255));  }</p>
-<p> while(Firmata.available()) {  Firmata.processInput();  } }</p>
-<p>``` I prefer not to deal with pull up/pull down resistors since the Arduino has some built in, so I make the following tweak to enable the built-in pull ups:</p>
-<p>```</p>
-<p>void setPinModeCallback(byte pin, int mode) {  if (IS<em>PIN</em>DIGITAL(pin)) {  pinMode(PIN<em>TO</em>DIGITAL(pin), mode);  // enable internal pull up resistors with digitalWrite  digitalWrite(pin, HIGH);  } }</p>
-<p>``` You can also make this change in the Firmata shared library code as <a href="http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1270758468">outlined here</a>, although I chose to make my changes locally in the sketch. Note that setting up the Arduino to use pull up resistors means that everything will be inverted from most of the Firmata examples you will find on the Web. We are using PD so it is trivial to invert the signals so this is really not an issue at all, just something to keep in mind when debugging. To reiterate, when we hit a button the Firmata object in PD will go low rather than high. The steady state when a button is not depressed will be high.</p>
+<pre><code>/usr/share/arduino/libraries/Firmata/Boards.h: In function ‘void loop()’:
+/usr/share/arduino/libraries/Firmata/Boards.h:270: error: too few arguments to function ‘unsigned char readPort(byte, byte)’
+SimpleDigitalFirmata:56: error: at this point in file</code></pre>
+<p>you will have to make this fix.</p>
+<pre><code>void loop()
+{
+ byte i;
+
+ for (i=0; i&lt;TOTAL_PORTS; i++) {
+ // IMPORTANT! bitmask set to 255
+ outputPort(i, readPort(i, 255));
+ }
+
+ while(Firmata.available()) {
+ Firmata.processInput();
+ }
+}</code></pre>
+<p>I prefer not to deal with pull up/pull down resistors since the Arduino has some built in, so I make the following tweak to enable the built-in pull ups:</p>
+<pre><code>void setPinModeCallback(byte pin, int mode) {
+ if (IS_PIN_DIGITAL(pin)) {
+ pinMode(PIN_TO_DIGITAL(pin), mode);
+ // enable internal pull up resistors with digitalWrite
+ digitalWrite(pin, HIGH);
+ }
+}</code></pre>
+<p>You can also make this change in the Firmata shared library code as <a href="http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1270758468">outlined here</a>, although I chose to make my changes locally in the sketch. Note that setting up the Arduino to use pull up resistors means that everything will be inverted from most of the Firmata examples you will find on the Web. We are using PD so it is trivial to invert the signals so this is really not an issue at all, just something to keep in mind when debugging. To reiterate, when we hit a button the Firmata object in PD will go low rather than high. The steady state when a button is not depressed will be high.</p>
 <p>Everything we do with respect to Midi here in Linux depends on a running Jack server, so let’s run qjackctl and start the server. I use pasuspender to keep pulse audio from getting in the way:</p>
-<p>```</p>
-<p>$ pasuspender qjackctl</p>
-<p>``` Here is the test PD patch I’m using to convert the Firmata serial data to Midi. Note that the Pduino.pd file from the Pduino distribution will be necessary for this to work, and under Linux we have to add /usr/lib/pd-extended/extra/flatspace to the PD search path. This is done using file->path once PD is running.</p>
+<pre><code>$ pasuspender qjackctl</code></pre>
+<p>Here is the test PD patch I’m using to convert the Firmata serial data to Midi. Note that the Pduino.pd file from the Pduino distribution will be necessary for this to work, and under Linux we have to add /usr/lib/pd-extended/extra/flatspace to the PD search path. This is done using file->path once PD is running.</p>
 <p><img src="../../images/2012-05-22_pedal-fighter-first-play-test_pd-firmata-test.png" alt="" loading="lazy"></p>
 <p>Another thing to be aware of is that the Arduino might come up as a different serial device on your machine. In the patch shown above you can see the serial port given to the connect message is 3. Mine tends to be /dev/ttyACM3 (hence, port number 3), but if the USB connection is reconnected frequently it can change. Best to be safe and use dmesg to figure out what the Aruino was detected as.</p>
 <p>Once PD is running, select ALSA Midi as the output system in PD. This should cause PDs Midi output to appeaer in the Jack connection manager:</p>

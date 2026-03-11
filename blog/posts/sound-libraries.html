@@ -188,6 +188,25 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
     .post-body img {
       max-width: 100%;
       height: auto;
@@ -254,7 +273,7 @@
     <div class="post-body">
 <h1>Sound libraries</h1>
 <p>I’m trying to build Seq66 on OSX right now. I figured it would be straightforward since everything is mostly POSIX.</p>
-<p>Turns out that `libasound` isn’t really ported to mac. This led me to look into what other libraries are out there right now.</p>
+<p>Turns out that <code>libasound</code> isn’t really ported to mac. This led me to look into what other libraries are out there right now.</p>
 <p><a href="http://libsound.io/"><a href="http://libsound.io/">http://libsound.io/</a></a></p>
 <p>I have never heard of libsound. These all have such generic names that it’s hard to recall if you’ve ever run across it before. It’s kind of a weird deja-vu when I dive back into this stuff.</p>
 <p>It looks like it might not support AISIO, which would be a bummer.</p>

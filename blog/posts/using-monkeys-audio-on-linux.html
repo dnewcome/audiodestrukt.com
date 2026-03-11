@@ -188,6 +188,25 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
     .post-body img {
       max-width: 100%;
       height: auto;
@@ -258,16 +277,12 @@
 <p>I have performed this decompression in the past using a command called “mac” that is a native Linux version of the Monkey’s codec, but this time around I couldn’t get it installed quickly enough, so I just installed the Windows version of Monkey’s under Wine.</p>
 <p>I didn’t know if it would work out, but it works just fine.</p>
 <p>Install Wine:</p>
-<p>```</p>
-<p>$ sudo apt-get install Wine</p>
-<p>``` Install Monkey’s under Wine by just running the installer:</p>
-<p>```</p>
-<p>$ wine MAC_410.exe</p>
-<p>``` The Monkey’s Audio GUI should now be installed, and you can decompress files as you would under Windows.</p>
+<pre><code>$ sudo apt-get install Wine</code></pre>
+<p>Install Monkey’s under Wine by just running the installer:</p>
+<pre><code>$ wine MAC_410.exe</code></pre>
+<p>The Monkey’s Audio GUI should now be installed, and you can decompress files as you would under Windows.</p>
 <p>Run the the GUI like this:</p>
-<p>```</p>
-<p>$ .wine/drive_c/Program Files/Monkey's Audio/Monkey's Audio.exe</p>
-<p>```</p>
+<pre><code>$ .wine/drive_c/Program Files/Monkey's Audio/Monkey's Audio.exe</code></pre>
     </div>
     <div class="post-nav">
       <div><a href="project-idea-percussive-foot-controller.html">&larr; Project idea: percussive foot controller</a></div>

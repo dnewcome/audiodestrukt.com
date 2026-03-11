@@ -188,6 +188,25 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
     .post-body img {
       max-width: 100%;
       height: auto;
@@ -258,16 +277,14 @@
 <p>So now as a result it looks like there is a nice SDL_mixer library for Node. I checked it out and it looks like just what the doctor ordered for what I’m thinking. Later on I’m still planning on getting <a href="https://audiodestrukt.wordpress.com/2011/10/24/project-libpd-module-for-node-js/">libpd for Node</a> finished, but for a new project I have in mind this is perfect.</p>
 <p>I have tested this library on OS X and also under Linux and it seems to work perfectly in both environments.</p>
 <p>On Ubuntu Linux:</p>
-<p>```</p>
-<h1>apt-get install libsdl-mixer1.2-dev</h1>
-<h1>npm install sdlmixer</h1>
-<p>``` On OS X using Homebrew:</p>
-<p>```</p>
-<h1>brew install sdl_mixer</h1>
-<h1>brew install node</h1>
-<h1>curl <a href="http://npmjs.org/install.sh">http://npmjs.org/install.sh</a> | sh</h1>
-<h1>npm install sdlmixer</h1>
-<p>``` Now go into the tests and run test.js to see if you get some sound!</p>
+<pre><code># apt-get install libsdl-mixer1.2-dev
+# npm install sdlmixer</code></pre>
+<p>On OS X using Homebrew:</p>
+<pre><code># brew install sdl_mixer
+# brew install node
+# curl http://npmjs.org/install.sh | sh
+# npm install sdlmixer</code></pre>
+<p>Now go into the tests and run test.js to see if you get some sound!</p>
     </div>
     <div class="post-nav">
       <div><a href="midi-over-http-with-using-alsa-and-curl.html">&larr; MIDI over HTTP with using ALSA and Curl</a></div>

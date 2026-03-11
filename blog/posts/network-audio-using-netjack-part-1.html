@@ -188,6 +188,25 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
     .post-body img {
       max-width: 100%;
       height: auto;
@@ -268,18 +287,52 @@
 <p><img src="../../images/2013-01-21_network-audio-using-netjack-part-1_reaper-connections2.png" alt="reaper-connections2" loading="lazy"></p>
 <p>At this point I’m pretty happy to be hearing sound, but I’m wondering what the latency is like when running this way, and I’m not sure what portaudio is using under the hood for audio output. I’m thinking it’s not using ASIO, but rather WDM.</p>
 <p>The next step then is to run the Jack server using some particular settings to try to force ASIO. There are some hints about this <a href="http://jackaudio.org/jack<em>on</em>windows">here on the Jack site</a>. Running the server like the following will start up ASIO4ALL when starting Jack:</p>
-<p>```</p>
-<p>C:\Program Files\Jack\jackd.exe" -R -S -d portaudio -d "ASIO::ASIO4ALL v2"</p>
-<p>``` However Reaper is reporting 512 samples of latency regardless of how I set the latency in the ASIO4ALL configuration interface. Looking at the help for the portaudio driver I found that setting the frames/period setting when specifying an ASIO driver will take the buffer size specified in the ASIO settings – ASIO4ALL in this case. Effectively this means that the last buffer size specified in the ASIO4ALL control panel will be used.</p>
-<p>```</p>
-<p>C:\Program Files (x86)\Jack>jackd.exe -d portaudio --help jackdmp 1.9.9.5 Copyright 2001-2005 Paul Davis and others. Copyright 2004-2012 Grame. jackdmp comes with ABSOLUTELY NO WARRANTY This is free software, and you are welcome to redistribute it under certain conditions; see the file COPYING for details Drivers/internals found in : C:\Windows Drivers/internals found in : C:\Windows  -c, --channels Maximum number of channels (default: 0)  -i, --inchannels Maximum number of input channels (default: 0)  -o, --outchannels Maximum number of output channels (default: 0)  -C, --capture Provide capture ports. Optionally set PortAudio device n ame (default: none)  -P, --playback Provide playback ports. Optionally set PortAudio device name (default: none)  -m, --monitor Provide monitor ports for the output (default: false)  -D, --duplex Provide both capture and playback ports (default: true)  -r, --rate Sample rate (default: 44100)  -p, --period Frames per period. If 0 and ASIO driver, will take prefe rred value (default: 512)  -d, --device PortAudio device name (default: none)  -I, --input-latency Extra input latency (default: 0)  -O, --output-latency Extra output latency (default: 0)  -l, --list-devices Display available PortAudio devices (default: tr ue)</p>
-<p>``` Adding the -p flag to our configuration looks like this:</p>
-<p>```</p>
-<p>"C:\Program Files (x86)\Jack\jackd.exe" -R -S -d portaudio -d "ASIO::ASIO4ALL v2" -p 0</p>
-<p>``` Running, we get the following output. Notice the “ASIO preferred buffer size”:</p>
-<p>```</p>
-<p>jackdmp 1.9.9.5 Copyright 2001-2005 Paul Davis and others. Copyright 2004-2012 Grame. jackdmp comes with ABSOLUTELY NO WARRANTY This is free software, and you are welcome to redistribute it under certain conditions; see the file COPYING for details Drivers/internals found in : C:\Windows Drivers/internals found in : C:\Windows JACK server starting in realtime mode with priority 10 ASIO minimum buffer size = 64 ASIO maximum buffer size = 2048 ASIO preferred buffer size = 128 ASIO buffer granularity = 8 InitTime : multimedia timer resolution set to 1 milliseconds</p>
-<p>``` Everything seemed like it was working pretty well at this point, so I was wondering if I was getting true 128 sample latency like I was without Jack. From the Jack FAQ:</p>
+<pre><code>C:\Program Files\Jack\jackd.exe" -R -S -d portaudio -d "ASIO::ASIO4ALL v2"</code></pre>
+<p>However Reaper is reporting 512 samples of latency regardless of how I set the latency in the ASIO4ALL configuration interface. Looking at the help for the portaudio driver I found that setting the frames/period setting when specifying an ASIO driver will take the buffer size specified in the ASIO settings – ASIO4ALL in this case. Effectively this means that the last buffer size specified in the ASIO4ALL control panel will be used.</p>
+<pre><code>C:\Program Files (x86)\Jack&gt;jackd.exe -d portaudio --help
+jackdmp 1.9.9.5
+Copyright 2001-2005 Paul Davis and others.
+Copyright 2004-2012 Grame.
+jackdmp comes with ABSOLUTELY NO WARRANTY
+This is free software, and you are welcome to redistribute it
+under certain conditions; see the file COPYING for details
+Drivers/internals found in : C:\Windows
+Drivers/internals found in : C:\Windows
+ -c, --channels Maximum number of channels (default: 0)
+ -i, --inchannels Maximum number of input channels (default: 0)
+ -o, --outchannels Maximum number of output channels (default: 0)
+ -C, --capture Provide capture ports. Optionally set PortAudio device n
+ame (default: none)
+ -P, --playback Provide playback ports. Optionally set PortAudio device
+name (default: none)
+ -m, --monitor Provide monitor ports for the output (default: false)
+ -D, --duplex Provide both capture and playback ports (default: true)
+ -r, --rate Sample rate (default: 44100)
+ -p, --period Frames per period. If 0 and ASIO driver, will take prefe
+rred value (default: 512)
+ -d, --device PortAudio device name (default: none)
+ -I, --input-latency Extra input latency (default: 0)
+ -O, --output-latency Extra output latency (default: 0)
+ -l, --list-devices Display available PortAudio devices (default: tr
+ue)</code></pre>
+<p>Adding the -p flag to our configuration looks like this:</p>
+<pre><code>"C:\Program Files (x86)\Jack\jackd.exe" -R -S -d portaudio -d "ASIO::ASIO4ALL v2" -p 0</code></pre>
+<p>Running, we get the following output. Notice the “ASIO preferred buffer size”:</p>
+<pre><code>jackdmp 1.9.9.5
+Copyright 2001-2005 Paul Davis and others.
+Copyright 2004-2012 Grame.
+jackdmp comes with ABSOLUTELY NO WARRANTY
+This is free software, and you are welcome to redistribute it
+under certain conditions; see the file COPYING for details
+Drivers/internals found in : C:\Windows
+Drivers/internals found in : C:\Windows
+JACK server starting in realtime mode with priority 10
+ASIO minimum buffer size = 64
+ASIO maximum buffer size = 2048
+ASIO preferred buffer size = 128
+ASIO buffer granularity = 8
+InitTime : multimedia timer resolution set to 1 milliseconds</code></pre>
+<p>Everything seemed like it was working pretty well at this point, so I was wondering if I was getting true 128 sample latency like I was without Jack. From the Jack FAQ:</p>
 <p>>  There is NO extra latency caused by using JACK for audio input and output. When we say none, we mean absolutely zero. The only impact of using JACK is a slight increase in the amount of work done by the CPU to process a given chunk of audio, which means that in theory you could not get 100% of the processing power that you might get it if your application(s) used ALSA or CoreAudio directly. However, given that the difference is less than 1%, and that your system will be unstable before you get close to 80% of the theoretical processing power, the effect is completely disregardable.</p>
 <p>So apparently we burn a little more CPU, but the latency is no larger. This is good news.</p>
 <p>Now, on the Mac side of things – I was able to get Jack installed using the Snow Leopard installer package. I’m using OSX 10.8 (Mountain Lion). </p>

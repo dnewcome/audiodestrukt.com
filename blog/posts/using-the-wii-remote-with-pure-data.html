@@ -188,6 +188,25 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
     .post-body img {
       max-width: 100%;
       height: auto;
@@ -261,20 +280,28 @@
 <p>The Wiimote shows up in PD using the pd-extended <a href="http://puredata.info/downloads/hid">[hid] object</a>. However, the buttons are really strangely numbered and although I got some data when pressing buttons, I’m not too sure how you would go about acutally getting something useful done with it this way. The data stream needs to be “cooked” beyond what is convenient using just [hid] I think, although I’m sure it’s possible somehow.</p>
 <p>Thus begins the search for a Wii external.</p>
 <p>The first thing I found was <a href="http://puredata.info/downloads/wiimote">wiimote</a>. There is no binary distributed for OSX so I had to try to build my own. I grabbed the source and running <a href="http://linux.die.net/man/1/make">make(1)</a> failed thusly:</p>
-<p>```</p>
-<p>retnex:wiimote-0.3.2 dan$ make Package cwiid was not found in the pkg-config search path. Perhaps you should add the directory containing `cwiid.pc' to the PKG<em>CONFIG</em>PATH environment variable No package 'cwiid' found cc -DPD -I../../pd/src -Wall -W -g -DVERSION='"0.3.2"' -arch ppc -arch i386 -arch x86_64 -mmacosx-version-min=10.4 -fPIC -I/sw/include -I/Applications/Pd-extended.app/Contents/Resources/include -ftree-vectorize -ftree-vectorizer-verbose=2 -fast -o "wiimote.o" -c "wiimote.c" clang: warning: not using the clang compiler for the 'powerpc' architecture llvm-gcc-4.2: error trying to exec '/usr/bin/../llvm-gcc-4.2/bin/powerpc-apple-darwin11-llvm-gcc-4.2': execvp: No such file or directory clang: error: gcc frontend command failed with exit code 255 (use -v to see invocation)</p>
-<p>``` Ok so there are two issues here. The first is that we need the package <a href="http://abstrakraft.org/cwiid/">cwiid</a>, which is a C library for interfacing with the Wiimote. The second is that we are trying to build a powerpc version of the binary, which is a non-starter for recent versions of the Apple GCC tools I think. </p>
+<pre><code>retnex:wiimote-0.3.2 dan$ make
+Package cwiid was not found in the pkg-config search path.
+Perhaps you should add the directory containing `cwiid.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'cwiid' found
+cc -DPD -I../../pd/src -Wall -W -g -DVERSION='"0.3.2"' -arch ppc -arch i386 -arch x86_64 -mmacosx-version-min=10.4 -fPIC -I/sw/include -I/Applications/Pd-extended.app/Contents/Resources/include -ftree-vectorize -ftree-vectorizer-verbose=2 -fast -o "wiimote.o" -c "wiimote.c"
+clang: warning: not using the clang compiler for the 'powerpc' architecture
+llvm-gcc-4.2: error trying to exec '/usr/bin/../llvm-gcc-4.2/bin/powerpc-apple-darwin11-llvm-gcc-4.2': execvp: No such file or directory
+clang: error: gcc frontend command failed with exit code 255 (use -v to see invocation)</code></pre>
+<p>Ok so there are two issues here. The first is that we need the package <a href="http://abstrakraft.org/cwiid/">cwiid</a>, which is a C library for interfacing with the Wiimote. The second is that we are trying to build a powerpc version of the binary, which is a non-starter for recent versions of the Apple GCC tools I think. </p>
 <p>Taking a look at the makefile should help us out of the second issue:</p>
-<p>```</p>
-<h1>build universal 32-bit on 10.4 and 32/64 on newer</h1>
-<p>ifeq ($(shell uname -r | sed 's|\([0-9][0-9]<em>\)\.[0-9][0-9]</em>\.[0-9][0-9]*|\1|'), 8) FAT<em>FLAGS = -arch ppc -arch i386 -mmacosx-version-min=10.4 else FAT</em>FLAGS = -arch ppc -arch i386 -arch x86<em>64 -mmacosx-version-min=10.4 SOURCES += $(SOURCES</em>iphoneos)</p>
-<p>``` so let’s remove:</p>
-<p>```</p>
-<p>-arch ppc</p>
-<p>``` resulting in:</p>
-<p>```</p>
-<p>FAT<em>FLAGS = -arch i386 -arch x86</em>64 -mmacosx-version-min=10.4</p>
-<p>``` Ok so now we still have a missing dependency. Hopefully we can grab this on <a href="http://www.macports.org/">macports </a>or <a href="http://mxcl.github.com/homebrew/">homebrew</a>. Nope, not available in homebrew or macports. Can we build from source? Apparently not unless we get <a href="http://www.bluez.org/">libbluetooth </a>going on Mac. </p>
+<pre><code># build universal 32-bit on 10.4 and 32/64 on newer
+ifeq ($(shell uname -r | sed 's|\([0-9][0-9]*\)\.[0-9][0-9]*\.[0-9][0-9]*|\1|'), 8)
+FAT_FLAGS = -arch ppc -arch i386 -mmacosx-version-min=10.4
+else
+FAT_FLAGS = -arch ppc -arch i386 -arch x86_64 -mmacosx-version-min=10.4
+SOURCES += $(SOURCES_iphoneos)</code></pre>
+<p>so let’s remove:</p>
+<pre><code>-arch ppc</code></pre>
+<p>resulting in:</p>
+<pre><code>FAT_FLAGS = -arch i386 -arch x86_64 -mmacosx-version-min=10.4</code></pre>
+<p>Ok so now we still have a missing dependency. Hopefully we can grab this on <a href="http://www.macports.org/">macports </a>or <a href="http://mxcl.github.com/homebrew/">homebrew</a>. Nope, not available in homebrew or macports. Can we build from source? Apparently not unless we get <a href="http://www.bluez.org/">libbluetooth </a>going on Mac. </p>
 <p>At this point I think it’s time to explore other options. Which basically means switching to Windows and trying another external called <a href="http://code.google.com/p/wiisense/">WiiSense</a>. </p>
 <p>WiiSense has a binary distribution, so although source is available I didn’t see much point in compiling it from source on Windows. However, when I installed it (copy dll to pd\extra\) and instantiated [WiiSense] paying attention to case (by convention most PD externals are lowercase, but are case senstivive so mixed case can be confusing) I was rewarded with PD crashing hard (complete application termination).</p>
 <p>One side note about WiiSense is that it needs to be instantiated with an argument. I don’t know what that argument means since there is no documentation that I could find and I haven’t read the source. I want to get something (anything) working before I go looking through source code to an external.</p>
@@ -290,10 +317,11 @@
 <p>For info on the different glovepie gyro and accelerometer options the <a href="http://glovepie.org/w/index.php?title=Preliminary<em>Documentation</em>v0.45#Vista<em>.28and</em>Windows_7.29">GlovePIE documentation</a> is great. There are differences between raw and processed accelerometer data values that are important to know, as well as how to map these values to useful data that we can use in PD. GlovePIE supports unit conversions and some other things that are explained in the documentation.</p>
 <p>It’s worth noting that GlovePIE uses the Wii player LEDs (1-4) on the bottom of the Wiimote to indicate status. When a user script is running the first LED should be lit, when the GUI code generation mode is active 1 and 4 will be lit. If the lights are still all blinking, something is probably wrong, or you just need to wait a minute for the pairing to finish.</p>
 <p>The GlovePIE code I ended up with looks like the following:</p>
-<p>```</p>
-<p>midi2.channel1.c4 = Wiimote.A</p>
-<p>midi2.control95 = maprange(wiimote1.smoothpitch, -90 degrees, 90 degrees, 0, 1) midi2.control96 = maprange(wiimote1.smoothroll, -90 degrees, 90 degrees, 0, 1)</p>
-<p>``` And on the other end my PD patch looks like this:</p>
+<pre><code>midi2.channel1.c4 = Wiimote.A
+
+midi2.control95 = maprange(wiimote1.smoothpitch, -90 degrees, 90 degrees, 0, 1)
+midi2.control96 = maprange(wiimote1.smoothroll, -90 degrees, 90 degrees, 0, 1)</code></pre>
+<p>And on the other end my PD patch looks like this:</p>
 <p><img src="../../images/2013-04-04_using-the-wii-remote-with-pure-data_pd-patch.png" alt="pd-patch" loading="lazy"></p>
 <p>This shows me pitch and roll of the controller (roughly the 2D tilt of the controller when oriented horizontally). There seems to be a roughly half-second delay when measuring the accelerometer. I haven’t tried controlling any audio signals yet, so it may be a little faster than I think it is. I don’t know a lot about Bluetooth latency or accelerometer speed, and from past experience MIDI in PD on Windows can be slow, so I’m not sure what contributes the most to latency in this system.</p>
 <p>After all this I never did try OSCulator, although when the need arises and I need to get this working on the Mac it will be the first thing I try.</p>

@@ -188,6 +188,25 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
     .post-body img {
       max-width: 100%;
       height: auto;
@@ -258,9 +277,10 @@
 <p>As a little background, I’m trying to get some sort of low-latency audio stream happening on a local network having relatively high bandwidth. My thoughts were that Jack had the most promise and flexibility. I was right about the flexibility part, but wrong about the promise. </p>
 <p>The way that the Jack architecture works is that any networked audio done using Jack is actually handled by a Jack client. Lots of different programs can be clients, and they show up and register themselves with the Jack daemon when they are run. The streaming source runs a Jack client called jack_netsource and the listener runs Jackd with the netone audio backend enabled.</p>
 <p>When netone is used, Jackd listens on UDP port 3000</p>
-<p>```</p>
-<p>retnex:single-step dan$ lsof -P -iUDP | grep jack jackdmp 22690 dan 0u IPv4 0x3e86a3266c10ae7 0t0 UDP <em>:3000 jackdmp 22690 dan 5u IPv4 0x3e86a3266c12b0f 0t0 UDP </em>:*</p>
-<p>``` Connecting from Windows to Mac worked somewhat, but connecting the other way did not work at all. I can’t find my notes from this experiment so I’m not sure exactly what the errors I was getting were.</p>
+<pre><code>retnex:single-step dan$ lsof -P -iUDP | grep jack
+jackdmp 22690 dan 0u IPv4 0x3e86a3266c10ae7 0t0 UDP *:3000
+jackdmp 22690 dan 5u IPv4 0x3e86a3266c12b0f 0t0 UDP *:*</code></pre>
+<p>Connecting from Windows to Mac worked somewhat, but connecting the other way did not work at all. I can’t find my notes from this experiment so I’m not sure exactly what the errors I was getting were.</p>
 <p>So netjack is a bust, what about other Jack clients? </p>
 <p>Well I tried to build VLC with Jack enabled for Windows. This doesn’t seem to be supported at all. It should work in theory, but the build system doesn’t include libjack and I didn’t feel like trying to build VLC this way.</p>
 <p>I tried a few other things like Gstreamer and ffmpeg Jack clients, but I just wasn’t able to get any of these things working.</p>

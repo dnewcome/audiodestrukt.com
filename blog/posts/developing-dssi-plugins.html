@@ -188,6 +188,25 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
     .post-body img {
       max-width: 100%;
       height: auto;
@@ -257,30 +276,36 @@
 <p>I dip my toes into the Linux audio development world every now and then, so I figured I’d take a look at the current state-of-the-art for Linux instrument plugins, <a href="http://dssi.sourceforge.net/">DSSI</a> (dizzy).</p>
 <p>DSSI is basically <a href="http://en.wikipedia.org/wiki/Virtual<em>Studio</em>Technology">VSTi</a> for Linux, or <a href="http://www.ladspa.org/">LADSPA</a> for instruments depending on your viewpoint. It is a <a href="http://dssi.sourceforge.net/RFC.html">spec</a> that we can conform with to enable our code to be hosted in different programs such as <a href="http://ardour.org/">Ardour</a>.</p>
 <p>I grabbed the DSSI development kit and compiled it. I had to grab the LADSPA SDK using <a href="http://en.wikipedia.org/wiki/Advanced<em>Packaging</em>Tool">APT</a> (I’m using Ubuntu)</p>
-<p>```</p>
-<p>$ sudo apt-get install ladspa-sdk</p>
-<p>``` After this I could build the sources using configure/make.</p>
+<pre><code>$ sudo apt-get install ladspa-sdk</code></pre>
+<p>After this I could build the sources using configure/make.</p>
 <p>However in order to get the reference Jack host to work we’ll need the libjack development package which includes the headers.</p>
-<p>```</p>
-<p>$ sudo apt-get install libjack-dev</p>
-<p>``` There are some other dependencies that I already had installed, but are worth mentioning. Liblo is the <a href="http://liblo.sourceforge.net/">Lightweight OSC library</a>.</p>
+<pre><code>$ sudo apt-get install libjack-dev</code></pre>
+<p>There are some other dependencies that I already had installed, but are worth mentioning. Liblo is the <a href="http://liblo.sourceforge.net/">Lightweight OSC library</a>.</p>
 <p>I started looking through the code and the host looked to complicated to start with (the reference jack-dssi-host is 2000 lines or so) so I started with trivial_synth.c under examples/.</p>
 <p>I looked around for an entry point. I noticed the following:</p>
-<p>```</p>
-<p>#ifdef <strong>GNUC</strong> <strong>attribute</strong>((constructor)) void init() #else void _init() #endif</p>
-<p>``` _init(), is part of <a href="http://linux.die.net/man/3/dlopen">dlopen</a>, which is used to load dynamic libraries at runtime. The init function constructs the plugin descriptors according to the LADSPA and DSSI specs. </p>
+<pre><code>#ifdef __GNUC__
+__attribute__((constructor)) void init()
+#else
+void _init()
+#endif</code></pre>
+<p>_init(), is part of <a href="http://linux.die.net/man/3/dlopen">dlopen</a>, which is used to load dynamic libraries at runtime. The init function constructs the plugin descriptors according to the LADSPA and DSSI specs. </p>
 <p>The following function is specified in the <a href="http://gdam.ffem.org/ladspa-doc/ladspa-2.html">LADSPA spec</a>, and returns the descriptor when called.</p>
-<p>```</p>
-<p>const LADSPA<em>Descriptor *ladspa</em>descriptor(unsigned long index) {  switch (index) {  case 0:  return tsLDescriptor;  default:  return NULL;  } }</p>
-<p>``` The descriptor is where we specify the functions we want to use as callbacks for things like processing the chunk of audio or defining input and output ports.</p>
+<pre><code>const LADSPA_Descriptor *ladspa_descriptor(unsigned long index)
+{
+ switch (index) {
+ case 0:
+ return tsLDescriptor;
+ default:
+ return NULL;
+ }
+}</code></pre>
+<p>The descriptor is where we specify the functions we want to use as callbacks for things like processing the chunk of audio or defining input and output ports.</p>
 <p>The only thing further to understand is that the GUIs are separate standalone programs that communicate with the running plugin using OSC. You can start the GUI separately from the plugin and kill the GUI without affecting the execution of the plugin.</p>
 <p>I had some problems getting the GUIs for the sample projects to show up when running the reference Jack host though. In order to get things working I had to actually install everything on my system using</p>
-<p>```</p>
-<p>$ sudo make install</p>
-<p>``` The commandline options for running a GUI are kind of cryptic so here is what the GUI command looks like when it runs automatically from the Jack reference host:</p>
-<p>```</p>
-<p>$ /usr/local/lib/dssi/trivial<em>sampler/trivial</em>sampler<em>qt osc.udp://X200:12034/dssi/trivial</em>sampler/stereo<em>sampler/chan00 trivial</em>sampler.so stereo_sampler channel 0</p>
-<p>``` It looks like the GUIs are installed alongside the plugins using a folder structure that follows the naming convention of the shared object file.</p>
+<pre><code>$ sudo make install</code></pre>
+<p>The commandline options for running a GUI are kind of cryptic so here is what the GUI command looks like when it runs automatically from the Jack reference host:</p>
+<pre><code>$ /usr/local/lib/dssi/trivial_sampler/trivial_sampler_qt osc.udp://X200:12034/dssi/trivial_sampler/stereo_sampler/chan00 trivial_sampler.so stereo_sampler channel 0</code></pre>
+<p>It looks like the GUIs are installed alongside the plugins using a folder structure that follows the naming convention of the shared object file.</p>
 <p>I’ll write some more once I’ve done some actual coding on a new plugin.</p>
     </div>
     <div class="post-nav">

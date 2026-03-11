@@ -188,6 +188,25 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--accent);
+    }
+
+    .post-body pre code {
+      color: var(--text);
+    }
+
     .post-body img {
       max-width: 100%;
       height: auto;
@@ -258,19 +277,17 @@
 <p>Darran Hunt has done all of the hard work here by hacking up a firmware that does Midi over USB and lets us put data over the wire using the Arduino serial communications API. You can find that code <a href="http://hunt.net.nz/users/darran/weblog/5b7f8/">here</a>.</p>
 <p>The important thing to notice is that this is not the same as the Arduino bootloader and it does not get written to the main AVR chip on the board. It is code for the Atmega8U2 that drives the USB port on the Arduino board. In order to flash this chip, we have to put the board into <a href="http://arduino.cc/en/Hacking/DFUProgramming8U2">DFU (Device firmware update)</a> mode</p>
 <p>I used dfu-programmer on Linux to flash the new firmware to my Uno. Installing the tool was easy using apt-get:</p>
-<p>```</p>
-<p>$ sudo apt-get install dfu-programmer</p>
-<p>``` Here is the command to flash the Midi firmware (hex file) using DFH:</p>
-<p>```</p>
-<p>$ dfh-programmer at90usb82 flash Arduino-usbmidi-0.1.hex</p>
-<p>``` Once the firmware has been flashed, you can no longer use the normal bootloader to program the Arduino! I get around this by using a homemade serial programmer. I’ll post this later, but if you have a programmer that can connect to the 6-pin ICSP header on the board you should be good to go.</p>
+<pre><code>$ sudo apt-get install dfu-programmer</code></pre>
+<p>Here is the command to flash the Midi firmware (hex file) using DFH:</p>
+<pre><code>$ dfh-programmer at90usb82 flash Arduino-usbmidi-0.1.hex</code></pre>
+<p>Once the firmware has been flashed, you can no longer use the normal bootloader to program the Arduino! I get around this by using a homemade serial programmer. I’ll post this later, but if you have a programmer that can connect to the 6-pin ICSP header on the board you should be good to go.</p>
 <p>To test things out I flashed an Atmega48 chip out-of-circuit with the test program provided by Darran. I swapped the chips in my arduino and plugged it in. Here is how the device shows up in Linux:</p>
-<p>```</p>
-<p>$ amidi -l Dir Device Name IO hw:1,0,0 Arduino MIDI MIDI 1</p>
-<p>``` And then to test that the demo program is sending midi data:</p>
-<p>```</p>
-<p>dan@dan-Latitude-D600:/tmp/build1002454732081805362.tmp$ amidi --dump -p hw:1,0,0</p>
-<p>``` So far, things are looking pretty good. I’ll post some new stuff using this firmware in a little while.</p>
+<pre><code>$ amidi -l
+Dir Device Name
+IO hw:1,0,0 Arduino MIDI MIDI 1</code></pre>
+<p>And then to test that the demo program is sending midi data:</p>
+<pre><code>dan@dan-Latitude-D600:/tmp/build1002454732081805362.tmp$ amidi --dump -p hw:1,0,0</code></pre>
+<p>So far, things are looking pretty good. I’ll post some new stuff using this firmware in a little while.</p>
     </div>
     <div class="post-nav">
       <div><a href="simple-usb-midi-footswitch-using-arduino.html">&larr; Simple USB Midi footswitch using Arduino</a></div>
