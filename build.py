@@ -241,7 +241,7 @@ CSS = """
 
     .post-excerpt {
       font-size: 0.85rem;
-      color: var(--muted);
+      color: var(--text);
       margin-bottom: 0.75rem;
     }
 
@@ -306,7 +306,7 @@ CSS = """
     .post-body h3 { font-size: 1rem; }
 
     .post-body p {
-      color: var(--muted);
+      color: var(--text);
       margin-bottom: 1.25rem;
       line-height: 1.8;
     }
