@@ -188,6 +188,14 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
     .post-nav {
       display: flex;
       justify-content: space-between;
@@ -247,11 +255,13 @@
 <h1>Pure data in Ableton</h1>
 <p>I’m messing around with PD again after what feels like years. I have PlugData installed and I’m messing around with it.</p>
 <p>I tried adding a noise generator like this:</p>
+<p><img src="../../images/2024-11-19_pure-data-in-ableton_image_2024-11-19_153656082.png" alt="" loading="lazy"></p>
 <p>Note that the volume is turned down by default. In order to hear anything I had to turn up the volume slider. DSP was turn on when I added the out~ module though.</p>
 <p>Adding a lowpass filter to the noise is no problem.</p>
+<p><img src="../../images/2024-11-19_pure-data-in-ableton_image_2024-11-19_153920494.png" alt="" loading="lazy"></p>
 <p>I wonder if we can do midi learn on the knob? Doesn’t seem like it.</p>
 <p>Automation params can be mapped by receive symbol. Adding a new float object and a new parameter. We can link them using this symbol</p>
-<p>There is a compiled mode using the HVCC compiler <a href="https://wasted-audio.github.io/hvcc/docs/01.introduction.html">https://wasted-audio.github.io/hvcc/docs/01.introduction.html</a></p>
+<p>There is a compiled mode using the HVCC compiler <a href="https://wasted-audio.github.io/hvcc/docs/01.introduction.html"><a href="https://wasted-audio.github.io/hvcc/docs/01.introduction.html">https://wasted-audio.github.io/hvcc/docs/01.introduction.html</a></a></p>
     </div>
     <div class="post-nav">
       <div><a href="more-pure-data.html">&larr; More Pure Data</a></div>

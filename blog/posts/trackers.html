@@ -188,6 +188,14 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
     .post-nav {
       display: flex;
       justify-content: space-between;
@@ -246,9 +254,11 @@
     <div class="post-body">
 <h1>Trackers</h1>
 <p>I’m a fan of trackers. Mostly out of nostalgia now. I never did get much music written back in the day using trackers but I still liked dabbling. FastTracker 2 was a revelation seeing those oscilloscope displays dancing away.</p>
-<p>There was something I found called GoatStudio that was a simple curses-based tracker. I have been digging into a few programming projects recently and realized that I ran across another tracker of that type called PLEB Tracker.</p>
+<p>There was something I found called <a href="https://cadaver.github.io/tools.html">GoatStudio</a> that was a simple curses-based tracker. I have been digging into a few programming projects recently and realized that I ran across another tracker of that type called <a href="https://github.com/danfrz/PLEBTracker">PLEB Tracker.</a></p>
 <p>Build the image with docker build and then run</p>
-<p>docker run -it 59b97580bcca</p>
+<p>``` docker run -it 59b97580bcca</p>
+<p>```</p>
+<p><img src="../../images/2024-12-07_trackers_screenshot-from-2024-12-07-10-02-42.png" alt="" loading="lazy"></p>
     </div>
     <div class="post-nav">
       <div><a href="algorithmic-composition.html">&larr; Algorithmic composition</a></div>

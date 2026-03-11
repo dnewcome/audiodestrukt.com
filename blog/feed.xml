@@ -5,7 +5,7 @@
     <link>https://audiodestrukt.com</link>
     <description>A poke in the ear with a sharp stick.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 Mar 2026 02:59:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Mar 2026 07:22:23 +0000</lastBuildDate>
     <atom:link href="https://audiodestrukt.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>Strings and things</title>
@@ -42,7 +42,7 @@
       <link>https://audiodestrukt.com/blog/posts/sound-libraries.html</link>
       <guid isPermaLink="true">https://audiodestrukt.com/blog/posts/sound-libraries.html</guid>
       <pubDate>Thu, 20 Feb 2025 14:05:31 +0000</pubDate>
-      <description>Sound libraries I’m trying to build Seq66 on OSX right now. I figured it would be straightforward since everything is mostly POSIX. Turns out that libasound isn’t really ported to mac. This led me to look into what other libraries are out there right now. http://libsound.io/ I have never heard of libsound. These all have such generic names that it’s…</description>
+      <description>Sound libraries I’m trying to build Seq66 on OSX right now. I figured it would be straightforward since everything is mostly POSIX. Turns out that `libasound` isn’t really ported to mac. This led me to look into what other libraries are out there right now. http://libsound.io/ I have never heard of libsound. These all have such generic names that it’s…</description>
     </item>    <item>
       <title>Recording rig</title>
       <link>https://audiodestrukt.com/blog/posts/recording-rig.html</link>

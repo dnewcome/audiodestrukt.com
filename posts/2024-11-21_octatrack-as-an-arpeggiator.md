@@ -17,4 +17,4 @@ Also the fact that the Octatrack can be set up for per-track pattern lengths mak
 
 I’m messing around with this a little bit and it’s got a lot of potential. I’ll see if I can modulate the actual notes in the pattern to form an actual arpeggiator but for now it’s really cool to be able to sync re-trigger patterns arp-style. This is something I was doing with the old Piz Plz MidiLooper plugin (super old and crashy now unfortunately, but I haven’t found anything quite like it).
 
-Update: as I was researching for this post I came across this video which I’m now re-watching. I like the idea of slightly off loops running. I didn’t actually try this yet but I will https://www.youtube.com/watch?v=pAG5VrTPUxs
+Update: as I was researching for this post I came across this video which I’m now re-watching. I like the idea of slightly off loops running. I didn’t actually try this yet but I will [https://www.youtube.com/watch?v=pAG5VrTPUxs](https://www.youtube.com/watch?v=pAG5VrTPUxs)

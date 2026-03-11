@@ -9,13 +9,15 @@ tags: hiking, nature, travel, walking, walks
 
 # Octatrack forgetfulness
 
-I was watching this video on Youtube and remembered that I have an Octatrack sitting here that I don’t use enough. https://www.youtube.com/watch?v=eqdczUpXy4c
+I was watching this video on Youtube and remembered that I have an Octatrack sitting here that I don’t use enough. [https://www.youtube.com/watch?v=eqdczUpXy4c](https://www.youtube.com/watch?v=eqdczUpXy4c)
 
 He’s using the Polybrute 12 along with an Octatrack to make a beat.
 
 I dug my Octatrack out and hooked it up. I had some random project loaded up that I forgot all about, that’s always fun. I created a new project (I always forget the project/set/part layout of these machines).
 
 Scrolly scroll to create a name. Why do we use hardware again?
+
+![](images/2024-11-20_octatrack-forgetfulness_octa.jpg)
 
 So the Octa doesn’t make any sounds of its own. It’s a recorder/sampler. I used my Minitaur to make some sounds. 
 

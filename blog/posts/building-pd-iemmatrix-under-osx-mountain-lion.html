@@ -188,6 +188,14 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
     .post-nav {
       display: flex;
       justify-content: space-between;
@@ -245,13 +253,19 @@
     </div>
     <div class="post-body">
 <h1>Building PD iemmatrix under OSX Mountain Lion</h1>
-<p>It’s often a trial by fire to build Pure Data externals despite cross-platform build systems like flext designed to make the job easier. I’ve blogged a little bit about getting some arcane externals to build before, so I’ll continue my quest to document my builds here. Iemmatrix is a matrix math external for Pure Data. Those of you working with PD will realize that there are native arrays but nothing that deals with two-dimensional data. Iemmatrix fills that void with some efficient methods of manipulating matrix data. As I noted before, 64bit versions of OSX will try to build 64bit libraries, so we have to take care of CFLAGS and LFLAGS appropriately. The one difference with iemmatrix is that it will try to build a shared library, and on my version of PD (0.43.4-extended OSX 32bit), this is not possible. The linker will link against the pd binary, which is not a shared library. I set the following environment variables</p>
+<p>It’s often a trial by fire to build Pure Data externals despite cross-platform build systems like flext designed to make the job easier. I’ve blogged a little bit about getting some <a href="https://audiodestrukt.wordpress.com/2013/02/04/building-vinylcontrol-pure-data-external-on-mac-os/">arcane externals to build before</a>, so I’ll continue my quest to document my builds here.</p>
+<p>Iemmatrix is a matrix math external for Pure Data. Those of you working with PD will realize that there are native arrays but nothing that deals with two-dimensional data. Iemmatrix fills that void with some efficient methods of manipulating matrix data.</p>
+<p>As I noted before, 64bit versions of OSX will try to build 64bit libraries, so we have to take care of CFLAGS and LFLAGS appropriately. The one difference with iemmatrix is that it will try to build a shared library, and on my version of PD (0.43.4-extended OSX 32bit), this is not possible. The linker will link against the pd binary, which is not a shared library.</p>
+<p>I set the following environment variables</p>
+<p>```</p>
 <p>$ export LDFLAGS="-arch i386" $ export CFLAGS="-arch i386"</p>
-<p>Before running configure, edit configure.ac and comment out the line that sets the -shared flag by prepending “dnl”:</p>
+<p>``` Before running configure, edit configure.ac and comment out the line that sets the -shared flag by prepending “dnl”:</p>
+<p>```</p>
 <p>dnl AC<em>CHECK</em>LDFLAGS([-shared])</p>
-<p>After running configure like this:</p>
+<p>``` After running configure like this:</p>
+<p>```</p>
 <p>$ ./configure --with-pd=/Applications/Pd-0.43.4-extended-20130105.app/Contents/Resources</p>
-<p>I was able to make and get the iemmatrix.pd_darwin binary.</p>
+<p>``` I was able to make and get the iemmatrix.pd_darwin binary.</p>
     </div>
     <div class="post-nav">
       <div><a href="guitar-pedal-resources.html">&larr; Guitar pedal resources</a></div>

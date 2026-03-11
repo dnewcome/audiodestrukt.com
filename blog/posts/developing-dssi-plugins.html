@@ -188,6 +188,14 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
     .post-nav {
       display: flex;
       justify-content: space-between;
@@ -245,19 +253,35 @@
     </div>
     <div class="post-body">
 <h1>Developing DSSI plugins</h1>
-<p>I was looking around for a sampler instrument on Linux to test my Pedal Fighter project with, and while I remembered Specimen from a while ago, I remembered that there weren’t many samplers out there apart from the Linux Sampler project (which I’ve had problems with in the past – way too complicated for quick setups). I dip my toes into the Linux audio development world every now and then, so I figured I’d take a look at the current state-of-the-art for Linux instrument plugins, DSSI (dizzy). DSSI is basically VSTi for Linux, or LADSPA for instruments depending on your viewpoint. It is a spec that we can conform with to enable our code to be hosted in different programs such as Ardour. I grabbed the DSSI development kit and compiled it. I had to grab the LADSPA SDK using APT (I’m using Ubuntu)</p>
+<p>I was looking around for a sampler instrument on Linux to test my Pedal Fighter project with, and while I remembered Specimen from a while ago, I remembered that there weren’t many samplers out there apart from the <a href="http://www.linuxsampler.org/">Linux Sampler project</a> (which I’ve had problems with in the past – way too complicated for quick setups).</p>
+<p>I dip my toes into the Linux audio development world every now and then, so I figured I’d take a look at the current state-of-the-art for Linux instrument plugins, <a href="http://dssi.sourceforge.net/">DSSI</a> (dizzy).</p>
+<p>DSSI is basically <a href="http://en.wikipedia.org/wiki/Virtual<em>Studio</em>Technology">VSTi</a> for Linux, or <a href="http://www.ladspa.org/">LADSPA</a> for instruments depending on your viewpoint. It is a <a href="http://dssi.sourceforge.net/RFC.html">spec</a> that we can conform with to enable our code to be hosted in different programs such as <a href="http://ardour.org/">Ardour</a>.</p>
+<p>I grabbed the DSSI development kit and compiled it. I had to grab the LADSPA SDK using <a href="http://en.wikipedia.org/wiki/Advanced<em>Packaging</em>Tool">APT</a> (I’m using Ubuntu)</p>
+<p>```</p>
 <p>$ sudo apt-get install ladspa-sdk</p>
-<p>After this I could build the sources using configure/make. However in order to get the reference Jack host to work we’ll need the libjack development package which includes the headers.</p>
+<p>``` After this I could build the sources using configure/make.</p>
+<p>However in order to get the reference Jack host to work we’ll need the libjack development package which includes the headers.</p>
+<p>```</p>
 <p>$ sudo apt-get install libjack-dev</p>
-<p>There are some other dependencies that I already had installed, but are worth mentioning. Liblo is the Lightweight OSC library. I started looking through the code and the host looked to complicated to start with (the reference jack-dssi-host is 2000 lines or so) so I started with trivial_synth.c under examples/. I looked around for an entry point. I noticed the following:</p>
+<p>``` There are some other dependencies that I already had installed, but are worth mentioning. Liblo is the <a href="http://liblo.sourceforge.net/">Lightweight OSC library</a>.</p>
+<p>I started looking through the code and the host looked to complicated to start with (the reference jack-dssi-host is 2000 lines or so) so I started with trivial_synth.c under examples/.</p>
+<p>I looked around for an entry point. I noticed the following:</p>
+<p>```</p>
 <p>#ifdef <strong>GNUC</strong> <strong>attribute</strong>((constructor)) void init() #else void _init() #endif</p>
-<p>_init(), is part of dlopen, which is used to load dynamic libraries at runtime. The init function constructs the plugin descriptors according to the LADSPA and DSSI specs.  The following function is specified in the LADSPA spec, and returns the descriptor when called.</p>
-<p>const LADSPA<em>Descriptor *ladspa</em>descriptor(unsigned long index) {     switch (index) {     case 0:     return tsLDescriptor;     default:     return NULL;     } }</p>
-<p>The descriptor is where we specify the functions we want to use as callbacks for things like processing the chunk of audio or defining input and output ports. The only thing further to understand is that the GUIs are separate standalone programs that communicate with the running plugin using OSC. You can start the GUI separately from the plugin and kill the GUI without affecting the execution of the plugin. I had some problems getting the GUIs for the sample projects to show up when running the reference Jack host though. In order to get things working I had to actually install everything on my system using</p>
+<p>``` _init(), is part of <a href="http://linux.die.net/man/3/dlopen">dlopen</a>, which is used to load dynamic libraries at runtime. The init function constructs the plugin descriptors according to the LADSPA and DSSI specs. </p>
+<p>The following function is specified in the <a href="http://gdam.ffem.org/ladspa-doc/ladspa-2.html">LADSPA spec</a>, and returns the descriptor when called.</p>
+<p>```</p>
+<p>const LADSPA<em>Descriptor *ladspa</em>descriptor(unsigned long index) {  switch (index) {  case 0:  return tsLDescriptor;  default:  return NULL;  } }</p>
+<p>``` The descriptor is where we specify the functions we want to use as callbacks for things like processing the chunk of audio or defining input and output ports.</p>
+<p>The only thing further to understand is that the GUIs are separate standalone programs that communicate with the running plugin using OSC. You can start the GUI separately from the plugin and kill the GUI without affecting the execution of the plugin.</p>
+<p>I had some problems getting the GUIs for the sample projects to show up when running the reference Jack host though. In order to get things working I had to actually install everything on my system using</p>
+<p>```</p>
 <p>$ sudo make install</p>
-<p>The commandline options for running a GUI are kind of cryptic so here is what the GUI command looks like when it runs automatically from the Jack reference host:</p>
+<p>``` The commandline options for running a GUI are kind of cryptic so here is what the GUI command looks like when it runs automatically from the Jack reference host:</p>
+<p>```</p>
 <p>$ /usr/local/lib/dssi/trivial<em>sampler/trivial</em>sampler<em>qt osc.udp://X200:12034/dssi/trivial</em>sampler/stereo<em>sampler/chan00 trivial</em>sampler.so stereo_sampler channel 0</p>
-<p>It looks like the GUIs are installed alongside the plugins using a folder structure that follows the naming convention of the shared object file. I’ll write some more once I’ve done some actual coding on a new plugin.</p>
+<p>``` It looks like the GUIs are installed alongside the plugins using a folder structure that follows the naming convention of the shared object file.</p>
+<p>I’ll write some more once I’ve done some actual coding on a new plugin.</p>
     </div>
     <div class="post-nav">
       <div><a href="meeblip-open-source-synth.html">&larr; Meeblip open source synth</a></div>

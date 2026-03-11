@@ -188,6 +188,14 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
     .post-nav {
       display: flex;
       justify-content: space-between;
@@ -245,10 +253,10 @@
     </div>
     <div class="post-body">
 <h1>Streaming performances</h1>
-<p>I’m starting to set up a rig for doing live performance streams. In order to do this I’m feeding the output of my setup to OBS. There are a few tricks for getting this to work the way I wanted it to. The main thing is that I have a multi-channel audio interface (Focusrite Scarlett) and I want to use inputs other than the first two. For some reason OBS will only support the first two inputs of an interface out of the box. Fortunately there is an ASIO plugin available <a href="https://github.com/Andersama/obs-asio/releases">https://github.com/Andersama/obs-asio/releases</a></p>
+<p>I’m starting to set up a rig for doing live performance streams. In order to do this I’m feeding the output of my setup to OBS. There are a few tricks for getting this to work the way I wanted it to. The main thing is that I have a multi-channel audio interface (Focusrite Scarlett) and I want to use inputs other than the first two. For some reason OBS will only support the first two inputs of an interface out of the box. Fortunately there is an ASIO plugin available <a href="https://github.com/Andersama/obs-asio/releases"><a href="https://github.com/Andersama/obs-asio/releases">https://github.com/Andersama/obs-asio/releases</a></a></p>
 <p>After installing this plugin I saw an additional audio input capture device called ASIO Input Capture which allows you to select any available input.</p>
-<p>Capturing outputs is a little different. Apparently most ASIO devices don’t actually put data through the driver on output so even if we select an output it won’t have any audio. Newer interfaces like the 3rd generation Focusrite Scarlett seem to allow hardware loopbacks that you can set up in the driver. Otherwise there are audio loopback cables such as LoopBe and <a href="https://vb-audio.com/Cable/">https://vb-audio.com/Cable/</a></p>
-<p>Another alternative is to use Reaper’s rearoute feature. This means you have to have Reaper running. If you want to output from the DAW this is sort of a requirement since outputs aren’t available. I’m curious if Ableton has something similar. Maybe Rewire would work for this. <a href="https://forum.cockos.com/showthread.php?t=63358">https://forum.cockos.com/showthread.php?t=63358</a></p>
+<p>Capturing outputs is a little different. Apparently most ASIO devices don’t actually put data through the driver on output so even if we select an output it won’t have any audio. Newer interfaces like the 3rd generation Focusrite Scarlett seem to allow hardware loopbacks that you can set up in the driver. Otherwise there are audio loopback cables such as LoopBe and <a href="https://vb-audio.com/Cable/"><a href="https://vb-audio.com/Cable/">https://vb-audio.com/Cable/</a></a></p>
+<p>Another alternative is to use Reaper’s rearoute feature. This means you have to have Reaper running. If you want to output from the DAW this is sort of a requirement since outputs aren’t available. I’m curious if Ableton has something similar. Maybe Rewire would work for this. <a href="https://forum.cockos.com/showthread.php?t=63358"><a href="https://forum.cockos.com/showthread.php?t=63358">https://forum.cockos.com/showthread.php?t=63358</a></a></p>
 <p>For now I have a setup with two cameras, one overhead and one facing me when I perform. So far my little SFF PC is handling things ok. I’m streaming some visuals over using NDI from another machine. I had to install the NDI plugin for OBS in order to get the visuals streaming to work. I also installed a plugin that allows me to automatically change scenes during the stream so I can move between cameras automatically. This is a key thing for doing a stream without assistance. Most DJ streams cycle between cameras and having the ability to do this on the fly is really great. The plugin is called advanced scene switcher. It takes a little configuration and is a little confusing at first. Make sure it’s actually running otherwise nothing happens!</p>
 <p>So far OBS has been able to handle everything and now that I know about obs-asio the audio side of the equation is working out. I have the first two channels free for guitar input and I can route everything the way I need to for now.</p>
     </div>

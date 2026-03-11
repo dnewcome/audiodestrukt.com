@@ -15,6 +15,8 @@ I was relatively successful in doing that and some kind soul on the DnB forum Do
 
 Anyway on to this. I’m treating Reaktor as a problem solving tool. Sort of like Max 4 Live maybe. Here is a screenshot:
 
+![](images/2024-11-19_reaktor-drum-programming_image_2024-11-19_085318998.png)
+
 The idea here is to do some layering and drum synth things in order to make a kick ass flexible drum synth. I started this idea back when I couldn’t find many good drum synths. Now I think there are some pretty good ones like the Kick etc.
 
 Anyway this is a good reminder that Reaktor can be a really cool tool for prototyping what you want quickly in the case that no VST exists for what you are trying to do.

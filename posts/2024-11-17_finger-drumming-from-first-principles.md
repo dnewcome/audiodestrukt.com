@@ -19,7 +19,7 @@ Rudiments are the combination of these basic principles into little bits of musc
 
 Timing is just the interval between consecutive hits of the drums. Independence is keeping different hands/feet coordinated in time and space.
 
-Ok so now we have some basic things to build on. The kit is positioned in space. Different drummers may put the hi hat higher or lower. Or the snare higher or lower depending on how he likes to hit rim shots. Also, rim shots. That’s another first  principle that I just thought of. I’m not sure how that’s going to relate to pad drumming yet.
+Ok so now we have some basic things to build on. The kit is positioned in space. Different drummers may put the hi hat higher or lower. Or the snare higher or lower depending on how he likes to hit rim shots. Also, rim shots. That’s another first principle that I just thought of. I’m not sure how that’s going to relate to pad drumming yet.
 
 So with finger drumming. We have ten fingers arranged between two hands. That kind of changes the game a little bit. We can still use our feet if we want to using pedals. I’m going to ignore that for now though.
 
@@ -49,7 +49,7 @@ Two finger rolls. If the pads are sensitive enough we can use the index and midd
 
 We have some other things on pad controllers that are like variations of a drum hit. On a real kit we probably don’t have two kick drums. If we do we have a double pedal to manage that. On a pad controller we might have a whole row of kicks and another row of snares.
 
-Are there setups that we need to categorize here? What makes sense. We aren’t shackled to the practicality of having only a single trap kit set up on stage. We have a whole universe of kits at  our disposal. The sky is the limit, but our brains can only take so much. We must reach a middle ground. A reasonable compromise.
+Are there setups that we need to categorize here? What makes sense. We aren’t shackled to the practicality of having only a single trap kit set up on stage. We have a whole universe of kits at our disposal. The sky is the limit, but our brains can only take so much. We must reach a middle ground. A reasonable compromise.
 
 Maybe we should think about these things like guitar chords instead? Oh my aching head. Let’s think about arpeggio patterns and arpeggiated chords. Is this a better analogy than the trap kit?
 

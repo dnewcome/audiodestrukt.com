@@ -188,6 +188,14 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
     .post-nav {
       display: flex;
       justify-content: space-between;
@@ -245,16 +253,21 @@
     </div>
     <div class="post-body">
 <h1>Simple USB Midi footswitch using Arduino</h1>
-<p>I wrote about getting USB Midi working on the Arduino recently, and now here is my first attempt at getting it to do something useful. I have a momentary pushbutton installed in a small plastic junction box from the  hardware store. I need to update my prototyping techniques notes here, as I’ve begun to explore the use of cheap plastic enclosures since they are so easy to work with compared to the difficulty of drilling galvanized metal boxes. The purpose of this project was to test out my approach for reading the Arduino’s inputs and sending a corresponding Midi message out. In this test I wanted to send note-on and note-off messages when the button was pushed and released. I decided to use middle C on the keyboard which is C4 or Midi note number 60. The code is a simple polling loop with state so that we can send messages only when the state changes, in other words, we can hold the button down without sending duplicate messages every polling cycle. Using interrupts would be a nicer way of handling this, but I wanted to keep this test as simple as possible for now. Here is the code:</p>
-<p>#define MIDI<em>COMMAND</em>NOTE<em>OFF       0x80 #define MIDI</em>COMMAND<em>NOTE</em>ON        0x90 #define MIDI<em>COMMAND</em>CONTROL_CHANGE 0xB0</p>
+<p>I wrote about getting USB Midi working on the Arduino recently, and now here is my first attempt at getting it to do something useful. I have a momentary pushbutton installed in a small plastic junction box from the hardware store. I need to update my prototyping techniques notes here, as I’ve begun to explore the use of cheap plastic enclosures since they are so easy to work with compared to the difficulty of drilling galvanized metal boxes.</p>
+<p>The purpose of this project was to test out my approach for reading the Arduino’s inputs and sending a corresponding Midi message out. In this test I wanted to send note-on and note-off messages when the button was pushed and released. I decided to use middle C on the keyboard which is C4 or Midi note number 60. The code is a simple polling loop with state so that we can send messages only when the state changes, in other words, we can hold the button down without sending duplicate messages every polling cycle.</p>
+<p>Using interrupts would be a nicer way of handling this, but I wanted to keep this test as simple as possible for now.</p>
+<p>Here is the code:</p>
+<p>```</p>
+<p>#define MIDI<em>COMMAND</em>NOTE<em>OFF 0x80 #define MIDI</em>COMMAND<em>NOTE</em>ON 0x90 #define MIDI<em>COMMAND</em>CONTROL_CHANGE 0xB0</p>
 <p>int button_state = 0;</p>
-<p>/<em> The format of the message to send via serial </em>/ typedef struct {     uint8<em>t command;     uint8</em>t channel;     uint8<em>t data2;     uint8</em>t data3; } t_midiMsg;</p>
+<p>/<em> The format of the message to send via serial </em>/ typedef struct {  uint8<em>t command;  uint8</em>t channel;  uint8<em>t data2;  uint8</em>t data3; } t_midiMsg;</p>
 <p>void setup(); void loop();</p>
-<p>void setup()  {     pinMode(9, INPUT);          digitalWrite(9, HIGH); /<em> enable internal pullups </em>/</p>
-<p>    Serial.begin(115200);     delay(200);     }</p>
-<p>void loop()  {     int button<em>state</em>prev = button<em>state;     button</em>state = digitalRead(9);</p>
-<p>    t_midiMsg msg;</p>
-<p>    /<em> Send the notes </em>/     if( button<em>state == 1 && button</em>state<em>prev == 0 ) {         msg.command = MIDI</em>COMMAND<em>NOTE</em>ON; 	msg.channel = 1; 	msg.data2   = 60; /<em> middle c </em>/ 	msg.data3   = 127;	/<em> max velocity </em>/ 	Serial.write((uint8<em>t <em>)&msg, sizeof(msg));     }     else if( button</em>state == 0 && button<em>state</em>prev == 1 ) {         msg.command = MIDI<em>COMMAND</em>NOTE<em>OFF; 	msg.channel = 1; 	msg.data2   = 60; /</em> middle c <em>/ 	msg.data3   = 127;	/</em> max velocity <em>/ 	Serial.write((uint8</em>t </em>)&msg, sizeof(msg));     }  }</p>
+<p>void setup()  {  pinMode(9, INPUT);   digitalWrite(9, HIGH); /<em> enable internal pullups </em>/</p>
+<p> Serial.begin(115200);  delay(200);  }</p>
+<p>void loop()  {  int button<em>state</em>prev = button<em>state;  button</em>state = digitalRead(9);</p>
+<p> t_midiMsg msg;</p>
+<p> /<em> Send the notes </em>/  if( button<em>state == 1 && button</em>state<em>prev == 0 ) {  msg.command = MIDI</em>COMMAND<em>NOTE</em>ON; 	msg.channel = 1; 	msg.data2 = 60; /<em> middle c </em>/ 	msg.data3 = 127;	/<em> max velocity </em>/ 	Serial.write((uint8<em>t <em>)&msg, sizeof(msg));  }  else if( button</em>state == 0 && button<em>state</em>prev == 1 ) {  msg.command = MIDI<em>COMMAND</em>NOTE<em>OFF; 	msg.channel = 1; 	msg.data2 = 60; /</em> middle c <em>/ 	msg.data3 = 127;	/</em> max velocity <em>/ 	Serial.write((uint8</em>t </em>)&msg, sizeof(msg));  }  }</p>
+<p>```</p>
     </div>
     <div class="post-nav">
       <div><a href="alesis-dual-zone-snare-trigger-teardown.html">&larr; Alesis dual zone snare trigger teardown</a></div>

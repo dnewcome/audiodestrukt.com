@@ -25,6 +25,8 @@ Another snafu was the jack plate. This happened due to the way I routed the edge
 
 This post turned out to be just a random string of thoughts on what I have gone through so far rather than any sort of cohesive thing, I apologize if you are still reading here. A ton of ad-hoc thoughts and processes have come about as a result of my building a prototype and I’m still trying to come up with a repeatable way of building the guitar efficiently in a way that I will be able to manufacture a run of say 10 instruments myself without taking a year to do it.
 
+![](images/2023-01-23_guitar-design_image.png)
+
 This is what the template looks like when applied to a random Strat outline that I downloaded. It’s parametric so I can specify where each component goes on the center line, but I’m still looking into how to automatically figure out where the neck pocket and bridge position need to go based on the scale length and the neck. One template I found marked the position of the 21st fret so maybe that’s common in the luthier world. Ideally I’d like to take a random outline, establish a centerline and be able to play with positioning in a way that will always produce a playable instrument. I need to figure out a critical measurement for a given neck that I might buy so that the scale length works out. I was a little perplexed the first time I bought a neck and it didn’t have any holes drilled in it. So it’s a design decision how deep in to set the neck really and even where to drill it.
 
 One other thing that I found unexpectedly difficult was drilling the bridge pin holes. They have to be dead-on for the bridge to fit down over the pins and they have to be exactly the right distance away from the nut for the intonation to be correct. Well, the latter isn’t totally true, since the bridges can generally be adjusted and each string requires some fine adjustment anyway. The former was hard and I screwed it up twice trying to do it even with a drill press. I ended up filling the holes in with dowels and trying again. Even with a press, I needed brad-point drill bits to get the center correct and they had to be marked perfectly with a punch first. Also the bridges I was using didn’t have any data so I was measuring everything with a caliper.
@@ -35,6 +37,8 @@ The last thing is the neck pocket. If I want to use a single routing template I 
 
 Creating drawings in Inkscape requires changing the units in the “drawing” menu and rescaling the image. It took me a while to get this right but it seems repeatable for getting svg files that can be used in OpenScad with correct dimensions.
 
-The critical detail here is the “resize to content” and the scale factor. For my system the scale factor was 0.26 approximately. It  seems to be automatically calculated by Inkscape and seems to work. The default unit seems to be the pixel.
+![](images/2023-01-23_guitar-design_image-1.png)
 
-BTW I’m publishing this code as a project called grout https://github.com/dnewcome/grout
+The critical detail here is the “resize to content” and the scale factor. For my system the scale factor was 0.26 approximately. It seems to be automatically calculated by Inkscape and seems to work. The default unit seems to be the pixel.
+
+BTW I’m publishing this code as a project called grout [https://github.com/dnewcome/grout](https://github.com/dnewcome/grout)

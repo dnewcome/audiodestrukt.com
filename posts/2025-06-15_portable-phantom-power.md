@@ -9,6 +9,8 @@ tags: gaming, gear, music, technology, travel
 
 # Portable phantom power
 
+![](images/2025-06-15_portable-phantom-power_img_9529.jpg)
+
 I was on a quest for a small phantom-powered mic pre that could be powered by batteries for one of my live rigs. I had a flute and various small instruments to play along with my synths and I wanted to have a single condenser mic set up and running through my effects. I figured this would be a pretty easy ask but I ended up getting a bunch of things before I found something that worked.
 
 First off was an inexpensive Behringer audio interface that I already had. The UM2 has an XLR mic input on it that supports 48v phantom power. I figured I’d be able to just power it from a USB power bank and just use it with direct monitoring enabled. I was wrong. The interface does not power up unless actually connected to a USB host, not just power.

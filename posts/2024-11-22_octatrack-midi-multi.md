@@ -9,6 +9,8 @@ tags: audio, MIDI, music, music-production, reviews
 
 # Octatrack MIDI multi
 
+![](images/2024-11-22_octatrack-midi-multi_img_8671.jpg)
+
 I’m still jamming on my Octatrack today. I hooked up my Waldorf Blofeld to the mix. Same kind of setup where I have MIDI going out of the OT and into the Blofeld.
 
 I chose the Blofeld for this experiment because it’s 16 part multitimbral and I can trigger a few different sounds at once from different tracks on the OT.

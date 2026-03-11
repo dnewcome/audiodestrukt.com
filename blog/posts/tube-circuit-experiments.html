@@ -188,6 +188,14 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
     .post-nav {
       display: flex;
       justify-content: space-between;
@@ -245,7 +253,14 @@
     </div>
     <div class="post-body">
 <h1>Tube circuit experiments</h1>
-<p>Here at Audiodestrukt, no esoteric and potentially aurally destructive technology goes unexploited, even those technologies that are over 50 years old. Well, in this case the parts I’m using are modern versions of the early stuff, but it’s still pretty cool. I had some 12AX7 preamp tubes on hand and after running across this tube headphone amp powered by a 12V supply I decided to sit down at the bench and see if I could get a low-voltage circuit working with one of these tubes. Now, normally when dealing with tube circuits, the voltages involved are well into the several hundreds of volts. The power levels here can be lethal. I think it’s nice to be able to experiment first with low voltage circuits before diving into pentode power amp circuits with 600V plate voltages. Using the headphone amplifier schematic as a guide, I constructed the simplest class-A single-ended amplifier circuit possible. I read a few other articles on biasing the circuit. I would have expected to see a voltage divider at the screen input of the tube, but we can also change the effective bias point by raising the voltage of the cathode.  I didn’t have a tube socket so I just wrapped wires around the pins of the tube. I got the pinout from here. Note that the pinout is given looking at the tube with the pins pointing toward the viewer. With a simple common cathode amplifier circuit on the breadboard, I played around with different signal levels and saw how the circuit clipped softly and dare I say it, tube-like. I’ve got to play around again with a transistor circuit to see how they differ, but I have to say I saw what I was looking for on the scope. I recorded a short video of me playing with the input signal and showing the output on the oscilloscipe. I’m thinking that this could be used to build a small guitar pedal or amplifier. I might do a project for audiohackers involving this stuff.</p>
+<p>Here at Audiodestrukt, no esoteric and potentially aurally destructive technology goes unexploited, even those technologies that are over 50 years old.</p>
+<p>Well, in this case the parts I’m using are modern versions of the early stuff, but it’s still pretty cool.</p>
+<p>I had some 12AX7 preamp tubes on hand and after running across this <a href="http://diyaudioprojects.com/Solid/12AU7-IRF510-LM317-Headamp/">tube headphone amp</a> powered by a 12V supply I decided to sit down at the bench and see if I could get a low-voltage circuit working with one of these tubes.</p>
+<p>Now, normally when dealing with tube circuits, the voltages involved are well into the several hundreds of volts. The power levels here can be lethal. I think it’s nice to be able to experiment first with low voltage circuits before diving into pentode power amp circuits with 600V plate voltages.</p>
+<p>Using the headphone amplifier schematic as a guide, I constructed the simplest class-A single-ended amplifier circuit possible. I read a <a href="http://en.wikipedia.org/wiki/Single-ended_triode">few other articles</a> on biasing the circuit. I would have expected to see a voltage divider at the screen input of the tube, but we can also change the effective bias point by raising the voltage of the cathode. </p>
+<p>I didn’t have a tube socket so I just wrapped wires around the pins of the tube. I got the pinout <a href="http://en.wikipedia.org/wiki/12AX7">from here</a>. Note that the pinout is given looking at the tube with the pins pointing toward the viewer.</p>
+<p>With a simple common cathode amplifier circuit on the breadboard, I played around with different signal levels and saw how the circuit clipped softly and dare I say it, tube-like. I’ve got to play around again with a transistor circuit to see how they differ, but I have to say I saw what I was looking for on the scope. I recorded a <a href="http://www.youtube.com/watch?v=RdZVH8bsD7k">short video</a> of me playing with the input signal and showing the output on the oscilloscipe.</p>
+<p>I’m thinking that this could be used to build a small guitar pedal or amplifier. I might do a project for audiohackers involving this stuff.</p>
     </div>
     <div class="post-nav">
       <div><a href="arduino-pedalfighter-project.html">&larr; Arduino Pedal Fighter project</a></div>

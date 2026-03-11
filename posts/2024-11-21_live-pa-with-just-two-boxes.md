@@ -13,6 +13,8 @@ I’m calling DAWless Live PA from now on. That’s what it used to be called an
 
 Grooveboxes with audio inputs make this setup so much more compact. You don’t need a mixer.
 
+![](images/2024-11-21_live-pa-with-just-two-boxes_img_8662-2.jpg)
+
 Of course the Octatrack has 4 inputs, or 2 stereo if you are that kind of person. It’s an overachiever in this way although I wish it had 8 inputs. Or maybe I don’t. Maybe that’s a creative limitation. Anyway the market is ripe for someone to come up with an 8 track digital mixer/sampler/sequencer that has a good workflow and is less scary than the Octa.
 
 I will take a moment here to say that the Minitaur is one of the most amazing live synths Everything just sounds so great and it’s capable of a diversity of sounds that makes it possible to do an entire track with just the Mini.

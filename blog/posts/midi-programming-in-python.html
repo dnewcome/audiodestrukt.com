@@ -188,6 +188,14 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
     .post-nav {
       display: flex;
       justify-content: space-between;
@@ -245,22 +253,31 @@
     </div>
     <div class="post-body">
 <h1>Midi programming in Python</h1>
-<p>I’ve been playing with different ways to script MIDI I/O over the last year or so. There are a ton of different ways to skin this cat including special-purpose languages like PD and KeyKit. However, it’s nice to be able to do some coding in a more general purpose language if for no other reason that other programmers can see what the hell you’re trying to do without wrapping their head around some bizarre environment. What I’ve found is that for the most part, MIDI has been relegated to game libraries and low-level libraries like PortMidi and RtMidi. Some of these libraries are also kind of old and rely on outdated midi device interfaces (OSS, etc.). The game libraries (pygame, rubygame) make things relatively easy to get started, but I’m not a huge fan of dealing with things in a framerate-based environment. Also if you aren’t careful, your midi program will consume 100% of your cpu like a badly-written game. I’m spinning up on python for a new gig, so I figured I’d try out pygame instead of rubygame like I did last time. I started with some kind of hello world app. I’m on OSX so I had some issues with fonts in the test apps that I dug up around the Web. To get pygame installed I first installed SDL using homebrew:</p>
+<p>I’ve been playing with different ways to <a href="https://audiodestrukt.wordpress.com/2012/11/26/midi-with-ruby/">script MIDI I/O</a> over the last year or so. There are a ton of different ways to skin this cat including special-purpose languages like <a href="http://puredata.info/">PD</a> and <a href="http://nosuch.com/keykit/">KeyKit</a>. However, it’s nice to be able to do some coding in a more general purpose language if for no other reason that other programmers can see what the hell you’re trying to do without wrapping their head around some bizarre environment.</p>
+<p>What I’ve found is that for the most part, MIDI has been relegated to game libraries and low-level libraries like <a href="http://portmedia.sourceforge.net/portmidi/">PortMidi</a> and <a href="http://www.music.mcgill.ca/~gary/rtmidi/">RtMidi</a>. Some of these libraries are also kind of old and rely on outdated midi device interfaces (<a href="http://www.opensound.com/">OSS</a>, etc.).</p>
+<p>The game libraries (pygame, rubygame) make things relatively easy to get started, but I’m not a huge fan of dealing with things in a framerate-based environment. Also if you aren’t careful, your midi program will consume 100% of your cpu like a badly-written game.</p>
+<p>I’m spinning up on python for a new gig, so I figured I’d try out pygame instead of rubygame like I did last time. I started with some kind of hello world app. I’m on OSX so I had some issues with fonts in the test apps that I dug up around the Web.</p>
+<p>To get pygame installed I first installed SDL using homebrew:</p>
 <h1>brew install sdl</h1>
 <p>Then I installed pygame using pip:</p>
 <h1>pip install hg+<a href="http://bitbucket.org/pygame/pygame">http://bitbucket.org/pygame/pygame</a></h1>
-<p>Note that I installed directly from bitbucket, due to an error in the build that has been fixed in the latest sources. The pygame MIDI docs, along with some sample pygame code got me as far as reading my Korg NanoPad and dumping the MIDI events to the console. Here is the code:</p>
+<p>Note that I installed directly from bitbucket, due to an <a href="https://bitbucket.org/pygame/pygame/issue/139/sdlh-not-found-even-thought-it-exists">error in the build</a> that has been fixed in the latest sources.</p>
+<p>The <a href="http://www.pygame.org/docs/ref/midi.html">pygame MIDI docs</a>, along with some sample pygame code got me as far as reading my Korg NanoPad and dumping the MIDI events to the console. Here is the code:</p>
+<p>```</p>
 <p>import sys, pygame, pygame.midi</p>
 <p> # set up pygame  pygame.init()  pygame.midi.init()</p>
-<p> # list all midi devices  for x in range( 0, pygame.midi.get<em>count() ):      print pygame.midi.get</em>device_info(x)</p>
+<p> # list all midi devices  for x in range( 0, pygame.midi.get<em>count() ):  print pygame.midi.get</em>device_info(x)</p>
 <p> # open a specific midi device  inp = pygame.midi.Input(2)</p>
-<p> # run the event loop  while True:      if inp.poll():          # no way to find number of messages in queue          # so we just specify a high max value          print inp.read(1000)</p>
-<p>     # wait 10ms - this is arbitrary, but wait(0) still resulted      # in 100% cpu utilization      pygame.time.wait(10)</p>
-<p>The output of the above looks something like this after starting up and hitting a pad on my NanoPad controller:</p>
+<p> # run the event loop  while True:  if inp.poll():  # no way to find number of messages in queue  # so we just specify a high max value  print inp.read(1000)</p>
+<p> # wait 10ms - this is arbitrary, but wait(0) still resulted  # in 100% cpu utilization  pygame.time.wait(10)</p>
+<p>``` The output of the above looks something like this after starting up and hitting a pad on my NanoPad controller:</p>
+<p>```</p>
 <p>'CoreMIDI', 'IAC Driver Bus 1', 1, 0, 0) ('CoreMIDI', 'IAC Driver IAC Bus 2', 1, 0, 0) ('CoreMIDI', 'nanoPAD PAD', 1, 0, 0) ('CoreMIDI', 'IAC Driver Bus 1', 0, 1, 0) ('CoreMIDI', 'IAC Driver IAC Bus 2', 0, 1, 0) ('CoreMIDI', 'nanoPAD CTRL', 0, 1, 0) [[[144, 55, 107, 0], 4993]] [[[128, 55, 64, 0], 5059]]</p>
-<p>I’ve enumerated the MIDI input and output devices in the code, and the first 3 items in the list above are the inputs and the rest are the outputs. You can see the MIDI data in the two python lists at the end. When I hit ctrl-c to stop the program I get an error from PortMidi. This probably isn’t a big deal, but I suppose exiting the program should be handled more gracefully and/or this exception should be handled. Not sure what they pythonic/pygameic way of doing this is yet, but here is the trace:</p>
-<p>Traceback (most recent call last):   File "midi.py", line 21, in <module>     pygame.time.wait(10) KeyboardInterrupt Exception Exception: Exception("PortMidi: `Bad pointer'",) in <pypm.Input object at 0x1038f3df0> ignored</p>
-<p>I came across some interesting code in the course of getting this stuff working. There is apparently a pygame event type MIDI that can be consumed just like a mouse move or keypress event. However it looks like we still need to pull the data using read() anyway, so I’m not sure if this is useful.</p>
+<p>``` I’ve enumerated the MIDI input and output devices in the code, and the first 3 items in the list above are the inputs and the rest are the outputs. You can see the MIDI data in the two python lists at the end.</p>
+<p>When I hit ctrl-c to stop the program I get an error from PortMidi. This probably isn’t a big deal, but I suppose exiting the program should be handled more gracefully and/or this exception should be handled. Not sure what they pythonic/pygameic way of doing this is yet, but here is the trace:</p>
+<p>```</p>
+<p>Traceback (most recent call last):  File "midi.py", line 21, in <module>  pygame.time.wait(10) KeyboardInterrupt Exception Exception: Exception("PortMidi: `Bad pointer'",) in <pypm.Input object at 0x1038f3df0> ignored</p>
+<p>``` I came across some <a href="https://bitbucket.org/pygame/pygame/src/25e3f2cee879/examples/midi.py">interesting code</a> in the course of getting this stuff working. There is apparently a pygame event type MIDI that can be consumed just like a mouse move or keypress event. However it looks like we still need to pull the data using read() anyway, so I’m not sure if this is useful.</p>
     </div>
     <div class="post-nav">
       <div><a href="using-kinkect-as-a-midi-controller.html">&larr; Using the Kinect as a MIDI controller</a></div>

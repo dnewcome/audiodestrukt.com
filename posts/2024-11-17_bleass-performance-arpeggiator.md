@@ -15,6 +15,10 @@ Refer to my previous articles when setting up arps in Ableton.
 
 Here is a screenshot of an automation track within the arpeggiator plugin. This is a cool way of getting some variation in the arp pattern.
 
+![](images/2024-11-17_bleass-performance-arpeggiator_image_2024-11-17_204919112.png)
+
 Ok it’s super cool there are two LFOs and two performance X-Y control pads that you can assign to control various parts of the arpeggiator like pattern skip and restart. This is super cool
+
+![](images/2024-11-17_bleass-performance-arpeggiator_image_2024-11-17_205300163.png)
 
 I’m going to mess with this one a little more tonight. It’s pretty inspiring.

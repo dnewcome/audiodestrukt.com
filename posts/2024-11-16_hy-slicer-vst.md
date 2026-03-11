@@ -15,9 +15,11 @@ Later on I discovered Geist and similar apps. FL has a slicer too. I tried to li
 
 Now I’m looking again. I found one called HY-Slicer. Going to try it out right now.
 
-https://hy-plugins.com/product/hy-slicer2/
+[https://hy-plugins.com/product/hy-slicer2/](https://hy-plugins.com/product/hy-slicer2/)
 
 OK I tried to resize the window and it froze. Not a good start. It’s a very busy window. Live just completely froze on me.
+
+![](images/2024-11-16_hy-slicer-vst_image_2024-11-16_142146463.png)
 
 There’s a lot going on there.
 

@@ -11,6 +11,8 @@ tags: fashion, music, news, reviews, technology
 
 I bought this little Bluetooth MIDI controller on a whim when an ad showed up on my Instagram feed.
 
+![](images/2024-11-21_first-look-at-the-this-is-noise-nm2_img_8670.jpg)
+
 It really is tiny. It uses little soft tactile switches that are non-clicky. I ordered some of these same switches for my own projects but never got around to actually using them.
 
 I connected it up to my Macbook Air using the Audio/Midi control panel. Apparently MIDI devices don’t show up in the main Bluetooth configuration panel.

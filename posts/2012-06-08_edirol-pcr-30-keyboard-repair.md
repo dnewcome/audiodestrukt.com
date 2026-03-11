@@ -27,3 +27,25 @@ I’ve had to tear down my PCR-30 more times than I can count now. I’m startin
 				margin-left: 0;
 			}
 			/* see gallery_shortcode() in wp-includes/media.php */
+
+![](images/2012-06-08_edirol-pcr-30-keyboard-repair_contact-strip.jpg)
+
+![](images/2012-06-08_edirol-pcr-30-keyboard-repair_defroster-paint.jpg)
+
+![](images/2012-06-08_edirol-pcr-30-keyboard-repair_finished-contact-strip.jpg)
+
+![](images/2012-06-08_edirol-pcr-30-keyboard-repair_keyboard-detail.jpg)
+
+![](images/2012-06-08_edirol-pcr-30-keyboard-repair_keyboard-rear-springs.jpg)
+
+![](images/2012-06-08_edirol-pcr-30-keyboard-repair_main-board.jpg)
+
+![](images/2012-06-08_edirol-pcr-30-keyboard-repair_overview.jpg)
+
+![](images/2012-06-08_edirol-pcr-30-keyboard-repair_removed-keys.jpg)
+
+![](images/2012-06-08_edirol-pcr-30-keyboard-repair_removing-contacts.jpg)
+
+![](images/2012-06-08_edirol-pcr-30-keyboard-repair_removing-keyboard.jpg)
+
+![](images/2012-06-08_edirol-pcr-30-keyboard-repair_removing-top.jpg)

@@ -188,6 +188,14 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
     .post-nav {
       display: flex;
       justify-content: space-between;
@@ -248,13 +256,17 @@
 <p>I’m interested in getting something working headless for a project. I did some research and found the Non mixer stuff. I looked like what I wanted since it’s a way of decoupling the parts of a DAW and using them independently. I’m interested mostly in the mixer.</p>
 <p>However it looks like these are still UI-based components that can’t be run without at least a virtual framebuffer. I’d like to find something that doesn’t have any UI at all.</p>
 <p>Well it turns out that Reaper on Linux can be built as a headless app with some flags to libswell. Swell is an abstraction library for UI functionality so that the app can be ported between other non-Windows systems.</p>
-<p>I’m going to give this a shot and see where I get. So far I’m getting errors when trying to build. <a href="https://forum.cockos.com/showthread.php?t=263372">https://forum.cockos.com/showthread.php?t=263372</a></p>
+<p>I’m going to give this a shot and see where I get. So far I’m getting errors when trying to build. <a href="https://forum.cockos.com/showthread.php?t=263372"><a href="https://forum.cockos.com/showthread.php?t=263372">https://forum.cockos.com/showthread.php?t=263372</a></a></p>
 <p>I tried changing to clang as the compiler and still got some errors.</p>
-<p>swell-wnd-generic.cpp:4694:32: error: use of bitwise '|' with boolean operands [-Werror,-Wbitwise-instead-of-logical]                 bool changed = lvs->clear<em>sel() | lvs->set</em>sel(offs,true);                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                                                 || swell-wnd-generic.cpp:4694:32: note: cast one or both operands to int to silence this warning 1 error generated.</p>
+<p>```</p>
+<p>swell-wnd-generic.cpp:4694:32: error: use of bitwise '|' with boolean operands [-Werror,-Wbitwise-instead-of-logical]  bool changed = lvs->clear<em>sel() | lvs->set</em>sel(offs,true);  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  || swell-wnd-generic.cpp:4694:32: note: cast one or both operands to int to silence this warning 1 error generated.</p>
+<p>```</p>
 <p>Compiling with GCC I got the following errors:</p>
-<p>swell-miscdlg-generic.cpp: In function ‘LRESULT swellFileSelectProc(HWND, UINT, WPARAM, LPARAM)’: swell-types.h:94:31: error: value computed is not used [-Werror=unused-value]    94 | #define CreateDirectory(x,y) (!mkdir((x),0755))       |                              ~^~~~~~~~~~~~~~~~~ swell-miscdlg-generic.cpp:855:22: note: in expansion of macro ‘CreateDirectory’   855 |                      CreateDirectory(buf,NULL);       |                      ^~~~~~~~~~~~~~~ In file included from swell-miscdlg-generic.cpp:42: In function ‘bool WDL<em>hasStringsEx2(const char<strong>, int, const LineParser<em>)’,     inlined from ‘bool WDL</em>hasStrings(const char</em>, const LineParser<em>)’ at ../has<em>strings.h:446:27,     inlined from ‘void BrowseFile</em>State::viewlist<em>sort(const char</em>)’ at swell-miscdlg-generic.cpp:230:40: ../has</em>strings.h:248:28: error: array subscript 1 is outside array bounds of ‘const char [1]’ [-Werror=array-bounds]   248 |     if (n[0] == '(' && !n[1] && !lp->gettoken_quotingchar(x))       |                         ~~~^ cc1plus: all warnings being treated as errors make: </strong>* [<builtin>: swell-miscdlg-generic.o] Error 1</p>
+<p>```</p>
+<p>swell-miscdlg-generic.cpp: In function ‘LRESULT swellFileSelectProc(HWND, UINT, WPARAM, LPARAM)’: swell-types.h:94:31: error: value computed is not used [-Werror=unused-value]  94 | #define CreateDirectory(x,y) (!mkdir((x),0755))  | ~^~~~~~~~~~~~~~~~~ swell-miscdlg-generic.cpp:855:22: note: in expansion of macro ‘CreateDirectory’  855 | CreateDirectory(buf,NULL);  | ^~~~~~~~~~~~~~~ In file included from swell-miscdlg-generic.cpp:42: In function ‘bool WDL<em>hasStringsEx2(const char<strong>, int, const LineParser<em>)’,  inlined from ‘bool WDL</em>hasStrings(const char</em>, const LineParser<em>)’ at ../has<em>strings.h:446:27,  inlined from ‘void BrowseFile</em>State::viewlist<em>sort(const char</em>)’ at swell-miscdlg-generic.cpp:230:40: ../has</em>strings.h:248:28: error: array subscript 1 is outside array bounds of ‘const char [1]’ [-Werror=array-bounds]  248 | if (n[0] == '(' && !n[1] && !lp->gettoken_quotingchar(x))  | ~~~^ cc1plus: all warnings being treated as errors make: </strong>* [<builtin>: swell-miscdlg-generic.o] Error 1</p>
+<p>```</p>
 <p>I’m not sure if there are other configuration steps here that I missed. This project doesn’t seem to use autotools and just has a makefile included.</p>
-<p>I compiled with ALLOW_WARNINGS and it worked. I supposed the code snapshot I got was not totally clean.</p>
+<p>I compiled with `ALLOW_WARNINGS` and it worked. I supposed the code snapshot I got was not totally clean.</p>
     </div>
     <div class="post-nav">
       <div><a href="reaper-extensions.html">&larr; Reaper extensions</a></div>

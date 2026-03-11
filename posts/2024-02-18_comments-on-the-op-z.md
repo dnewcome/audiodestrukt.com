@@ -9,7 +9,7 @@ tags:
 
 # Comments on the OP-Z
 
-I did some traveling to Southeast Asia recently and I took along a few diversions for the long flights. One was my Kindle and the other was the Teenage Engineering OP-Z. I bought the OP-Z a while  ago used from Reverb as I was kind of curious about the OP-1 but didn’t want to drop the cash for it. The OP-Z seemed to have a vibe to it according to the internet, so I figured I’d start there.
+I did some traveling to Southeast Asia recently and I took along a few diversions for the long flights. One was my Kindle and the other was the Teenage Engineering OP-Z. I bought the OP-Z a while ago used from Reverb as I was kind of curious about the OP-1 but didn’t want to drop the cash for it. The OP-Z seemed to have a vibe to it according to the internet, so I figured I’d start there.
 
 When I first unboxed it I was kind of underwhelmed. It was cute and sounded surprisingly good on first listen, but I quickly got bored. Later I hooked it up to my phone and grabbed the app and things started to make more sense, but I still didn’t use it much.
 

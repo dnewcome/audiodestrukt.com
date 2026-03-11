@@ -13,7 +13,11 @@ I’m digging back through my archive of old stuff and looking to see what I use
 
 Looks like there is a new version 3 out now. I’m trying out the demo.
 
+![](images/2024-11-19_revisiting-favorite-vsts_capture-1.png)
+
 There is an old arpeggiator from Insert Piz Here. It’s 32bit and doesn’t work with Ableton. I got it sort of working again in FL Studio.
+
+![](images/2024-11-19_revisiting-favorite-vsts_capture-2.png)
 
 This plugin forms sort of a sequencer that can function as an arpeggiator through the use of the scale and transpose channel. There are some fiddly UI things like setting the loop requires a right click to set the end point. Also host sync mode needs to be set to “sample” in order for the loop to be free running with respect the the DAW timeline (it still uses the host tempo).
 
@@ -21,4 +25,6 @@ Unsync loop lets the loop start from the beginning with each note on received. N
 
 Playing around with this makes me wonder if something like SEQ32 could be converted to a VST plugin.
 
-Getting this to work in 64bit Ableton might be done using JBridge https://www.kvraudio.com/forum/viewtopic.php?t=600349
+Getting this to work in 64bit Ableton might be done using JBridge [https://www.kvraudio.com/forum/viewtopic.php?t=600349](https://www.kvraudio.com/forum/viewtopic.php?t=600349)
+
+![](images/2024-11-19_revisiting-favorite-vsts_capture-3.png)

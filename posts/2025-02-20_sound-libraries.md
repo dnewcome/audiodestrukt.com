@@ -11,9 +11,9 @@ tags:
 
 I’m trying to build Seq66 on OSX right now. I figured it would be straightforward since everything is mostly POSIX.
 
-Turns out that libasound isn’t really ported to mac. This led me to look into what other libraries are out there right now.
+Turns out that `libasound` isn’t really ported to mac. This led me to look into what other libraries are out there right now.
 
-http://libsound.io/
+[http://libsound.io/](http://libsound.io/)
 
 I have never heard of libsound. These all have such generic names that it’s hard to recall if you’ve ever run across it before. It’s kind of a weird deja-vu when I dive back into this stuff.
 

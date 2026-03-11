@@ -188,6 +188,14 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
     .post-nav {
       display: flex;
       justify-content: space-between;
@@ -245,20 +253,33 @@
     </div>
     <div class="post-body">
 <h1>MIDI over HTTP with using ALSA and Curl</h1>
-<p>A few weeks ago, I created a small Node app called Dub Siren to demonstrate playing audio under Node using SDL. My plan was to expand the idea into a more fully-featured sampler. One of the things that I wanted to check out was the audio latency between the time a request was initiated and the time that the sound was played. In order to get a feel for whether the latency was musically tolerable, I decided to rig up my Korg NanoPad so that I could send HTTP requests to the Dub Siren app. I realize that this is a completely unscientific way of measuring the latency, but it mirrors the use case that I care about most, and that is the live realtime performance of the app. I hacked the MIDI-to-HTTP script up in bash using curl. I’m using Ubuntu, which means that the standard MIDI interface is ALSA. I didn’t want to mess with ALSA-OSS compatibility, although that should have let me treat the MIDI controller like a regular file (I think). However, ALSA has a few useful tools for getting MIDI data to standard out. Amidi lets us monitor a connected MIDI device for data. I want to take this data and send it to the Dub Siren app using curl. In order to do this we need to invoke curl for each line of output that we get from amidi. Fortunately the common UNIX xargs tool will let us do just this. To start with, I connected my NanoPad using USB and used amidi to find out the hardware device number that it had been assigned:</p>
-<p>$ amidi -l Dir Device    Name IO  hw:1,0,0  nanoPAD MIDI 1</p>
-<p>Here you can see that the device number is </p>
+<p>A few weeks ago, I created a small Node app called <a href="https://github.com/dnewcome/dub-siren">Dub Siren</a> to demonstrate playing audio under <a href="http://nodejs.org/">Node</a> using <a href="http://www.libsdl.org/">SDL</a>. My plan was to expand the idea into a more fully-featured <a href="http://en.wikipedia.org/wiki/Sampler<em>(musical</em>instrument">sampler</a>). One of the things that I wanted to check out was the audio <a href="http://en.wikipedia.org/wiki/Latency_(audio">latency</a>) between the time a request was initiated and the time that the sound was played.</p>
+<p>In order to get a feel for whether the latency was musically tolerable, I decided to rig up my <a href="http://www.korg.com/nanoseries2">Korg NanoPad</a> so that I could send <a href="http://en.wikipedia.org/wiki/Hypertext<em>Transfer</em>Protocol">HTTP</a> requests to the Dub Siren app. I realize that this is a completely unscientific way of measuring the latency, but it mirrors the use case that I care about most, and that is the live realtime performance of the app.</p>
+<p>I hacked the MIDI-to-HTTP script up in bash using <a href="http://curl.haxx.se/">curl</a>. I’m using Ubuntu, which means that the standard <a href="http://en.wikipedia.org/wiki/MIDI">MIDI</a> interface is <a href="http://www.alsa-project.org/main/index.php/Main_Page">ALSA</a>. I didn’t want to mess with <a href="http://alsa.opensrc.org/Alsa-oss">ALSA-OSS</a> compatibility, although that should have let me treat the MIDI controller like a regular file (I think). However, ALSA has a few useful tools for getting MIDI data to standard out. <a href="http://linux.die.net/man/1/amidi">Amidi</a> lets us monitor a connected MIDI device for data. I want to take this data and send it to the Dub Siren app using curl. In order to do this we need to invoke curl for each line of output that we get from amidi. Fortunately the common UNIX xargs tool will let us do just this.</p>
+<p>To start with, I connected my NanoPad using USB and used amidi to find out the hardware device number that it had been assigned:</p>
+<p>```</p>
+<p>$ amidi -l Dir Device Name IO hw:1,0,0 nanoPAD MIDI 1</p>
+<p>``` Here you can see that the device number is </p>
+<p>```</p>
 <p>hw:1,0,0</p>
-<p>Now we can use this device number to monitor the device, again using amidi:</p>
+<p>``` Now we can use this device number to monitor the device, again using amidi:</p>
+<p>```</p>
 <p>$ amidi -d -p hw:1,0,0</p>
 <p>90 26 7F 80 26 40</p>
-<p>The data shown is a single pad hit. All values are shown in hexadecimal. 0x90 is the MIDI command for a note-on, and 0x80 is the command for a note-off. The second number, 0x26 is the note number for the pad that I pressed. The third value is the velocity number.  Data is output to the console continuously until the process is killed. What I need to have happen is for curl to be invoked for each line of this continuous output. This would be tricky since without some help from xargs. Xargs is intended to do things like run a command for each file found by find or to take a list of arguments and put them all on the same line. In short, it processes input and calls a target command with the input as the arguments. Here is the command </p>
+<p>``` The data shown is a single pad hit. All values are shown in <a href="http://en.wikipedia.org/wiki/Hexadecimal">hexadecimal</a>. 0x90 is the MIDI command for a note-on, and 0x80 is the command for a note-off. The second number, 0x26 is the note number for the pad that I pressed. The third value is the velocity number. </p>
+<p>Data is output to the console continuously until the process is killed. What I need to have happen is for curl to be invoked for each line of this continuous output. This would be tricky since without some help from <a href="http://unixhelp.ed.ac.uk/CGI/man-cgi?xargs">xargs</a>. Xargs is intended to do things like run a command for each file found by find or to take a list of arguments and put them all on the same line. In short, it processes input and calls a target command with the input as the arguments.</p>
+<p>Here is the command </p>
+<p>```</p>
 <p>amidi -d -p hw:1,0,0 | xargs -I {} ./midicurl.sh {}</p>
-<p>Where midicurl.sh is a wrapper around curl that parses the arguments and makes the HTTP request:</p>
+<p>``` Where midicurl.sh is a wrapper around curl that parses the arguments and makes the HTTP request:</p>
+<p>```</p>
 <p>tokens=( $1 )</p>
 <h2>since this is a drum sampler for now, we only care about note-on events</h2>
 <p>if [ ${tokens[0]} == "90" ] ; then  	echo $1 	curl "http://localhost:3003/play?note=${tokens[1]}&vel=${tokens[2]}" fi</p>
-<p>I filter out note-off events by checking for MIDI command 90. The only interesting thing here is that all of the arguments get passed from xargs in one string and we have to tokenize them. There should be a way to get xargs to pass them as separate arguments, but I didn’t seem straightforward and I didn’t have the time to figure it out. Now hitting a note on my NanoPad results in an HTTP request to the Dub Siren’s /play method, passing note number and velocity in the query string. Pretty cool. However, the latency is pretty unusable. It is probably ok for the actual siren sample, but not for drum samples. It’s way too slow to play a drum beat live on the pads. What to do? Well, since we are using Node, there is another way to easily pass data that eliminates the overhead of HTTP. That is Websockets. I’ll show the code for using Websockets via Socket.IO in the next post.</p>
+<p>``` I filter out note-off events by checking for MIDI command 90. The only interesting thing here is that all of the arguments get passed from xargs in one string and we have to tokenize them. There should be a way to get xargs to pass them as separate arguments, but I didn’t seem straightforward and I didn’t have the time to figure it out.</p>
+<p>Now hitting a note on my NanoPad results in an HTTP request to the Dub Siren’s /play method, passing note number and velocity in the query string. Pretty cool.</p>
+<p>However, the latency is pretty unusable. It is probably ok for the actual siren sample, but not for drum samples. It’s way too slow to play a drum beat live on the pads. What to do? Well, since we are using Node, there is another way to easily pass data that eliminates the overhead of HTTP. That is <a href="http://en.wikipedia.org/wiki/WebSocket">Websockets</a>.</p>
+<p>I’ll show the code for using Websockets via <a href="http://socket.io/">Socket.IO</a> in the next post.</p>
     </div>
     <div class="post-nav">
       <div><a href="midi-over-websockets-with-socket-io.html">&larr; MIDI over Websockets with Socket.IO</a></div>

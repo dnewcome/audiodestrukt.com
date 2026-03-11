@@ -13,12 +13,12 @@ I’ve recently needed to run a headless mixer on my machine. I spent a lot of t
 
 I thought it would be cool to just use a DAW and currently I’m using Reaper set up with my desired routing. I’d like to not even have the GUI distracting me though and I looked into running it headless. Turns out that it’s possible on Linux only by recompiling libswell.so with some flags.
 
-The trick is outlined here https://forums.cockos.com/showthread.php?p=2529113
+The trick is outlined here [https://forums.cockos.com/showthread.php?p=2529113](https://forums.cockos.com/showthread.php?p=2529113)
 
 Passing NOGDK=1 into the build of libswell does the trick. There are some warnings generated and by default GCC treats these as errors. So it’s essential to also set -Wno-error. I did this by modifying the makefile but it’s just as easy to pass in the environment.
 
 It’s worth noting that libswell is part of the WDL library from Cockos. After building I just copied libswell.so over into my downloaded Linux install of Reaper.
 
-Audio settings are saved in reaper.ini according to this https://forum.cockos.com/showthread.php?t=254769
+Audio settings are saved in reaper.ini according to this [https://forum.cockos.com/showthread.php?t=254769](https://forum.cockos.com/showthread.php?t=254769)
 
 So far so good. I haven’t used it yet but at least it appears to be working as expected.

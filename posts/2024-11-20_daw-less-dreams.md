@@ -13,7 +13,7 @@ I’m going through my hardware collection and I’m thinking about what caused 
 
 I was on a kick with MIDI sequencers for a while. I think it started when I found an MMT-8 for sale locally. I bought it because of its legendary status and because the seller only wanted 80 bucks for it and all of the keys actually worked. I found out later that the only thing wrong with it was the green playback LED doesn’t work. Somehow I don’t think this is a very common problem. I never bothered to look into why it doesn’t light up.
 
-Anyway it has an interesting workflow and I thought about cloning it for a while. It seems like it wouldn’t be that hard to do. Maybe write an emulator for the ROM. It’s anything but modern though. It’s not really a loop based machine even though  it’s the loop mode that made it famous. Each track has its own button which I think set the standard for grooveboxes to come.
+Anyway it has an interesting workflow and I thought about cloning it for a while. It seems like it wouldn’t be that hard to do. Maybe write an emulator for the ROM. It’s anything but modern though. It’s not really a loop based machine even though it’s the loop mode that made it famous. Each track has its own button which I think set the standard for grooveboxes to come.
 
 What’s particularly interesting about it is that it’s a fully featured sequencer. You can stream multi track midi at it and it will dutifully record it all. You can use it to back up full productions and record it digitally to cassette as a backup. Wow.
 

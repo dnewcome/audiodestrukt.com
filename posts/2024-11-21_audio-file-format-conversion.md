@@ -19,9 +19,13 @@ Many of the virtual drive solutions seem to be outdated now so I’m looking to 
 
 The main tool for looking at AKAI images is CDXtract. I have an ancient version of it from years ago that seems to still work
 
+![](images/2024-11-21_audio-file-format-conversion_capture-5.png)
+
 As you can see I have an old copy of Akai Library Vol 3 with some classic drum machine samples. I think this was originally sold by Akai or included with some of their early samplers.
 
 This lets me export to sf2 soundfont or some other formats. I’m not sure what I really want here. I think I just want some folders of wave files. I did batch converts at some point in the past but I can’t recall exactly how I did it.
+
+![](images/2024-11-21_audio-file-format-conversion_capture-6.png)
 
 This is a step in the right direction.CDXtract is able to open the .bin file that I have. I don’t seem to need the .cue file here.
 
@@ -29,10 +33,14 @@ There are some other tools like Awave Studio that I used to use. Awave can read 
 
 It looks like Extreme Sample converter can convert to sfz
 
+![](images/2024-11-21_audio-file-format-conversion_capture-7.png)
+
 It can also open image files. So this is one way to go.
 
 Chicken systems translator needed WINASPI32.dll to work with CD images I think. It wasn’t installed on my system so let’s see.
 
 Translator lets me create new disk images but I’m not sure how to open an existing image
+
+![](images/2024-11-21_audio-file-format-conversion_capture-8.png)
 
 Ok that’s all the tricks I have up my sleeve right now. Once I get into some sample conversion projects I will write up some workflows that I use.

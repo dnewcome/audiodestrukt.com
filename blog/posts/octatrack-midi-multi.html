@@ -188,6 +188,14 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
     .post-nav {
       display: flex;
       justify-content: space-between;
@@ -245,6 +253,7 @@
     </div>
     <div class="post-body">
 <h1>Octatrack MIDI multi</h1>
+<p><img src="../../images/2024-11-22_octatrack-midi-multi_img_8671.jpg" alt="" loading="lazy"></p>
 <p>I’m still jamming on my Octatrack today. I hooked up my Waldorf Blofeld to the mix. Same kind of setup where I have MIDI going out of the OT and into the Blofeld.</p>
 <p>I chose the Blofeld for this experiment because it’s 16 part multitimbral and I can trigger a few different sounds at once from different tracks on the OT.</p>
 <p>So some things to note about the OT and MIDI. By default all of the audio triggers also send corresponding MIDI notes out. This can be a problem when trying to work with external devices because tracks that are just intended to play samples will be triggering external sounds simultaneously. In the project MIDI configuration we can set Audio MIDI tracks to INT so that notes triggered by audio tracks don’t send anything outside the OT.</p>

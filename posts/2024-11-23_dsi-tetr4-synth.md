@@ -19,6 +19,8 @@ How does the DSI Tetr4 fit in here? It’s a beautiful analog synth that has 4 v
 
 The problem with these synths is that editing patches is pretty difficult. It’s one of those things where it’s useful for having it in a setup if your sounds are already done. I went around looking for an editor. The only one that seems to work for me is a commercial piece of software from SoundTower.
 
+![](images/2024-11-23_dsi-tetr4-synth_image_2024-11-23_100324405.png)
+
 I’m messing with this right now and it’s honestly not working all that well for me. It’s pretty fiddly.
 
 So the Tetr4 has some kind of interesting features when it comes to “combos”. There are these little analog drum grooves in the factory sounds that are unlike any of the other analog synths that I have. The Wagnerian patch is a classic DSI sound. Apart from that I’m not sure this box really stands out for me.
@@ -27,6 +29,6 @@ I think I will always have it in my collection as an example of the Dave Smith s
 
 Turning on multi mode lets you trigger the different voices individually. So the drum combos can be triggered separately.
 
-Click to access Tetra_Manual_v.1.3.pdf
+[Click to access Tetra_Manual_v.1.3.pdf](https://sequential.com/downloads/tetra/doc/Tetra_Manual_v.1.3.pdf)
 
 I’m not sure about this synth for sound design. I just can’t get an editor working correctly. It sounds amazing and has interesting sounds in the combos. I love that many of the patches respond nicely to aftertouch. I’m always going to keep this box but I don’t know if it’s a go-to for many things.

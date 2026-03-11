@@ -24,3 +24,5 @@ Turns out that M-Vave makes one called the SMK-25. This keyboard is tiny. Almost
 I was able to pair using Bluetooth and easily set up the wired MIDI output using the same Cubesuite app that the Chocolate pedal uses on iOS.
 
 Biggest thing for me is the keys actually feel great, almost as good as the keys on the Keystep. This is attributed to the fact that the keys are individually sprung instead of molded together as one piece with live-hinge style springs. That style is always spongy.
+
+![](images/2025-05-31_small-midi-controllers_img_9526-2.jpg)

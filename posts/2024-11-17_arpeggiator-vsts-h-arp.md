@@ -17,9 +17,13 @@ Anyway, back to arpeggiators. I used to use some things back in the day like Piz
 
 I found this H-Arp arpeggiator which is touted as being tracker-like. I like trackers so let’s check it out.
 
+![](images/2024-11-17_arpeggiator-vsts-h-arp_capture.png)
+
 Hey this is pretty sweet. I understand how it works. You hit notes, it shows up in the notes pressed list. There are settings for note ordering and priority. The event list gets played from top to bottom. When you press a new note it restarts. Brilliant. 
 
-The one thing about arpeggiators that I’m noticing, especially in Ableton, is that you can’t set it up so that it’s just on the same track in front of a synth. The docs were actually useful https://raveystabs.co.uk/manuals/h-arp/daw-setup
+The one thing about arpeggiators that I’m noticing, especially in Ableton, is that you can’t set it up so that it’s just on the same track in front of a synth. The docs were actually useful [https://raveystabs.co.uk/manuals/h-arp/daw-setup](https://raveystabs.co.uk/manuals/h-arp/daw-setup)
+
+![](images/2024-11-17_arpeggiator-vsts-h-arp_1711319066385.png)
 
 There’s the setup.
 

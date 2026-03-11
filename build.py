@@ -55,6 +55,17 @@ def md_to_html(text):
 
 
 def inline_md(text):
+    # Extract images into placeholders to protect src URLs from italic/bold
+    placeholders = {}
+    def extract_img(m):
+        alt, src = m.group(1), m.group(2)
+        if src.startswith('images/'):
+            src = '../../images/' + src[len('images/'):]
+        tag = f'<img src="{src}" alt="{alt}" loading="lazy">'
+        key = f'\x00IMG{len(placeholders)}\x00'
+        placeholders[key] = tag
+        return key
+    text = re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', extract_img, text)
     # Bold
     text = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', text)
     text = re.sub(r'__(.+?)__', r'<strong>\1</strong>', text)
@@ -69,6 +80,9 @@ def inline_md(text):
         r'<a href="\1">\1</a>',
         text
     )
+    # Restore image placeholders
+    for key, tag in placeholders.items():
+        text = text.replace(key, tag)
     return text
 
 
@@ -315,6 +329,14 @@ CSS = """
     .post-body a { color: var(--accent); }
 
     .post-body strong { color: var(--text); }
+
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
 
     .post-nav {
       display: flex;

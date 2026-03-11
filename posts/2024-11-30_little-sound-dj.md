@@ -13,4 +13,6 @@ I was pretty intrigued by this a few years ago and then again when Trash80 relea
 
 I loaded Lameboy emulator on the DSTT and used it to boot LSDJ.
 
+![](images/2024-11-30_little-sound-dj_img_8734.jpg)
+
 This is pretty cool. I can’t remember how to use LSDJ but I remember it being a huge influence on the M8 (at least the UI and navigation).

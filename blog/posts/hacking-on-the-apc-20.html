@@ -188,6 +188,14 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
     .post-nav {
       display: flex;
       justify-content: space-between;
@@ -245,11 +253,21 @@
     </div>
     <div class="post-body">
 <h1>Hacking on the APC 20</h1>
-<p>I recently got an AKAI APC 20 Ableton control interface at a local used music store. I have been hunting around for one of these pad-style controllers for a while, and this one was priced right. I don’t think I’d ever buy a Monome, mostly due to the price, but the controller market seems to be heating up and there is a new one on the market every few months it seems. Something to note about the APC is that while it is fully MIDI-compliant, it has a few operating modes that are set via SYSEX commands. When the controller is connected to Ableton, it goes into an Ableton Live mode where all of the lights are controlled by software. When the device is first powered up and not conneted to any software it goes into a default mode where the clip launch pads trigger a green light when pressed and the small channel buttons at the bottom are latched buttons that turn on and off when pushed. I first used this with FL Studio, which apparently supports the device so well that it has its own set of note pages that give you some different interesting mappings. At first I thought that these modes were baked into the device, but they are obviously not, as the modes are only available when paired with FL Studio. If the APC just sits there without a USB connection it will start to display a sort of screensaver pattern with chasing lights. Here are the SYSEX commands that can be sent with a tool like MIDI OX. The handshake query identifies the device and polls things like the firmware revision:</p>
+<p>I recently got an AKAI APC 20 Ableton control interface at a local used music store. I have been hunting around for one of these pad-style controllers for a while, and this one was priced right.</p>
+<p>I don’t think I’d ever buy a Monome, mostly due to the price, but the controller market seems to be heating up and there is a new one on the market every few months it seems.</p>
+<p>Something to note about the APC is that while it is fully MIDI-compliant, it has a few operating modes that are set via SYSEX commands.</p>
+<p>When the controller is connected to Ableton, it goes into an Ableton Live mode where all of the lights are controlled by software. When the device is first powered up and not conneted to any software it goes into a default mode where the clip launch pads trigger a green light when pressed and the small channel buttons at the bottom are latched buttons that turn on and off when pushed.</p>
+<p>I first used this with FL Studio, which apparently supports the device so well that it has its own set of note pages that give you some different interesting mappings. At first I thought that these modes were baked into the device, but they are obviously not, as the modes are only available when paired with FL Studio.</p>
+<p>If the APC just sits there without a USB connection it will start to display a sort of screensaver pattern with chasing lights.</p>
+<p>Here are the SYSEX commands that can be sent with a tool like MIDI OX.</p>
+<p>The handshake query identifies the device and polls things like the firmware revision:</p>
+<p>```</p>
 <p>0xF0, 0x7E, 0x00, 0x06, 0x01, 0xF7</p>
-<p>The device mode set sysex can put the device into one of four modes based on the value of the 7th byte in the following message:</p>
+<p>``` The device mode set sysex can put the device into one of four modes based on the value of the 7th byte in the following message:</p>
+<p>```</p>
 <p>0xF0, 0x47, 0x7F, 0x7B, 0x60, 0x00, 0x04, 0x41, 0x08, 0x02, 0x01, 0xF7</p>
-<p>0x40 is the default startup mode, 0x41 is Ableton mode. The APC20 has a fourth mode called note mode corresponding to 0x43. I’m not sure what this mode is useful for yet, as mode 0x41 seems to be the most useful for programming since it relinquishes full control over the device. I’ll be posting more about this as I find out more.</p>
+<p>``` 0x40 is the default startup mode, 0x41 is Ableton mode. The APC20 has a fourth mode called note mode corresponding to 0x43. I’m not sure what this mode is useful for yet, as mode 0x41 seems to be the most useful for programming since it relinquishes full control over the device.</p>
+<p>I’ll be posting more about this as I find out more.</p>
     </div>
     <div class="post-nav">
       <div><a href="midi-software-roundup.html">&larr; MIDI software roundup</a></div>

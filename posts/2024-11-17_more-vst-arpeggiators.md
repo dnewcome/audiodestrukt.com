@@ -15,8 +15,14 @@ The main stumbling block on these arpeggiator plugins is the setup in Ableton. Y
 
 Here is a refresher on that setup:
 
+![](images/2024-11-17_more-vst-arpeggiators_1711319066385-1.png)
+
 Courtesy of H-arp.
 
 Here is my setup:
+
+![](images/2024-11-17_more-vst-arpeggiators_image_2024-11-17_204313340.png)
+
+![](images/2024-11-17_more-vst-arpeggiators_image_2024-11-17_204356673.png)
 
 Looks like plenty of features. I’m figuring it out but I can’t say it super inspiring right off the bat.

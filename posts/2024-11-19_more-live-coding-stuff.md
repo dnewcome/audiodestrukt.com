@@ -11,10 +11,12 @@ tags:
 
 I’m checking out Mumux which I found via toplap.
 
-https://unlessgames.gitlab.io/mumux/mixer.html
+[https://unlessgames.gitlab.io/mumux/mixer.html](https://unlessgames.gitlab.io/mumux/mixer.html)
 
 There is a live demo which looks super cool.
 
 Also via TopLap which I need to spend some more time on:
 
-https://forum.toplap.org/t/mumux-livecoding-vj-tool/2400
+[https://forum.toplap.org/t/mumux-livecoding-vj-tool/2400](https://forum.toplap.org/t/mumux-livecoding-vj-tool/2400)
+
+![](images/2024-11-19_more-live-coding-stuff_image_2024-11-19_180807971.png)

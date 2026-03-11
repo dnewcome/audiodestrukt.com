@@ -188,6 +188,14 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
     .post-nav {
       display: flex;
       justify-content: space-between;
@@ -246,10 +254,11 @@
     <div class="post-body">
 <h1>Overview of free MIDI editors</h1>
 <p>I’m doing research for a MIDI sequencer project now that I’ve had on the back burner for ages. Over the years I’ve dug around the internet to find examples of small MIDI apps sort of like Seq24. I’m going to post a few things here that I’ve found mostly because I forget that I even looked at them much less what I thought of it or even if I got it to build and run.</p>
-<p>Some projects have painfully generic names, and <a href="https://midieditor.org/">https://midieditor.org/</a> is one of them. I did get this to build from source. It is built on QT5 and uses qmake for building. I got some warnings and the build script didn’t work as-is on my linux box but I got it to work by running qmake by hand and building with make.</p>
-<p>I grabbed the source code from here <a href="https://github.com/markusschwenk/midieditor">https://github.com/markusschwenk/midieditor</a></p>
+<p>Some projects have painfully generic names, and <a href="https://midieditor.org/"><a href="https://midieditor.org/">https://midieditor.org/</a></a> is one of them. I did get this to build from source. It is built on QT5 and uses qmake for building. I got some warnings and the build script didn’t work as-is on my linux box but I got it to work by running qmake by hand and building with make.</p>
+<p>I grabbed the source code from here <a href="https://github.com/markusschwenk/midieditor"><a href="https://github.com/markusschwenk/midieditor">https://github.com/markusschwenk/midieditor</a></a></p>
+<p><img src="../../images/2024-01-26_overview-of-free-midi-editors_image.png" alt="" loading="lazy"></p>
 <p>This is a really basic sequencer. I’m not sure why I like messing with these little things so much. Maybe it’s to figure out what really is essential when building something like this.</p>
-<p>There are some commandline tools I’ve been looking at as well like midish <a href="https://midish.org/">https://midish.org/</a></p>
+<p>There are some commandline tools I’ve been looking at as well like midish <a href="https://midish.org/"><a href="https://midish.org/">https://midish.org/</a></a></p>
     </div>
     <div class="post-nav">
       <div><a href="headless-daws.html">&larr; Headless DAWs</a></div>

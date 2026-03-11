@@ -19,6 +19,6 @@ None of the bells and whistles make any difference if it doesn’t sound good. T
 
 I wish it had one more set of outputs. Maybe instead of two midi outputs. The box has a midi out and a midi thru. Seems like one would have sufficed. It’s super flexible in that the outputs can be used for DIN sync in addition to midi. I’m not sure how common that use case is or why Elektron decided to include this backward compatibility in such a modern product.
 
-I like the big clicky buttons and shortcut keys for most things make it pretty easy to navigate once you get  your fingers used to the motions. Some of the button locations are questionable since it takes two hands for some common operations but I don’t necessarily have any suggestions on how to improve it. Everything has tradeoffs and it’s not obvious to me what else might have been a factor in their decision making for the product.
+I like the big clicky buttons and shortcut keys for most things make it pretty easy to navigate once you get your fingers used to the motions. Some of the button locations are questionable since it takes two hands for some common operations but I don’t necessarily have any suggestions on how to improve it. Everything has tradeoffs and it’s not obvious to me what else might have been a factor in their decision making for the product.
 
 I’m going to be using the Syntakt along with my Octatrack and I’ll probably write a little post on that setup as well.

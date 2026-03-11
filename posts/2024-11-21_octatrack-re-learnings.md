@@ -9,7 +9,7 @@ tags: elektron, music, octatrack, technology
 
 # Octatrack re-learnings
 
-I’m digging back into using my Octatrack and I’m finding that I have to re-learn a bunch of things about how it works. Saying that it’s a quirky machine is an understatement. There are some guides like Merlin’s OT manual that go into the philosophy of the machine, but I’m writing things here with my own live use in mind.
+I’m digging back into using my Octatrack and I’m finding that I have to re-learn a bunch of things about how it works. Saying that it’s a quirky machine is an understatement. There are some guides like [Merlin’s OT manual](https://www.elektronauts.com/t/a-polished-version-of-merlins-ot-guide-here/42860) that go into the philosophy of the machine, but I’m writing things here with my own live use in mind.
 
 I used to think of the OT as a looper. Then I thought of it as a sampler. Then I thought of it as a sequencer. Now I think of it as a performance recorder – sort of.
 
@@ -21,7 +21,7 @@ Once we have monitoring out of the way there are trigger modes for enabling reco
 
 I’m not going to cover trigs here. I’m going to focus on manually recording things. There are three little buttons at the top left of the machine next to the (confusing) headphone volume knob. These three buttons trigger recording manually. There are a few modes. One mode just sets the thing off recording into the wild blue yonder. The default recording length is really long (MAX) unless you set it to some number of trig steps. I like to either set the max length to one bar or use the momentary mode where you have to keep the button held down for as long as the recording lasts.
 
-There are some tricks for recording to different tracks that I learned here https://www.youtube.com/watch?v=lniCqGfqBy4
+There are some tricks for recording to different tracks that I learned here [https://www.youtube.com/watch?v=lniCqGfqBy4](https://www.youtube.com/watch?v=lniCqGfqBy4)
 
 One of which is that you can hold the track button T1, T2 etc and hit the record button to trigger that track’s recorder. There are some others too, you should watch his video.
 
@@ -31,6 +31,6 @@ Speaking of slots, I also forget about how this works. Slots are not slices. Sli
 
 Confusingly, slices are not shared between machines. A FLEX machine that contains a sliced waveform will have separate slices than another FLEX machine. I think this is because the main sample that is loaded in a FLEX machine is separate from slots (you can play slots and the main sample separately on any FLEX machine but just not at the same time since each track is monophonic).
 
-Another confusing thing is that loop is enabled by default on FLEX machines, so any short sample that is played like a kick drum in a slot will loop indefinitely until another trig happens on the same track. This can be turned off in a settings page for the machine https://www.elektronauts.com/t/slices-looping-on-trigger-disable/151650/2
+Another confusing thing is that loop is enabled by default on FLEX machines, so any short sample that is played like a kick drum in a slot will loop indefinitely until another trig happens on the same track. This can be turned off in a settings page for the machine [https://www.elektronauts.com/t/slices-looping-on-trigger-disable/151650/2](https://www.elektronauts.com/t/slices-looping-on-trigger-disable/151650/2)
 
 Ok that covers some main things that I had to re-learn just now. Hope this helps you if you read this far.

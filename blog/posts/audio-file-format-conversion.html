@@ -188,6 +188,14 @@
 
     .post-body strong { color: var(--text); }
 
+    .post-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
     .post-nav {
       display: flex;
       justify-content: space-between;
@@ -250,14 +258,18 @@
 <p>Also some sample converter apps are able to read files directly and some need a virtual CD drive.</p>
 <p>Many of the virtual drive solutions seem to be outdated now so I’m looking to see what’s still supported on modern windows. I’m now using Virtual Clone Drive (the one with the sheep). It seems to be supported. There’s an open source one called WinCdEmu. That one works but I think I had issues getting it to work with bin/cue files. I can’t remember.</p>
 <p>The main tool for looking at AKAI images is CDXtract. I have an ancient version of it from years ago that seems to still work</p>
+<p><img src="../../images/2024-11-21_audio-file-format-conversion_capture-5.png" alt="" loading="lazy"></p>
 <p>As you can see I have an old copy of Akai Library Vol 3 with some classic drum machine samples. I think this was originally sold by Akai or included with some of their early samplers.</p>
 <p>This lets me export to sf2 soundfont or some other formats. I’m not sure what I really want here. I think I just want some folders of wave files. I did batch converts at some point in the past but I can’t recall exactly how I did it.</p>
+<p><img src="../../images/2024-11-21_audio-file-format-conversion_capture-6.png" alt="" loading="lazy"></p>
 <p>This is a step in the right direction.CDXtract is able to open the .bin file that I have. I don’t seem to need the .cue file here.</p>
 <p>There are some other tools like Awave Studio that I used to use. Awave can read from .iso files but not bin files. Once I have some intermediate format I think this can be used to batch convert. There might be some thing I can use on the command line too.</p>
 <p>It looks like Extreme Sample converter can convert to sfz</p>
+<p><img src="../../images/2024-11-21_audio-file-format-conversion_capture-7.png" alt="" loading="lazy"></p>
 <p>It can also open image files. So this is one way to go.</p>
 <p>Chicken systems translator needed WINASPI32.dll to work with CD images I think. It wasn’t installed on my system so let’s see.</p>
 <p>Translator lets me create new disk images but I’m not sure how to open an existing image</p>
+<p><img src="../../images/2024-11-21_audio-file-format-conversion_capture-8.png" alt="" loading="lazy"></p>
 <p>Ok that’s all the tricks I have up my sleeve right now. Once I get into some sample conversion projects I will write up some workflows that I use.</p>
     </div>
     <div class="post-nav">
